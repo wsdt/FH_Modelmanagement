@@ -381,55 +381,11 @@
                                                 <th style="width: 20%">Description</th>
                                                 <th>Compressions</th>
                                                 <th>Status</th>
-                                                <th>Filesize</th>
                                                 <th style="width: 20%">#Edit</th>
                                             </tr>
                                             </thead>
                                             <tbody id="queriedmodels">
-                                            <script type="text/javascript">printModelTableRow(
-                                                "#queriedmodels",""
-                                                );</script>
-                                            <tr>
-                                                <td>#</td>
-                                                <td>
-                                                    <a>Model description<!-- TODO: Use from JSON --></a>
-                                                    <br/>
-                                                    <small data-toggle="tooltip" data-placement="top" title="Owner: xxx / Creator: xxx">Created by X <!-- TODO: Use from JSON -->on 01.01.2015<!-- TODO: Use from JSON --></small>
-                                                </td>
-                                                <td>
-                                                    <ul class="list-inline">
-                                                        <li><!-- TODO: Use from JSON for TOOLTIP! -->
-                                                            <img src="images/user.png" class="avatar" alt="Avatar" data-toggle="tooltip" data-placement="top" title="Compression UID or additional data">
-                                                        </li>
-                                                        <li>
-                                                            <img src="images/user.png" class="avatar" alt="Avatar" data-toggle="tooltip" data-placement="top" title="Compression UID or additional data">
-                                                        </li>
-                                                        <li>
-                                                            <img src="images/user.png" class="avatar" alt="Avatar" data-toggle="tooltip" data-placement="top" title="Compression UID or additional data">
-                                                        </li>
-                                                        <li>
-                                                            <img src="images/user.png" class="avatar" alt="Avatar" data-toggle="tooltip" data-placement="top" title="Compression UID or additional data">
-                                                        </li>
-                                                    </ul>
-                                                </td>
-
-                                                <td>
-                                                    <button type="button" class="btn btn-success btn-xs">Success
-                                                    </button>
-                                                </td>
-
-                                                <td>
-                                                    0 Bytes <!-- TODO: Use from JSON -->
-                                                </td>
-                                                <td>
-                                                    <a href="#" class="btn btn-primary btn-xs"><i
-                                                                class="fa fa-folder"></i> View </a>
-                                                    <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>
-                                                        Edit </a>
-                                                    <a href="#" class="btn btn-danger btn-xs"><i
-                                                                class="fa fa-trash-o"></i> Delete </a>
-                                                </td>
-                                            </tr>
+                                            <script type="text/javascript">printTestJsons("#queriedmodels","");</script>
                                             </tbody>
                                         </table>
 

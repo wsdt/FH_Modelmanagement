@@ -14,7 +14,6 @@
       "fileSize": "long",
       "path": "string",
       "fileTypeSpecificMeta": {
-        /*future*/
       }
     },
     "compressionUUID2": {}
