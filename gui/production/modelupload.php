@@ -15,9 +15,13 @@
     <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
-
+    <!-- iCheck -->
+    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+    <!-- Modelupload JS -->
+    <script type="text/javascript" src="./js/modelupload/modelupload_general.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 
 <body class="nav-md">
@@ -355,16 +359,80 @@
                                         </li>
                                     </ul>
                                     <div id="step-1">
+                                        <p>This step focuses on searching for available models. After selecting a model
+                                            you can add new variations of it.</p>
                                         <div class="title_right">
                                             <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Search for models...">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="Search for models...">
                                                     <span class="input-group-btn">
                                                         <button class="btn btn-default" type="button">Go!</button>
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <!-- start project list -->
+                                        <table class="table table-striped projects">
+                                            <thead>
+                                            <tr>
+                                                <th style="width: 1%">#</th>
+                                                <th style="width: 20%">Description</th>
+                                                <th>Compressions</th>
+                                                <th>Status</th>
+                                                <th>Filesize</th>
+                                                <th style="width: 20%">#Edit</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="queriedmodels">
+                                            <script type="text/javascript">printModelTableRow(
+                                                "#queriedmodels",""
+                                                );</script>
+                                            <tr>
+                                                <td>#</td>
+                                                <td>
+                                                    <a>Model description<!-- TODO: Use from JSON --></a>
+                                                    <br/>
+                                                    <small data-toggle="tooltip" data-placement="top" title="Owner: xxx / Creator: xxx">Created by X <!-- TODO: Use from JSON -->on 01.01.2015<!-- TODO: Use from JSON --></small>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-inline">
+                                                        <li><!-- TODO: Use from JSON for TOOLTIP! -->
+                                                            <img src="images/user.png" class="avatar" alt="Avatar" data-toggle="tooltip" data-placement="top" title="Compression UID or additional data">
+                                                        </li>
+                                                        <li>
+                                                            <img src="images/user.png" class="avatar" alt="Avatar" data-toggle="tooltip" data-placement="top" title="Compression UID or additional data">
+                                                        </li>
+                                                        <li>
+                                                            <img src="images/user.png" class="avatar" alt="Avatar" data-toggle="tooltip" data-placement="top" title="Compression UID or additional data">
+                                                        </li>
+                                                        <li>
+                                                            <img src="images/user.png" class="avatar" alt="Avatar" data-toggle="tooltip" data-placement="top" title="Compression UID or additional data">
+                                                        </li>
+                                                    </ul>
+                                                </td>
+
+                                                <td>
+                                                    <button type="button" class="btn btn-success btn-xs">Success
+                                                    </button>
+                                                </td>
+
+                                                <td>
+                                                    0 Bytes <!-- TODO: Use from JSON -->
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="btn btn-primary btn-xs"><i
+                                                                class="fa fa-folder"></i> View </a>
+                                                    <a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>
+                                                        Edit </a>
+                                                    <a href="#" class="btn btn-danger btn-xs"><i
+                                                                class="fa fa-trash-o"></i> Delete </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
                                     </div>
                                     <div id="step-2">
                                         <h2 class="StepTitle">Step 2 Content</h2>

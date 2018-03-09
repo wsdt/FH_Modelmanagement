@@ -1,24 +1,22 @@
 {
-  "description"       : "This is an example description",
-  "objectTripleID"    : "TripleID",
-  "mediaTripleID"     : "TripleID",
-  "createDate"        : "date",
-  "creator"           : "string",
-  "owner"             : "string",
-  "MIMEtype"          : "string",
-  "files"  :
-  {
-    "compressionUUID1"   :
-    {
-      "uploadDate"        : "date",
-      "accessLevel"       : "accessLevel[public|private|visit]",
-"license"           : "string",
-"fileSize"          : "long",
-"path"              : "string",
-"fileTypeSpecificMeta" :{/*future*/}
-},
-"compressionUUID2"   :  { }
-
-
-}
+  "description": "This is an example description",
+  "objectTripleID": "TripleID",
+  "mediaTripleID": "TripleID",
+  "createDate": "date",
+  "creator": "string",
+  "owner": "string",
+  "MIMEtype": "string",
+  "files": {
+    "compressionUUID1": {
+      "uploadDate": "date",
+      "accessLevel": "accessLevel[public|private|visit]",
+      "license": "string",
+      "fileSize": "long",
+      "path": "string",
+      "fileTypeSpecificMeta": {
+        /*future*/
+      }
+    },
+    "compressionUUID2": {}
+  }
 }
