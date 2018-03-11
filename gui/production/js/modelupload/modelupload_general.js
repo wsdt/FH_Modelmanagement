@@ -25,15 +25,36 @@ function printModelTableRow(tbodyidentifier,jsonObj) {
     console.log("Tried to execute printModelTableRow(): "+tbodyidentifier+";;"+JSON.stringify(jsonObj));
 }
 
+/** Prints search results so just give all JsonObjs as an Array to this method :)*/
+function printAllModelTableRows(tbodyidentifier, jsonObjs) {
+    if (jsonObjs !== null) {
+        if (Array.isArray(jsonObjs)) {
+            for (var i = 0;i<jsonObjs.length;i++) {
+                console.log('Trying to print table row of provided array->'+JSON.stringify(jsonObjs[i]));
+                printModelTableRow(tbodyidentifier,jsonObjs[i]);
+            }
+        } else {
+            console.warn('Tried to print provided table row, but 2nd parameter was not an array as it was supposed to be.');
+            printModelTableRow(tbodyidentifier,jsonObjs); //just try to print it (if not an array)
+        }
+    } else {
+        console.error('Could not print table rows, because jsonObj[] is null!');
+    }
+}
+
+
+// DUMMY DATA FOR TESTING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 /** Just for testing purpose (delete after server interaction) */
 function printTestJsons(tbodyidentifier, jsonStr) {
     //Method: Extract important values from jsonStr and set it to tableRow template below
-    var jsonObj = "";
+    var testResultSet = []; //Instead of this array the search results should be put in
     if (jsonStr !== "") {
         console.log("Tried to parse provided json str.");
-        printModelTableRow(tbodyidentifier, JSON.parse(jsonStr));
+        testResultSet.push(JSON.parse(jsonStr)); //add test json to print
     } else {
         //use default (just for testing)
-        printModelTableRow(tbodyidentifier, JSON.parse('{"description":"This is an example description","objectTripleID":"TripleID","mediaTripleID":"TripleID","createDate":"date","creator":"string","owner":"string","MIMEtype":"string","files":{"compressionUUID1":{"uploadDate":"date","accessLevel":"accessLevel[public|private|visit]","license":"string","fileSize":"long","path":"string","fileTypeSpecificMeta":{}},"compressionUUID2":{}}}'))
+        testResultSet.push(JSON.parse('{"description":"This is an example description","objectTripleID":"TripleID","mediaTripleID":"TripleID","createDate":"date","creator":"string","owner":"string","MIMEtype":"string","files":{"compressionUUID1":{"uploadDate":"date","accessLevel":"accessLevel[public|private|visit]","license":"string","fileSize":"long","path":"string","fileTypeSpecificMeta":{}},"compressionUUID2":{}}}'));
     }
+    printAllModelTableRows(tbodyidentifier, testResultSet);
 }
