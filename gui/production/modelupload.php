@@ -19,11 +19,14 @@
     <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-    <!-- Dropzone.js -->
+    <!-- Dropzone.css -->
     <link href="../vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
+    <!-- Dropzone.js -->
+    <script src="../vendors/dropzone/dist/min/dropzone.min.js"></script>
     <!-- Modelupload JS -->
     <script type="text/javascript" src="./js/modelupload/modelupload_general.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <!-- Jquery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
 </head>
 
 <body class="nav-md">
@@ -341,24 +344,6 @@
                                           </span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="#step-3">
-                                                <span class="step_no">3</span>
-                                                <span class="step_descr">
-                                              Step 3<br/>
-                                              <small>Step 3 description</small>
-                                          </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#step-4">
-                                                <span class="step_no">4</span>
-                                                <span class="step_descr">
-                                              Step 4<br/>
-                                              <small>Step 4 description</small>
-                                          </span>
-                                            </a>
-                                        </li>
                                     </ul>
                                     <div id="step-1">
                                         <h2 class="StepTitle">Step 1: Search and Select</h2>
@@ -388,87 +373,60 @@
                                             </tr>
                                             </thead>
                                             <tbody id="queriedmodels">
-                                            <script type="text/javascript">printTestJsons("#queriedmodels","");</script>
+                                            <script type="text/javascript">printTestJsons("#queriedmodels", "");</script>
                                             </tbody>
                                         </table>
 
                                     </div>
                                     <div id="step-2">
                                         <h2 class="StepTitle">Step 2: Upload new compression</h2>
-                                        <!-- TODO: Place here upload form -->
-                                            <p>Drag multiple files to the box below for multi upload or click to select files. This is for demonstration purposes only, the files are not uploaded to any server.</p>
+                                        <p>Drag multiple files to the box below for multi upload or click to select
+                                            files. This is for demonstration purposes only, the files are not uploaded
+                                            to any server.</p>
+                                        <!-- TODO: Place here upload form but only compression field so:
+                                         * license as string (but in future to select)
+                                          * accessLevel to select -->
+
+
+                                        <form class="form-horizontal form-label-left">
+                                            <div class="form-group">
+                                                <label>License</label>
+                                                <!-- If I know which data to place here I would make something more special here -->
+                                                <input type="text" class="form-control" placeholder="Enter license">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="accessLevels">Accesslevel</label>
+                                                <select id="accessLevels" class="form-control" required>
+                                                    <option value="">public</option>
+                                                    <option value="press">visit</option>
+                                                    <option value="net">private</option>
+                                                </select>
+                                            </div>
+                                        </form>
+
+                                        <!-- Drag/Upload File -->
                                         <form action="form_upload.html" class="dropzone"></form>
                                     </div>
-                                    </div>
-                                    <div id="step-3">
-                                        <h2 class="StepTitle">Step 3 Content</h2>
-                                        <p>
-                                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-                                            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                            ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                            velit esse cillum dolore
-                                            eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                            sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                        </p>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                            consequat. Duis aute irure dolor
-                                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                                            officia deserunt mollit anim id est laborum.
-                                        </p>
-                                    </div>
-                                    <div id="step-4">
-                                        <h2 class="StepTitle">Step 4 Content</h2>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                            consequat.
-                                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-                                            eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                            sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                        </p>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                            consequat. Duis aute irure dolor
-                                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                                            officia deserunt mollit anim id est laborum.
-                                        </p>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                            consequat. Duis aute irure dolor
-                                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                                            officia deserunt mollit anim id est laborum.
-                                        </p>
-                                    </div>
-
                                 </div>
-                                <!-- End SmartWizard Content -->
                             </div>
+                            <!-- End SmartWizard Content -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /page content -->
-
-        <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
     </div>
+    <!-- /page content -->
+
+    <!-- footer content -->
+    <footer>
+        <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+</div>
 </div>
 
 <!-- jQuery -->
