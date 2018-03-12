@@ -22,7 +22,7 @@ function printModelTableRow(tbodyidentifier,jsonObj) {
         "</td><td><ul class='list-inline'>"+compressionTypesList+"</ul></td>" +
         "<td><button type='button' class='btn btn-success btn-xs'>Success</button></td>" +
         "<td><a href='#' class='btn btn-primary btn-xs'><i class='fa fa-folder'></i> View </a>" +
-        "<a href='#' class='btn btn-info btn-xs'><i class='fa fa-pencil'></i> Add</a>" +
+        "<a href='#' class='btn btn-info btn-xs' onclick='selectModel(&apos;"+objectTripleUUID+"&apos;)'><i class='fa fa-pencil'></i> Add</a>" +
         "<a href='#' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i> Delete </a></td></tr>").fadeIn('slow');
     //console.log("Tried to execute printModelTableRow(): "+tbodyidentifier+";;"+JSON.stringify(jsonObj));
 }
@@ -43,6 +43,23 @@ function printAllModelTableRows(tbodyidentifier, jsonObjs) {
         console.error('Could not print table rows, because jsonObj[] is null!');
     }
 }
+
+
+/** This method is called when user clicks on ADD btn, so we can do here sth stuff
+ * -> This method should send it's data to basket. After that the upload procedure can
+ * start. */
+function selectModel(objectTrippleUUID) {
+    if (objectTrippleUUID !== null) {
+        console.log('Received selected model with id: '+objectTrippleUUID);
+        //TODO: Do here sth stuff (e.g. send to basket with ajax or similar etc.)
+
+
+    } else {
+        console.error('Could not select model, bc. objectTrippleUUID is null!');
+    }
+}
+
+
 
 
 // DUMMY DATA FOR TESTING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -19,6 +19,8 @@
     <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+    <!-- Dropzone.js -->
+    <link href="../vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
     <!-- Modelupload JS -->
     <script type="text/javascript" src="./js/modelupload/modelupload_general.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -326,7 +328,7 @@
                                                 <span class="step_no">1</span>
                                                 <span class="step_descr">
                                               Step 1<br/>
-                                              <small>Search for models</small>
+                                              <small>Search and Select</small>
                                           </span>
                                             </a>
                                         </li>
@@ -335,7 +337,7 @@
                                                 <span class="step_no">2</span>
                                                 <span class="step_descr">
                                               Step 2<br/>
-                                              <small>Step 2 description</small>
+                                              <small>Upload new compression</small>
                                           </span>
                                             </a>
                                         </li>
@@ -359,6 +361,7 @@
                                         </li>
                                     </ul>
                                     <div id="step-1">
+                                        <h2 class="StepTitle">Step 1: Search and Select</h2>
                                         <p>This step focuses on searching for available models. After selecting a model
                                             you can add new variations of it.</p>
                                         <div class="title_right">
@@ -391,24 +394,11 @@
 
                                     </div>
                                     <div id="step-2">
-                                        <h2 class="StepTitle">Step 2 Content</h2>
-                                        <p>
-                                            do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                                            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                            velit esse cillum dolore eu
-                                            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-                                            in culpa qui officia deserunt mollit anim id est laborum.
-                                        </p>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                            consequat. Duis aute irure dolor
-                                            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                                            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-                                            officia deserunt mollit anim id est laborum.
-                                        </p>
+                                        <h2 class="StepTitle">Step 2: Upload new compression</h2>
+                                        <!-- TODO: Place here upload form -->
+                                            <p>Drag multiple files to the box below for multi upload or click to select files. This is for demonstration purposes only, the files are not uploaded to any server.</p>
+                                        <form action="form_upload.html" class="dropzone"></form>
+                                    </div>
                                     </div>
                                     <div id="step-3">
                                         <h2 class="StepTitle">Step 3 Content</h2>
