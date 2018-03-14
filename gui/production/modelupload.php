@@ -27,6 +27,9 @@
     <script type="text/javascript" src="./js/modelupload/modelupload_general.js"></script>
     <!-- Jquery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- PNotify -->
+    <link href="../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -372,21 +375,16 @@
                                                 <th style="width: 20%">#Edit</th>
                                             </tr>
                                             </thead>
-                                            <tbody id="queriedmodels">
+                                            <tbody id="queriedmodels"><!-- ID necessary in modelupload_general.js -->
                                             <script type="text/javascript">printTestJsons("#queriedmodels", "");</script>
                                             </tbody>
                                         </table>
 
                                     </div>
                                     <div id="step-2">
-                                        <h2 class="StepTitle">Step 2: Upload new compression</h2>
-                                        <p>Drag multiple files to the box below for multi upload or click to select
-                                            files. This is for demonstration purposes only, the files are not uploaded
-                                            to any server.</p>
-                                        <!-- TODO: Place here upload form but only compression field so:
-                                         * license as string (but in future to select)
-                                          * accessLevel to select -->
-
+                                        <!-- ID used for updating with TrippleUUID (usability) -->
+                                        <h2 class="StepTitle" id="step2_title">Step 2: Upload new compression</h2>
+                                        <p>Drag (multiple) files or upload them manually by clicking onto the dropzone.</p>
 
                                         <form class="form-horizontal form-label-left">
                                             <div class="form-group">
@@ -427,7 +425,6 @@
     </footer>
     <!-- /footer content -->
 </div>
-</div>
 
 <!-- jQuery -->
 <script src="../vendors/jquery/dist/jquery.min.js"></script>
@@ -441,6 +438,9 @@
 <script src="../vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
 <!-- Custom Theme Scripts -->
 <script src="../build/js/custom.min.js"></script>
+<!-- PNotify -->
+<script src="../vendors/pnotify/dist/pnotify.js"></script>
+<script src="../vendors/pnotify/dist/pnotify.nonblock.js"></script>
 
 
 </body>

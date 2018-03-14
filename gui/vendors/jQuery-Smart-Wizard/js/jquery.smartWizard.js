@@ -11,6 +11,22 @@
  * http://tech-laboratory.blogspot.com
  */
 
+/** Determines whether one model was selected by user (you can add here further validations). */
+function isModelSelected() {
+    console.log('Trying to determine whether model is selected: '+selectedObj);
+    var isModelSelected = true;
+    //Show notification and prevent next btn if var exists, but is not set.
+    if (selectedObj === undefined) {
+        isModelSelected = false;
+        new PNotify({
+            title: 'Invalid input',
+            text: 'Please select a model.',
+            styling: 'bootstrap3'
+        });
+    }
+    return isModelSelected;
+}
+
 function SmartWizard(target, options) {
     this.target       = target;
     this.options      = options;
@@ -59,7 +75,10 @@ function SmartWizard(target, options) {
         this.contentWidth = $this.elmStepContainer.width();
 
         $($this.buttons.next).click(function() {
-            $this.goForward();
+            if (isModelSelected()) {
+                //validate user input (only go to next if model is selected)
+                $this.goForward();
+            }
             return false;
         });
         $($this.buttons.previous).click(function() {

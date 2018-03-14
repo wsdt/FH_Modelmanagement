@@ -1,3 +1,5 @@
+var selectedObj; //used to keep track which elem is selected (i think it is less error prone than determining the bgColor)
+
 /** Prints general table row to tbody elem from json str */
 function printModelTableRow(tbodyidentifier,jsonObj) {
     /** Extract values from parsed json obj (extracted here, to make method more readable)*/
@@ -21,14 +23,14 @@ function printModelTableRow(tbodyidentifier,jsonObj) {
         "<small data-toggle='tooltip' data-placement='top' title='Owner: "+owner+" / Creator: "+creator+"'>Created on "+createDate+"</small>" +
         "</td><td><ul class='list-inline'>"+compressionTypesList+"</ul></td>" +
         "<td><button type='button' class='btn btn-success btn-xs'>Success</button></td>" +
-        "<td><a href='#' class='btn btn-primary btn-xs'><i class='fa fa-folder'></i> View </a>" +
-        "<a href='#' class='btn btn-info btn-xs' onclick='selectModel(&apos;"+objectTripleUUID+"&apos;)'><i class='fa fa-pencil'></i> Add</a>" +
-        "<a href='#' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i> Delete </a></td></tr>").fadeIn('slow');
+        "<td><a href='#' class='btn btn-info btn-xs' onclick='selectModel(&apos;"+objectTripleUUID+"&apos;)'><i class='fa fa-pencil'></i> Select</a></td></tr>").fadeIn('slow');
     //console.log("Tried to execute printModelTableRow(): "+tbodyidentifier+";;"+JSON.stringify(jsonObj));
 }
 
 /** Prints search results so just give all JsonObjs as an Array to this method :)*/
 function printAllModelTableRows(tbodyidentifier, jsonObjs) {
+    //removeInitialNotification(); //just assuming that printAllModelTableRows method is only called when page is reloaded.
+
     if (jsonObjs !== null) {
         if (Array.isArray(jsonObjs)) {
             for (var i = 0;i<jsonObjs.length;i++) {
@@ -44,19 +46,65 @@ function printAllModelTableRows(tbodyidentifier, jsonObjs) {
     }
 }
 
+/** Bug/Issue in this template, that initial notification always get's shown
+ * --> acc. to internet, just remove it manually, but I solved this issue by removing: (I think rebuilding custom.js will also solve this issue, because
+ * this line does not exist there)
+ *
+ * ",new PNotify({title:"PNotify",type:"info",text:"Welcome. Try hovering over me. You can click things behind me, because I'm non-blocking.",nonblock:{nonblock:!0},addclass:"dark",styling:"bootstrap3",hide:!1,before_close:function(a){return a.update({title:a.options.title+" - Enjoy your Stay",before_close:null}),a.queueRemove(),!1}})"
+ *
+ * from custom.min.js*/
+/*function removeInitialNotification() {
+    $(document).ready(function() {
+       $('.ui-pnotify').remove();
+    });
+    console.log('Tried to remove initial notifications.');
+}*/
+
+
 
 /** This method is called when user clicks on ADD btn, so we can do here sth stuff
  * -> This method should send it's data to basket. After that the upload procedure can
  * start. */
 function selectModel(objectTrippleUUID) {
-    if (objectTrippleUUID !== null) {
+    //Only select if not selected already and if not null
+    if (objectTrippleUUID !== null && selectedObj !== objectTrippleUUID) {
         console.log('Received selected model with id: '+objectTrippleUUID);
+        //Color selected row (now user has to click on next to upload a new compression
+        colorOnlyProvidedObject(objectTrippleUUID);
+        console.log('Tried to set bgcolor.');
+
+        selectedObj = objectTrippleUUID; //so we know which object was selected
+
+        //Update heading for step 2 (usability)
+        document.getElementById('step2_title').innerHTML += " for "+objectTrippleUUID;
+
+
         //TODO: Do here sth stuff (e.g. send to basket with ajax or similar etc.)
 
-
+        //Inform user that everything went well (Senseful?)
+        new PNotify({
+            title: 'Selected model.',
+            text: 'Excellent! Now click on &apos;NEXT&apos; to upload a new compression.',
+            type: 'info',
+            styling: 'bootstrap3'
+        });
     } else {
         console.error('Could not select model, bc. objectTrippleUUID is null!');
     }
+}
+
+function colorOnlyProvidedObject(objectTrippleUUID) {
+    var unselectedColor = "#f9f9f9";
+    var selectedColor = "#FFFBCC";
+
+    //uncolor old objects
+    var allRows = document.getElementById('queriedmodels').children; //get all rows
+    for (var i = 0;i < allRows.length; i++) {
+        allRows[i].style.backgroundColor = unselectedColor;
+    }
+
+    //Color new object
+    document.getElementById(objectTrippleUUID).style.backgroundColor = selectedColor;
 }
 
 
