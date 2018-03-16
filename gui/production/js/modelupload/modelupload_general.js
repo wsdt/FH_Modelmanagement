@@ -93,6 +93,32 @@ function selectModel(objectTrippleUUID) {
     }
 }
 
+/** TODO: Crafts json string of selected model (= selectedObj) */
+function craftJsonStr() {
+    console.log('Trying to craft json string of: '+selectedObj);
+    return '{'+
+                '"description": "This is an example description",'+
+                '"objectTripleID": "'+selectedObj+'",'+
+                '"mediaTripleID": "TripleID",'+
+                '"createDate": "date",'+
+                '"creator": "string",'+
+                '"owner": "string",'+
+                '"MIMEtype": "string",'+
+                '"files": {'+
+                    '"compressionUUID1": {'+
+                        '"uploadDate": "'+(new Date().toLocaleString())+'",'+
+                        '"accessLevel": "accessLevel[public|private|visit]",'+
+                        '"license": "string",'+
+                        '"fileSize": "long",'+
+                        '"path": "string",'+
+                        '"fileTypeSpecificMeta": {'+
+                        '}'+
+                    '},'+
+                    '"compressionUUID2": {}'+
+                '}'+
+            '}';
+}
+
 function colorOnlyProvidedObject(objectTrippleUUID) {
     var unselectedColor = "#f9f9f9";
     var selectedColor = "#FFFBCC";
