@@ -13,11 +13,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="modelupload_general.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="modelupload_general.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui/production/js/modelupload/modelupload_general.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="94" column="0" lean-forward="true" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+            <state relative-caret-position="395">
+              <caret line="99" column="20" lean-forward="false" selection-start-line="99" selection-start-column="20" selection-end-line="99" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="modelObj.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gui/production/js/modelupload/modelObj.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="609">
+              <caret line="43" column="10" lean-forward="true" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -26,8 +36,8 @@
       <file leaf-file-name="sampledata_1.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/sampledata_1.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="1" />
+            <state relative-caret-position="231">
+              <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -36,8 +46,8 @@
       <file leaf-file-name="modelupload.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui/production/modelupload.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="437" column="60" lean-forward="true" selection-start-line="437" selection-start-column="60" selection-end-line="437" selection-end-column="60" />
+            <state relative-caret-position="9177">
+              <caret line="437" column="60" lean-forward="false" selection-start-line="437" selection-start-column="60" selection-end-line="437" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -46,8 +56,8 @@
       <file leaf-file-name="jquery.smartWizard.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="19" column="32" lean-forward="true" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+            <state relative-caret-position="168">
+              <caret line="19" column="32" lean-forward="false" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -109,6 +119,7 @@
         <option value="$PROJECT_DIR$/gui/production/modelupload.php" />
         <option value="$PROJECT_DIR$/gui/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js" />
         <option value="$PROJECT_DIR$/gui/production/js/modelupload/modelupload_general.js" />
+        <option value="$PROJECT_DIR$/gui/production/js/modelupload/modelObj.js" />
       </list>
     </option>
   </component>
@@ -141,7 +152,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -338,8 +348,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -788,12 +799,13 @@
       <workItem from="1520839370181" duration="2045000" />
       <workItem from="1520866332969" duration="2696000" />
       <workItem from="1521007826294" duration="4572000" />
-      <workItem from="1521225889441" duration="984000" />
+      <workItem from="1521225889441" duration="1051000" />
+      <workItem from="1521443164197" duration="5346000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27841000" />
+    <option name="totallyTimeSpent" value="33254000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="0" />
@@ -836,7 +848,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -904,7 +918,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="6" column="15143" lean-forward="false" selection-start-line="6" selection-start-column="15143" selection-end-line="6" selection-end-column="15143" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1135,7 +1148,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="6" column="15143" lean-forward="false" selection-start-line="6" selection-start-column="15143" selection-end-line="6" selection-end-column="15143" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1184,16 +1196,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gui/production/modelupload.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="437" column="60" lean-forward="true" selection-start-line="437" selection-start-column="60" selection-end-line="437" selection-end-column="60" />
+        <state relative-caret-position="9177">
+          <caret line="437" column="60" lean-forward="false" selection-start-line="437" selection-start-column="60" selection-end-line="437" selection-end-column="60" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gui/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="19" column="32" lean-forward="true" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+        <state relative-caret-position="168">
+          <caret line="19" column="32" lean-forward="false" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -1202,16 +1214,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/data/sampledata_1.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="20" selection-end-column="1" />
+        <state relative-caret-position="231">
+          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gui/production/js/modelupload/modelupload_general.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="94" column="0" lean-forward="true" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+        <state relative-caret-position="395">
+          <caret line="99" column="20" lean-forward="false" selection-start-line="99" selection-start-column="20" selection-end-line="99" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui/production/js/modelupload/modelObj.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="43" column="10" lean-forward="true" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
           <folding />
         </state>
       </provider>

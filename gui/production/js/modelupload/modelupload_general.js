@@ -94,7 +94,7 @@ function selectModel(objectTrippleUUID) {
 }
 
 /** TODO: Crafts json string of selected model (= selectedObj) */
-function craftJsonStr() {
+function craftJsonOBJTRIPLEStr() {
     console.log('Trying to craft json string of: '+selectedObj);
     return '{'+
                 '"description": "This is an example description",'+
@@ -117,6 +117,19 @@ function craftJsonStr() {
                     '"compressionUUID2": {}'+
                 '}'+
             '}';
+}
+
+/** Used for compressions. Will be embedded into files {} obj of objTriple (see craftJsonOBJTRIPLEStr()) */
+function craftJsonCOMPRESSIONUUIDStr() {
+    return '"compressionUUID1": {'+
+    '"uploadDate": "'+(new Date().toLocaleString())+'",'+
+    '"accessLevel": "accessLevel[public|private|visit]",'+
+    '"license": "string",'+
+    '"fileSize": "long",'+
+    '"path": "string",'+
+    '"fileTypeSpecificMeta": {'+
+    '}'+
+    '}';
 }
 
 function colorOnlyProvidedObject(objectTrippleUUID) {
