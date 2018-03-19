@@ -16,7 +16,7 @@
       <file leaf-file-name="modelupload_general.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui/production/js/modelupload/modelupload_general.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
+            <state relative-caret-position="2079">
               <caret line="99" column="20" lean-forward="false" selection-start-line="99" selection-start-column="20" selection-end-line="99" selection-end-column="20" />
               <folding />
             </state>
@@ -26,8 +26,8 @@
       <file leaf-file-name="modelObj.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gui/production/js/modelupload/modelObj.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="609">
-              <caret line="43" column="10" lean-forward="true" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
+            <state relative-caret-position="336">
+              <caret line="16" column="16" lean-forward="true" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -131,10 +131,9 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1048" />
+    <option name="x" value="952" />
+    <option name="width" value="976" />
+    <option name="height" value="1038" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -348,9 +347,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -801,14 +800,15 @@
       <workItem from="1521007826294" duration="4572000" />
       <workItem from="1521225889441" duration="1051000" />
       <workItem from="1521443164197" duration="5346000" />
+      <workItem from="1521457511705" duration="2668000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33254000" />
+    <option name="totallyTimeSpent" value="35922000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="0" />
+    <frame x="952" y="0" width="976" height="1038" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -825,7 +825,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.234375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1222,7 +1222,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gui/production/js/modelupload/modelupload_general.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
+        <state relative-caret-position="2079">
           <caret line="99" column="20" lean-forward="false" selection-start-line="99" selection-start-column="20" selection-end-line="99" selection-end-column="20" />
           <folding />
         </state>
@@ -1230,8 +1230,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gui/production/js/modelupload/modelObj.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="43" column="10" lean-forward="true" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
+        <state relative-caret-position="336">
+          <caret line="16" column="16" lean-forward="true" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
           <folding />
         </state>
       </provider>
