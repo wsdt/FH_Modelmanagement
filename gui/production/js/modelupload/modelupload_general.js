@@ -79,7 +79,9 @@ function selectModel(objectTrippleUUID) {
         document.getElementById('step2_title').innerHTML += " for "+objectTrippleUUID;
 
 
-        //TODO: Do here sth stuff (e.g. send to basket with ajax or similar etc.)
+        //TODO: Do here sth stuff (e.g. send to basket with ajax or similar etc.) and then receive HERE a valid json str
+        var selectedModel = new ModelObj(receiveExampleJson()); //instead of example json place here queried json str
+        console.log('Created selected obj: '+selectedModel.description);
 
         //Inform user that everything went well (Senseful?)
         new PNotify({
@@ -93,8 +95,9 @@ function selectModel(objectTrippleUUID) {
     }
 }
 
-/** TODO: Crafts json string of selected model (= selectedObj) */
-function craftJsonOBJTRIPLEStr() {
+/** Supplies example json str (simulating that it comes from basket/server or similar */
+function receiveExampleJson() {
+    //Every line here is just for testing purpose
     console.log('Trying to craft json string of: '+selectedObj);
     return '{'+
                 '"description": "This is an example description",'+
@@ -119,18 +122,6 @@ function craftJsonOBJTRIPLEStr() {
             '}';
 }
 
-/** Used for compressions. Will be embedded into files {} obj of objTriple (see craftJsonOBJTRIPLEStr()) */
-function craftJsonCOMPRESSIONUUIDStr() {
-    return '"compressionUUID1": {'+
-    '"uploadDate": "'+(new Date().toLocaleString())+'",'+
-    '"accessLevel": "accessLevel[public|private|visit]",'+
-    '"license": "string",'+
-    '"fileSize": "long",'+
-    '"path": "string",'+
-    '"fileTypeSpecificMeta": {'+
-    '}'+
-    '}';
-}
 
 function colorOnlyProvidedObject(objectTrippleUUID) {
     var unselectedColor = "#f9f9f9";

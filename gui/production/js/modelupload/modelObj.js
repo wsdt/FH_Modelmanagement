@@ -26,66 +26,73 @@ function isJsonParamValid(json) {
 var ModelObj = function(json) {
     var jsonObj = isJsonParamValid(json); //might also contain false
     if (jsonObj !== false && jsonObj !== null && jsonObj !== undefined) {
+        Object.defineProperty(this, "descriptiontest", {
+           get: function () {
+               return _descriptiontest;
+           }
+        });
+
+
         Object.defineProperties(this,{
             "description": {
                 "get": function () {
-                    return this.description;
+                    return jsonObj.description;
                 },
                 "set": function (description) {
-                    this.description = description; //as extra param bc. --> id : {provided obj}
+                    jsonObj.description = description; //as extra param bc. --> id : {provided obj}
                 }
             },
             "objectTripleID": {
                 "get": function () {
-                    return this.objectTripleID;
+                    return jsonObj.objectTripleID;
                 },
                 "set": function (objectTripleID) {
-                    this.objectTripleID = objectTripleID; //as extra param bc. --> id : {provided obj}
+                    jsonObj.objectTripleID = objectTripleID; //as extra param bc. --> id : {provided obj}
                 }
             },
             "mediaTripleID": {
                 "get": function () {
-                    return this.mediaTripleID;
+                    return jsonObj.mediaTripleID;
                 },
                 "set": function (mediaTripleID) {
-                    this.mediaTripleID = mediaTripleID; //as extra param bc. --> id : {provided obj}
+                    jsonObj.mediaTripleID = mediaTripleID; //as extra param bc. --> id : {provided obj}
                 }
             },
             "createDate": {
                 "get": function () {
-                    return this.createDate;
+                    return jsonObj.createDate;
                 },
                 "set": function (createDate) {
-                    this.createDate = createDate; //as extra param bc. --> id : {provided obj}
+                    jsonObj.createDate = createDate; //as extra param bc. --> id : {provided obj}
                 }
             },
             "creator": {
                 "get": function () {
-                    return this.creator;
+                    return jsonObj.creator;
                 },
                 "set": function (creator) {
-                    this.creator = creator; //as extra param bc. --> id : {provided obj}
+                    jsonObj.creator = creator; //as extra param bc. --> id : {provided obj}
                 }
             },
             "owner": {
                 "get": function () {
-                    return this.owner;
+                    return jsonObj.owner;
                 },
                 "set": function (owner) {
-                    this.owner = owner; //as extra param bc. --> id : {provided obj}
+                    jsonObj.owner = owner; //as extra param bc. --> id : {provided obj}
                 }
             },
             "MIMEtype": {
                 "get": function () {
-                    return this.MIMEtype;
+                    return jsonObj.MIMEtype;
                 },
                 "set": function (MIMEtype) {
-                    this.MIMEtype = MIMEtype; //as extra param bc. --> id : {provided obj}
+                    jsonObj.MIMEtype = MIMEtype; //as extra param bc. --> id : {provided obj}
                 }
             },
             "files": {
                 "get": function () {
-                    return this.files;
+                    return jsonObj.files;
                 },
                 "set": function (files) {
                     var filesObj;
@@ -103,10 +110,10 @@ var ModelObj = function(json) {
                     for (var i = 0;i<compressionUUIDs.length;i++) {
                         compressionObjs[compressionUUIDs[i]] = (new CompressionObj(compressionUUIDs[i],jsonObj.files[compressionUUIDs[i]]));
                     }
-                    this.files = compressionObjs; //as extra param bc. --> id : {provided obj}
+                    jsonObj.files = compressionObjs; //as extra param bc. --> id : {provided obj}
                 },
                 "getFile": function (compressionUUID) {
-                    return new CompressionObj(compressionUUID,this.files[compressionUUID]);
+                    return new CompressionObj(compressionUUID,jsonObj.files[compressionUUID]);
                 }
             }
         });
@@ -119,58 +126,58 @@ var CompressionObj = function(compressionUUID,json) {
         Object.defineProperties(this, {
             "compressionUUID": {
                 "get": function () {
-                    return this.compressionUUID;
+                    return jsonObj.compressionUUID;
                 },
                 "set": function (compressionUUID) {
-                    this.compressionUUID = compressionUUID; //as extra param bc. --> id : {provided obj}
+                    jsonObj.compressionUUID = compressionUUID; //as extra param bc. --> id : {provided obj}
                 }
             },
             "uploadDate": {
                 "get": function () {
-                    return this.uploadDate;
+                    return jsonObj.uploadDate;
                 },
                 "set": function (uploadDate) {
-                    this.uploadDate = uploadDate; //as extra param bc. --> id : {provided obj}
+                    jsonObj.uploadDate = uploadDate; //as extra param bc. --> id : {provided obj}
                 }
             },
             "accessLevel": {
                 "get": function () {
-                    return this.accessLevel;
+                    return jsonObj.accessLevel;
                 },
                 "set": function (accessLevel) {
-                    this.accessLevel = accessLevel; //as extra param bc. --> id : {provided obj}
+                    jsonObj.accessLevel = accessLevel; //as extra param bc. --> id : {provided obj}
                 }
             },
             "license": {
                 "get": function () {
-                    return this.license;
+                    return jsonObj.license;
                 },
                 "set": function (license) {
-                    this.license = license; //as extra param bc. --> id : {provided obj}
+                    jsonObj.license = license; //as extra param bc. --> id : {provided obj}
                 }
             },
             "fileSize": {
                 "get": function () {
-                    return this.fileSize;
+                    return jsonObj.fileSize;
                 },
                 "set": function (fileSize) {
-                    this.fileSize = fileSize; //as extra param bc. --> id : {provided obj}
+                    jsonObj.fileSize = fileSize; //as extra param bc. --> id : {provided obj}
                 }
             },
             "path": {
                 "get": function () {
-                    return this.path;
+                    return jsonObj.path;
                 },
                 "set": function (path) {
-                    this.path = path; //as extra param bc. --> id : {provided obj}
+                    jsonObj.path = path; //as extra param bc. --> id : {provided obj}
                 }
             },
             "fileTypeSpecificMeta": {
                 "get": function () {
-                    return this.fileTypeSpecificMeta;
+                    return jsonObj.fileTypeSpecificMeta;
                 },
                 "set": function (fileTypeSpecificMeta) {
-                    this.fileTypeSpecificMeta = fileTypeSpecificMeta; //as extra param bc. --> id : {provided obj}
+                    jsonObj.fileTypeSpecificMeta = fileTypeSpecificMeta; //as extra param bc. --> id : {provided obj}
                 }
             }
         });

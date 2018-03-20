@@ -25,6 +25,7 @@
     <script src="../vendors/dropzone/dist/min/dropzone.min.js"></script>
     <!-- Modelupload JS -->
     <script type="text/javascript" src="./js/modelupload/modelupload_general.js"></script>
+    <script type="text/javascript" src="./js/modelupload/modelObj.js"></script>
     <!-- Jquery -->
     <script src="../vendors/jquery/dist/jquery.min.js"></script>
     <!-- PNotify -->
