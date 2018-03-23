@@ -356,10 +356,10 @@
                                         <div class="title_right">
                                             <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control"
+                                                    <input id="modelupload_search" type="text" class="form-control"
                                                            placeholder="Search for models...">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button">Go!</button>
+                                                        <button class="btn btn-default" type="button" onclick="printAllModelTableRows('#queriedmodels', searchInResultSet(document.getElementById('modelupload_search').value,provideTestResultSet()))">Go!</button>
                                                     </span>
                                                 </div>
                                             </div>
@@ -376,8 +376,8 @@
                                                 <th style="width: 20%">#Edit</th>
                                             </tr>
                                             </thead>
-                                            <tbody id="queriedmodels"><!-- ID necessary in modelupload_general.js -->
-                                            <script type="text/javascript">printTestJsons("#queriedmodels", "");</script>
+                                            <tbody id="queriedmodels"><!-- ID necessary in modelupload_general.js / Just print the whole result set now. -->
+                                            <script type="text/javascript">printAllModelTableRows("#queriedmodels", provideTestResultSet());</script>
                                             </tbody>
                                         </table>
 
