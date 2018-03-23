@@ -22,7 +22,7 @@ function printModelTableRow(tbodyidentifier,jsonObj) {
     var printFunction = $(tbodyidentifier).append("<tr id='"+objectTripleUUID+"'><td>#</td><td><a>"+description+"</a><br/>" +
         "<small data-toggle='tooltip' data-placement='top' title='Owner: "+owner+" / Creator: "+creator+"'>Created on "+createDate+"</small>" +
         "</td><td><ul class='list-inline'>"+compressionTypesList+"</ul></td>" +
-        "<td><button type='button' class='btn btn-success btn-xs'>Success</button></td>" +
+        "<td><button type='button' class='btn btn-success btn-xs'>Active</button></td>" +
         "<td><a href='#' class='btn btn-info btn-xs' onclick='selectModel(&apos;"+objectTripleUUID+"&apos;)'><i class='fa fa-pencil'></i> Select</a></td></tr>").fadeIn('slow');
     //console.log("Tried to execute printModelTableRow(): "+tbodyidentifier+";;"+JSON.stringify(jsonObj));
 }
