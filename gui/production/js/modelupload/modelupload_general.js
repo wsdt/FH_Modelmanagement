@@ -147,7 +147,7 @@ function provideTestResultSet() {
 function receiveExampleJson() {
     //Every line here is just for testing purpose
     console.log('Trying to craft json string. ');
-    var randomSubId = Math.random()*10;
+    var randomSubId = parseInt(Math.random()*1000,10);
     return '{'+
         '"description": "This is an example description",'+
         '"objectTripleID": "TripleID'+randomSubId+'",'+
