@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>FH Kufstein</title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -34,6 +34,19 @@
 </head>
 
 <body class="nav-md">
+
+<!-- TODO: remove and replace with real session logic etc. -->
+<script type="text/javascript">
+    //redirect to login page to simulate login when no fragment in url
+    if (window.location.hash) { //use dummy anchor
+        console.log('User logged in.');
+    } else {
+        window.location = "./login.html";
+    }
+</script>
+<a name="isLoggedIn"></a><!-- dummy anchor-->
+<!-- END of dummy procedure -->
+
 <div class="container body">
     <div class="main_container">
         <div class="col-md-3 left_col">
@@ -126,54 +139,18 @@
                             <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
                                aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
-                                <span class="badge bg-green">6</span>
+                                <span class="badge bg-green">1</span>
                             </a>
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                                 <li>
                                     <a>
                                         <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
                                         <span>
-                          <span>John Smith</span>
+                          <span>System</span>
                           <span class="time">3 mins ago</span>
                         </span>
                                         <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
-                                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
-                                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
-                                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                          Your model was uploaded successfully!
                         </span>
                                     </a>
                                 </li>
