@@ -95,33 +95,30 @@ var ModelObj = function(json) {
                     return jsonObj.files;
                 },
                 "set": function (files) {
-                    var filesObj;
-                    if (files.constructor === {}.constructor) {
-                        filesObj = files;
-                    } else if (files.constructor === "string".constructor) {
-                        filesObj = JSON.parse(files);
-                    } else {
-                        console.warn('modelObj:constructor: Could not parse filesObj. ');
-                        return;
-                    }
+                    //TODO: Works in console but not while setting ModelObj?
+                    var filesObj = isJsonParamValid(files);
 
                     var compressionUUIDs = Object.keys(filesObj);
-                    var compressionObjs = {};
+                    console.log('Compression UUIDs: '+compressionUUIDs);
+                    var compressionObjs = [];
                     for (var i = 0;i<compressionUUIDs.length;i++) {
-                        compressionObjs[compressionUUIDs[i]] = (new CompressionObj(compressionUUIDs[i],jsonObj.files[compressionUUIDs[i]]));
+                        compressionObjs.push((new CompressionObj(compressionUUIDs[i],filesObj[compressionUUIDs[i]]))); //.files[compressionUUIDs[i]])
+                        console.log(compressionObjs[i]);
                     }
                     jsonObj.files = compressionObjs; //as extra param bc. --> id : {provided obj}
-                },
-                "getFile": function (compressionUUID) {
-                    return new CompressionObj(compressionUUID,jsonObj.files[compressionUUID]);
                 }
             }
         });
+
+        ModelObj.prototype.getFile =  function (compressionUUID) {
+            return new CompressionObj(compressionUUID, jsonObj.files[compressionUUID]);
+        }
     } //no else necessary bc. last statement (return empty obj)
 };
 
 var CompressionObj = function(compressionUUID,json) {
     var jsonObj = isJsonParamValid(json); //might also contain false
+    console.log("New compression->"+jsonObj+";;;"+jsonObj.accessLevel);
     if (jsonObj !== false && jsonObj !== null && jsonObj !== undefined) {
         Object.defineProperties(this, {
             "compressionUUID": {
