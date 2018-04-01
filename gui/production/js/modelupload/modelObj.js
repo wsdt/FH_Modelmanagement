@@ -6,8 +6,6 @@ function isJsonParamValid(json) {
         console.warn('isJsonParamValid: Provided json is undefined. Created empty one.');
         return false;
     } else {
-        var jsonObj;
-
         //provided param must be an array, obj or str
         if (json.constructor === "str".constructor) {
             //Provided param is a str (presumably an unparsed json obj)
@@ -26,12 +24,14 @@ function isJsonParamValid(json) {
 var ModelObj = function(json) {
     var jsonObj = isJsonParamValid(json); //might also contain false
     if (jsonObj !== false && jsonObj !== null && jsonObj !== undefined) {
-        Object.defineProperty(this, "descriptiontest", {
-           get: function () {
-               return _descriptiontest;
-           }
-        });
-
+        this.description = jsonObj.description;
+        this.objectTripleID = jsonObj.objectTripleID;
+        this.mediaTripleID = jsonObj.mediaTripleID;
+        this.createDate = jsonObj.createDate;
+        this.creator = jsonObj.creator;
+        this.owner = jsonObj.owner;
+        this.MIMEtype = jsonObj.MIMEtype;
+        this.files = jsonObj.files;
 
         Object.defineProperties(this,{
             "description": {
@@ -87,6 +87,7 @@ var ModelObj = function(json) {
                     return jsonObj.MIMEtype;
                 },
                 "set": function (MIMEtype) {
+                    console.log('Have set mime type.');
                     jsonObj.MIMEtype = MIMEtype; //as extra param bc. --> id : {provided obj}
                 }
             },
@@ -99,7 +100,7 @@ var ModelObj = function(json) {
                     var filesObj = isJsonParamValid(files);
 
                     var compressionUUIDs = Object.keys(filesObj);
-                    console.log('Compression UUIDs: '+compressionUUIDs);
+                    console.log('Compression UUIDs: '+compressionUUIDs+";;;"+compressionUUIDs.length);
                     var compressionObjs = [];
                     for (var i = 0;i<compressionUUIDs.length;i++) {
                         compressionObjs.push((new CompressionObj(compressionUUIDs[i],filesObj[compressionUUIDs[i]]))); //.files[compressionUUIDs[i]])
@@ -111,14 +112,32 @@ var ModelObj = function(json) {
         });
 
         ModelObj.prototype.getFile =  function (compressionUUID) {
+            console.log('CompressionUUID: '+compressionUUID+";;;"+jsonObj+";;;"+jsonObj.files+";;;"+jsonObj.files[0]);
             return new CompressionObj(compressionUUID, jsonObj.files[compressionUUID]);
+        };
+
+        ModelObj.prototype.saveLocally = function () {
+            console.log("OBJ: "+JSON.stringify(this));
+
+            fetch("./LocalJsonMgr.php",
+                {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(this)
+                })
+                .then(function(res) {
+                    console.log('Submitted json: '+res);
+                });
         }
     } //no else necessary bc. last statement (return empty obj)
 };
 
 var CompressionObj = function(compressionUUID,json) {
     var jsonObj = isJsonParamValid(json); //might also contain false
-    console.log("New compression->"+jsonObj+";;;"+jsonObj.accessLevel);
+    console.log("New compression->"+jsonObj+";;;"+jsonObj.accessLevel+";;;"+json);
     if (jsonObj !== false && jsonObj !== null && jsonObj !== undefined) {
         Object.defineProperties(this, {
             "compressionUUID": {
