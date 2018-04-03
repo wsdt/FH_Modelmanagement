@@ -22,17 +22,11 @@ function isJsonParamValid(json) {
 
 /** Constructors -------------------------------------------- */
 var ModelObj = function(json) {
+    //TODO: overall problem (also problem of compression obj that setter not called while constructor calling!)
+
+    console.log('ModelObj-Json->'+json);
     var jsonObj = isJsonParamValid(json); //might also contain false
     if (jsonObj !== false && jsonObj !== null && jsonObj !== undefined) {
-        this.description = jsonObj.description;
-        this.objectTripleID = jsonObj.objectTripleID;
-        this.mediaTripleID = jsonObj.mediaTripleID;
-        this.createDate = jsonObj.createDate;
-        this.creator = jsonObj.creator;
-        this.owner = jsonObj.owner;
-        this.MIMEtype = jsonObj.MIMEtype;
-        this.files = jsonObj.files;
-
         Object.defineProperties(this,{
             "description": {
                 "get": function () {
@@ -96,12 +90,11 @@ var ModelObj = function(json) {
                     return jsonObj.files;
                 },
                 "set": function (files) {
-                    //TODO: Works in console but not while setting ModelObj?
                     var filesObj = isJsonParamValid(files);
 
                     var compressionUUIDs = Object.keys(filesObj);
                     console.log('Compression UUIDs: '+compressionUUIDs+";;;"+compressionUUIDs.length);
-                    var compressionObjs = [];
+                    var compressionObjs = []; //TODO: statt array jsonObj mit UUID als key damit ausgangsjson und result gleich!
                     for (var i = 0;i<compressionUUIDs.length;i++) {
                         compressionObjs.push((new CompressionObj(compressionUUIDs[i],filesObj[compressionUUIDs[i]]))); //.files[compressionUUIDs[i]])
                         console.log(compressionObjs[i]);
@@ -113,11 +106,12 @@ var ModelObj = function(json) {
 
         ModelObj.prototype.getFile =  function (compressionUUID) {
             console.log('CompressionUUID: '+compressionUUID+";;;"+jsonObj+";;;"+jsonObj.files+";;;"+jsonObj.files[0]);
-            return new CompressionObj(compressionUUID, jsonObj.files[compressionUUID]);
+            return jsonObj.files[compressionUUID];
         };
 
         ModelObj.prototype.saveLocally = function () {
-            console.log("OBJ: "+JSON.stringify(this));
+            var strModelObj = JSON.stringify((jsonObj));
+            console.log("OBJ: "+strModelObj+";;"+JSON.stringify(this.files));
 
             fetch("./LocalJsonMgr.php",
                 {
@@ -126,16 +120,26 @@ var ModelObj = function(json) {
                         'Accept': 'application/json, text/plain, */*',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(this)
+                    body: strModelObj
                 })
                 .then(function(res) {
                     console.log('Submitted json: '+res);
                 });
-        }
+        };
+
+        this.description = jsonObj.description;
+        this.objectTripleID = jsonObj.objectTripleID;
+        this.mediaTripleID = jsonObj.mediaTripleID;
+        this.createDate = jsonObj.createDate;
+        this.creator = jsonObj.creator;
+        this.owner = jsonObj.owner;
+        this.MIMEtype = jsonObj.MIMEtype;
+        this.files = jsonObj.files;
     } //no else necessary bc. last statement (return empty obj)
 };
 
 var CompressionObj = function(compressionUUID,json) {
+    console.log('Compression->'+compressionUUID+";;"+json);
     var jsonObj = isJsonParamValid(json); //might also contain false
     console.log("New compression->"+jsonObj+";;;"+jsonObj.accessLevel+";;;"+json);
     if (jsonObj !== false && jsonObj !== null && jsonObj !== undefined) {
