@@ -1,24 +1,34 @@
 <?php
 
-//TODO: Saving works now, but we also have to decide whether we want to save or retrieve json! (add to submitted json and do our modelObj as data:{} nested
-//Evaluate if fetch request was done to this file
-$contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
-
-if ($contentType === "application/json") {
-    //receive raw post data
-    $content = trim(file_get_contents("php://input"));
-    $decoded = json_decode($content, true);
-
-    //If failed then evaluate here
-    if (!is_array($decoded)) {
-        //error
-        echo "ERROR: Could not receive js fetch data.";
+if (!empty($_GET)) {
+    if (!empty($_GET['objectTripleID'])) {
+        echo LocalJsonMgr::retrieveJson($_GET['objectTripleID']);
+    } else if (!empty($_GET['getAllModelObjs']) && ($_GET['getAllModelObjs']===true || $_GET['getAllModelObjs']==="true")) {
+        echo LocalJsonMgr::retrieveAllJsons();
     } else {
-        //successful
-        LocalJsonMgr::saveJson($decoded["objectTripleID"],$content);
+        echo "ERROR: Invalid Get request: ".$_GET['getAllModelObjs'];
+    }
+} else {
+//Evaluate if fetch request was done to this file
+    $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+
+    if ($contentType === "application/json") {
+        //receive raw post data
+        $content = trim(file_get_contents("php://input"));
+        $decoded = json_decode($content, true);
+
+        //If failed then evaluate here
+        if (!is_array($decoded)) {
+            //error
+            echo "ERROR: Could not receive js fetch data.";
+        } else {
+            //successful
+            LocalJsonMgr::saveJson($decoded["objectTripleID"], $content);
+        }
+    } else {
+        echo "ERROR: Invalid call.";
     }
 }
-
 
 /** Did not created a database, because I think in our case it makes more sense just so save all downloaded Jsons as
  Json files. So we don't have to map sql objs to php and then to js and back, but only have to read the files and
@@ -43,7 +53,21 @@ class LocalJsonMgr
         if (!empty($jsonFileName)) {
             return file_get_contents(self::DATA_BASE_PATH . $jsonFileName . "." . self::FILE_EXTENSION);
         } else {
-            return "";
+            return "ERROR: Could not receive json. Maybe not found.";
         }
+    }
+
+    public static function retrieveAllJsons() {
+        $files = array_diff(scandir(self::DATA_BASE_PATH),array('.','..'));
+        $resultSet = "[";
+        $count = 0;
+        foreach ($files as $file) {
+            if (($count++) > 0) {
+                $resultSet .= ",";
+            }
+            $resultSet .= self::retrieveJson(str_replace('.json','',$file));
+        }
+        $resultSet .= "]";
+        return $resultSet;
     }
 }

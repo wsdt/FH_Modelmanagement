@@ -191,7 +191,7 @@
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                            aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#" title="Reloads all data" onclick="printAllModelTableRows('#queriedmodels', provideTestResultSet());">Synchronize</a> <!-- TODO: Place here synchronize/refresh logic -->
+                                            <li><a href="#" title="Reloads all data" onclick="printAllModelTableRows('#queriedmodels', getAllModelObjs());">Synchronize</a> <!-- TODO: Place here synchronize/refresh logic -->
                                             </li>
                                         </ul>
                                     </li>
@@ -236,7 +236,7 @@
                                                     <input id="modelupload_search" type="text" class="form-control"
                                                            placeholder="Search for models...">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onclick="printAllModelTableRows('#queriedmodels', searchInResultSet(document.getElementById('modelupload_search').value,provideTestResultSet()))">Go!</button>
+                                                        <button class="btn btn-default" type="button" onclick="printAllModelTableRows('#queriedmodels', searchInResultSet(document.getElementById('modelupload_search').value,getAllModelObjs()))">Go!</button>
                                                     </span>
                                                 </div>
                                             </div>
@@ -254,7 +254,7 @@
                                             </tr>
                                             </thead>
                                             <tbody id="queriedmodels"><!-- ID necessary in modelupload_general.js / Just print the whole result set now. -->
-                                            <script type="text/javascript">printAllModelTableRows("#queriedmodels", provideTestResultSet());</script>
+                                            <script type="text/javascript">printAllModelTableRows("#queriedmodels", getAllModelObjs());</script>
                                             </tbody>
                                         </table>
 
@@ -303,6 +303,7 @@
     </footer>
     <!-- /footer content -->
 </div>
+
 
 <!-- jQuery -->
 <script src="../vendors/jquery/dist/jquery.min.js"></script>

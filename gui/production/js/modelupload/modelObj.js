@@ -10,10 +10,10 @@ function isJsonParamValid(json) {
         if (json.constructor === "str".constructor) {
             //Provided param is a str (presumably an unparsed json obj)
             jsonObj = JSON.parse(json);
-        } else if (json.constructor === {}.constructor) {
+        } else if (json.constructor === {}.constructor || json.constructor === [].constructor) {
             jsonObj = json;
         } else {
-            console.warn('isJsonParamValid: Provided json is not a string neither an object! Created empty obj.');
+            console.warn('isJsonParamValid: Provided json is not a string neither an object! Created empty obj. Constructor: '+json.constructor);
             return false; //exit constructor
         }
     }
@@ -125,6 +125,39 @@ var ModelObj = function(json) {
                 .then(function(res) {
                     console.log('Submitted json: '+res);
                 });
+        };
+
+        /*static: Returns PROMISE (to get value use:
+            returnedPromise.then(function(value) {console.log(value);}
+         */
+        ModelObj.getLocally = function(objectTripleID) {
+            console.log('Sending id to '+"./LocalJsonMgr.php?objectTripleID="+objectTripleID);
+            return fetch("./LocalJsonMgr.php?objectTripleID="+objectTripleID)
+                .then((resp) => resp.json())
+                .then(function (res) {
+                    var modelObj = new ModelObj(res);
+                    console.log('Received json: '+JSON.stringify(res)+" / ModelObj: "+modelObj);
+                    return modelObj;
+                }
+            )
+        };
+
+        /*static: Returns PROMISE (to get value use:
+           returnedPromise.then(function(value) {console.log(value);}
+        */
+        ModelObj.getAllLocally = function() {
+            return fetch("./LocalJsonMgr.php?getAllModelObjs=true")
+                .then((resp) => resp.json())
+                .then(function (res) {
+                    console.log("PHP Row json: "+JSON.stringify(res));
+
+                    var allModelObjs = [];
+                    for (obj of res) {
+                        allModelObjs.push(new ModelObj(obj));
+                    }
+                    return allModelObjs;
+                    }
+                )
         };
 
         this.description = jsonObj.description;

@@ -1,22 +1,22 @@
 var selectedObj; //used to keep track which elem is selected (i think it is less error prone than determining the bgColor)
 
 /** Prints general table row to tbody elem from json str */
-function printModelTableRow(tbodyidentifier,modelObj) {
+function printModelTableRow(tbodyidentifier, modelObj) {
     var compressionTypesList = "";
     //console.log("JsonObjFiles length: "+Object.keys(jsonObj["files"]).length);
     var allCompressions = Object.keys(modelObj.files);
     for (var index = 0; index < allCompressions.length; ++index) {
         //TODO: place here relevant ata to string
-        compressionTypesList += "<li><img src='images/user.png' class='avatar' alt='Avatar' data-toggle='tooltip' data-placement='top' title='"+modelObj.getFile(allCompressions[index]).compressionUUID+"'></li>";
+        compressionTypesList += "<li><img src='images/user.png' class='avatar' alt='Avatar' data-toggle='tooltip' data-placement='top' title='" + modelObj.getFile(allCompressions[index]).compressionUUID + "'></li>";
         //console.log("Added string to types list. ");
     }
 
     //objectTripleUUID as Row ID, so we can get id as reference when selecting an action btn
-    var printFunction = $(tbodyidentifier).append("<tr id='"+modelObj.objectTripleID+"'><td>#</td><td><a>"+modelObj.description+"</a><br/>" +
-        "<small data-toggle='tooltip' data-placement='top' title='Owner: "+modelObj.owner+" / Creator: "+modelObj.creator+"'>Created on "+modelObj.createDate+"</small>" +
-        "</td><td><ul class='list-inline'>"+compressionTypesList+"</ul></td>" +
+    var printFunction = $(tbodyidentifier).append("<tr id='" + modelObj.objectTripleID + "'><td>#</td><td><a>" + modelObj.description + "</a><br/>" +
+        "<small data-toggle='tooltip' data-placement='top' title='Owner: " + modelObj.owner + " / Creator: " + modelObj.creator + "'>Created on " + modelObj.createDate + "</small>" +
+        "</td><td><ul class='list-inline'>" + compressionTypesList + "</ul></td>" +
         "<td><button type='button' class='btn btn-success btn-xs'>Active</button></td>" +
-        "<td><a href='#' class='btn btn-info btn-xs' onclick='selectModel(&apos;"+modelObj.objectTripleID+"&apos;)'><i class='fa fa-pencil'></i> Select</a></td></tr>").fadeIn('slow');
+        "<td><a href='#' class='btn btn-info btn-xs' onclick='selectModel(&apos;" + modelObj.objectTripleID + "&apos;)'><i class='fa fa-pencil'></i> Select</a></td></tr>").fadeIn('slow');
     //console.log("Tried to execute printModelTableRow(): "+tbodyidentifier+";;"+JSON.stringify(jsonObj));
 }
 
@@ -25,21 +25,18 @@ function printAllModelTableRows(tbodyidentifier, modelObjs) {
     //Remove all previous content/rows of element (e.g. when searching for sth we only want filtered results)
     $(tbodyidentifier).html('');
 
-    if (modelObjs !== null) {
-        if (Array.isArray(modelObjs)) {
-            for (var i = 0;i<modelObjs.length;i++) {
+    if (modelObjs !== null && modelObjs !== undefined) {
+        //ModelObjs is now a future! So we want to get it
+        modelObjs.then(function(modelObjArr) {
+            for (var i = 0; i < modelObjArr.length; i++) {
                 //console.log('Trying to print table row of provided array->'+JSON.stringify(jsonObjs[i]));
-                printModelTableRow(tbodyidentifier,modelObjs[i]);
+                printModelTableRow(tbodyidentifier, modelObjArr[i]);
             }
-        } else {
-            console.warn('Tried to print provided table row, but 2nd parameter was not an array as it was supposed to be.');
-            printModelTableRow(tbodyidentifier,modelObjs); //just try to print it (if not an array)
-        }
+        });
     } else {
         console.error('Could not print table rows, because jsonObj[] is null!');
     }
 }
-
 
 
 /** This method is called when user clicks on ADD btn, so we can do here sth stuff
@@ -48,13 +45,13 @@ function printAllModelTableRows(tbodyidentifier, modelObjs) {
 function selectModel(objectTrippleUUID) {
     //Only select if not selected already and if not null
     if (objectTrippleUUID !== null && selectedObj !== objectTrippleUUID) {
-        console.log('Received selected model with id: '+objectTrippleUUID);
+        console.log('Received selected model with id: ' + objectTrippleUUID);
         //Color selected row (now user has to click on next to upload a new compression
         colorOnlyProvidedObject(objectTrippleUUID);
         console.log('Tried to set bgcolor.');
 
         //Update heading for step 2 (usability)
-        document.getElementById('step2_title').innerHTML = "Step 2: Upload new compression for "+objectTrippleUUID;
+        document.getElementById('step2_title').innerHTML = "Step 2: Upload new compression for " + objectTrippleUUID;
 
         //TODO: Do here sth stuff (e.g. send to basket with ajax or similar etc.) and then receive HERE a valid json str
 
@@ -79,27 +76,27 @@ function selectModel(objectTrippleUUID) {
  *      I think the easiest thing just to provide resultSet as normal String-array (unparsed Jsons)
  *
  *      --> Search happens on Server and resultset gets delivered so in production just print resultSet with printAllTableRows()*/
-function searchInResultSet(searchTerm,resultSet) {
+function searchInResultSet(searchTerm, resultSet) {
     var filteredResultSet = [];
 
     if (resultSet !== undefined && resultSet !== null && searchTerm !== undefined && searchTerm !== null) {
-        if (resultSet.constructor === [].constructor) {
-            for (var i = 0; i < resultSet.length; i++) {
+        //Result set is a promise!
+        resultSet.then(function(resultSetValue) {
+            for (var i = 0; i < resultSetValue.length; i++) {
                 //console.log('searchInResultSet:Search->'+JSON.stringify(resultSet[i]).toLowerCase()+" searching for "+searchTerm.toString().toLowerCase());
-                if (JSON.stringify(resultSet[i]).toLowerCase().indexOf(searchTerm.toString().toLowerCase()) !== (-1)) {
+                if (JSON.stringify(resultSetValue[i]).toLowerCase().indexOf(resultSetValue.toString().toLowerCase()) !== (-1)) {
                     //found sth
-                    console.log('searchInResultSet: Found entry->'+resultSet[i]);
-                    filteredResultSet.push(resultSet[i]);
+                    console.log('searchInResultSet: Found entry->' + resultSetValue[i]);
+                    filteredResultSet.push(resultSetValue[i]);
                 }
             }
-            console.log('searchInResultSet: Length of resultSet->'+resultSet.length);
-        } else {
-            console.warn('searchInResultSet: Resultset is not an array.');
-        }
+            console.log('searchInResultSet: Length of resultSet->' + resultSetValue.length);
+        });
+
     } else {
         console.warn('searchInResultSet: Resultset or searchterm equals null or undefined.');
     }
-    console.log('searchInResultSet: searchResults->'+filteredResultSet);
+    console.log('searchInResultSet: searchResults->' + filteredResultSet);
     return filteredResultSet;
 }
 
@@ -110,7 +107,7 @@ function colorOnlyProvidedObject(objectTrippleUUID) {
 
     //uncolor old objects
     var allRows = document.getElementById('queriedmodels').children; //get all rows
-    for (var i = 0;i < allRows.length; i++) {
+    for (var i = 0; i < allRows.length; i++) {
         allRows[i].style.backgroundColor = unselectedColor;
     }
 
@@ -118,7 +115,11 @@ function colorOnlyProvidedObject(objectTrippleUUID) {
     document.getElementById(objectTrippleUUID).style.backgroundColor = selectedColor;
 }
 
-
+/** Dummy method, you can also call this directly --> BE careful, this method returns a PROMISE */
+function getAllModelObjs() {
+    //TODO: Everything worked, BUT NOW ModelObj methods are not addressable (why) --> maybe wrong parenthesis in modelObj.js?
+    return ModelObj.getAllLocally();
+}
 
 
 // DUMMY DATA FOR TESTING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -127,7 +128,7 @@ function colorOnlyProvidedObject(objectTrippleUUID) {
  * In our case to simulate searching we just provide here a large resultset (different in future) and filter them with the search() method.*/
 function provideTestResultSet() {
     var testResultSet = [];
-    for (var i = 0;i<10;i++) {
+    for (var i = 0; i < 10; i++) {
         testResultSet.push(new ModelObj(JSON.parse(receiveExampleJson())));
     }
     return testResultSet;
@@ -137,23 +138,23 @@ function provideTestResultSet() {
 function receiveExampleJson() {
     //Every line here is just for testing purpose
     console.log('Trying to craft json string. ');
-    var randomSubId = parseInt(Math.random()*1000,10);
-    return '{'+
-        '"description": "This is an example description",'+
-        '"objectTripleID": "TripleID'+randomSubId+'",'+
-        '"mediaTripleID": "TripleID'+randomSubId+'",'+
-        '"createDate": "date",'+
-        '"creator": "string",'+
-        '"owner": "string",'+
-        '"MIMEtype": "string",'+
-        '"files": {'+
-            '"compressionUUID'+randomSubId+'": {'+
-                '"uploadDate": "'+(new Date().toLocaleString())+'",'+
-                '"accessLevel": "accessLevel[public|private|visit]",'+
-                '"license": "string",'+
-                '"fileSize": "long",'+
-                '"path": "string",'+
-                '"fileTypeSpecificMeta": {'+
-                    '}'+
-                '}}}';
+    var randomSubId = parseInt(Math.random() * 1000, 10);
+    return '{' +
+        '"description": "This is an example description",' +
+        '"objectTripleID": "TripleID' + randomSubId + '",' +
+        '"mediaTripleID": "TripleID' + randomSubId + '",' +
+        '"createDate": "date",' +
+        '"creator": "string",' +
+        '"owner": "string",' +
+        '"MIMEtype": "string",' +
+        '"files": {' +
+        '"compressionUUID' + randomSubId + '": {' +
+        '"uploadDate": "' + (new Date().toLocaleString()) + '",' +
+        '"accessLevel": "accessLevel[public|private|visit]",' +
+        '"license": "string",' +
+        '"fileSize": "long",' +
+        '"path": "string",' +
+        '"fileTypeSpecificMeta": {' +
+        '}' +
+        '}}}';
 }
