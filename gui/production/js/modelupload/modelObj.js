@@ -127,38 +127,6 @@ var ModelObj = function(json) {
                 });
         };
 
-        /*static: Returns PROMISE (to get value use:
-            returnedPromise.then(function(value) {console.log(value);}
-         */
-        ModelObj.getLocally = function(objectTripleID) {
-            console.log('Sending id to '+"./LocalJsonMgr.php?objectTripleID="+objectTripleID);
-            return fetch("./LocalJsonMgr.php?objectTripleID="+objectTripleID)
-                .then((resp) => resp.json())
-                .then(function (res) {
-                    var modelObj = new ModelObj(res);
-                    console.log('Received json: '+JSON.stringify(res)+" / ModelObj: "+modelObj);
-                    return modelObj;
-                }
-            )
-        };
-
-        /*static: Returns PROMISE (to get value use:
-           returnedPromise.then(function(value) {console.log(value);}
-        */
-        ModelObj.getAllLocally = function() {
-            return fetch("./LocalJsonMgr.php?getAllModelObjs=true")
-                .then((resp) => resp.json())
-                .then(function (res) {
-                    console.log("PHP Row json: "+JSON.stringify(res));
-
-                    var allModelObjs = [];
-                    for (obj of res) {
-                        allModelObjs.push(new ModelObj(obj));
-                    }
-                    return allModelObjs;
-                    }
-                )
-        };
 
         this.description = jsonObj.description;
         this.objectTripleID = jsonObj.objectTripleID;
@@ -169,6 +137,39 @@ var ModelObj = function(json) {
         this.MIMEtype = jsonObj.MIMEtype;
         this.files = jsonObj.files;
     } //no else necessary bc. last statement (return empty obj)
+};
+//IMPORTANT: Static methods outside of if, otherwise not accessable without at least one valid instance!
+/*static: Returns PROMISE (to get value use:
+        returnedPromise.then(function(value) {console.log(value);}
+     */
+ModelObj.getLocally = function(objectTripleID) {
+    console.log('Sending id to '+"./LocalJsonMgr.php?objectTripleID="+objectTripleID);
+    return fetch("./LocalJsonMgr.php?objectTripleID="+objectTripleID)
+        .then((resp) => resp.json())
+        .then(function (res) {
+                var modelObj = new ModelObj(res);
+                console.log('Received json: '+JSON.stringify(res)+" / ModelObj: "+modelObj);
+                return modelObj;
+            }
+        )
+};
+
+/*static: Returns PROMISE (to get value use:
+   returnedPromise.then(function(value) {console.log(value);}
+*/
+ModelObj.getAllLocally = function() {
+    return fetch("./LocalJsonMgr.php?getAllModelObjs=true")
+        .then((resp) => resp.json())
+        .then(function (res) {
+                console.log("PHP Row json: "+JSON.stringify(res));
+
+                var allModelObjs = [];
+                for (obj of res) {
+                    allModelObjs.push(new ModelObj(obj));
+                }
+                return allModelObjs;
+            }
+        )
 };
 
 var CompressionObj = function(compressionUUID,json) {

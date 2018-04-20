@@ -115,12 +115,6 @@ function colorOnlyProvidedObject(objectTrippleUUID) {
     document.getElementById(objectTrippleUUID).style.backgroundColor = selectedColor;
 }
 
-/** Dummy method, you can also call this directly --> BE careful, this method returns a PROMISE */
-function getAllModelObjs() {
-    //TODO: Everything worked, BUT NOW ModelObj methods are not addressable (why) --> maybe wrong parenthesis in modelObj.js?
-    return ModelObj.getAllLocally();
-}
-
 
 // DUMMY DATA FOR TESTING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
