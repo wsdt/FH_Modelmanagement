@@ -104,6 +104,12 @@ var ModelObj = function(json) {
             }
         });
 
+        ModelObj.prototype.saveNewCompression = function(compressionJson) {
+            //assuming that var is compressionObj (not a json etc.)
+            jsonObj.files.push(compressionJson);
+            console.warn('newCompr:'+jsonObj.files);
+        };
+
         ModelObj.prototype.getFile =  function (compressionUUID) {
             console.log('CompressionUUID: '+compressionUUID+";;;"+jsonObj+";;;"+jsonObj.files+";;;"+jsonObj.files[0]);
             return jsonObj.files[compressionUUID];
@@ -143,15 +149,17 @@ var ModelObj = function(json) {
         returnedPromise.then(function(value) {console.log(value);}
      */
 ModelObj.getLocally = function(objectTripleID) {
-    console.log('Sending id to '+"./LocalJsonMgr.php?objectTripleID="+objectTripleID);
-    return fetch("./LocalJsonMgr.php?objectTripleID="+objectTripleID)
-        .then((resp) => resp.json())
-        .then(function (res) {
-                var modelObj = new ModelObj(res);
-                console.log('Received json: '+JSON.stringify(res)+" / ModelObj: "+modelObj);
-                return modelObj;
-            }
-        )
+    if (objectTripleID !== undefined && objectTripleID !== null) {
+        console.log('Sending id to ' + "./LocalJsonMgr.php?objectTripleID=" + objectTripleID);
+        return fetch("./LocalJsonMgr.php?objectTripleID=" + objectTripleID)
+            .then((resp) => resp.json())
+            .then(function (res) {
+                    var modelObj = new ModelObj(res);
+                    console.log('Received json: ' + JSON.stringify(res) + " / ModelObj: " + modelObj);
+                    return modelObj;
+                }
+            )
+    }
 };
 
 /*static: Returns PROMISE (to get value use:

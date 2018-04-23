@@ -268,14 +268,14 @@
                                             <div class="form-group">
                                                 <label>License</label>
                                                 <!-- If I know which data to place here I would make something more special here -->
-                                                <input type="text" class="form-control" placeholder="Enter license">
+                                                <input type="text" id="license" class="form-control" placeholder="Enter license">
                                             </div>
                                             <div class="form-group">
                                                 <label for="accessLevels">Accesslevel</label>
                                                 <select id="accessLevels" class="form-control" required>
-                                                    <option value="">public</option>
-                                                    <option value="press">visit</option>
-                                                    <option value="net">private</option>
+                                                    <option value="public">public</option>
+                                                    <option value="visit">visit</option>
+                                                    <option value="private">private</option>
                                                 </select>
                                             </div>
                                         </form>

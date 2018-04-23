@@ -1,5 +1,31 @@
 var selectedObj; //used to keep track which elem is selected (i think it is less error prone than determining the bgColor)
 
+/** Uploads a new compression */
+function uploadNewCompression() {
+    if (selectedObj !== undefined && selectedObj !== null) {
+
+        console.log('Trying to get json string of selected modelobj. ');
+
+        var modelObjPromise = ModelObj.getLocally(selectedObj); //is a modelObj not a string or json
+        var randomSubId = "TripleID" + parseInt(Math.random() * 1000, 10);
+        modelObjPromise.then(function(modelObj) {
+            modelObj.saveNewCompression((new CompressionObj(randomSubId,
+                '{"uploadDate": "' + (new Date().toLocaleString()) + '",' +
+                '"accessLevel": "' + document.getElementById('accessLevels').value + '",' +
+                '"license": "' + document.getElementById('license').value + '",' +
+                '"fileSize": "long",' +
+                '"path": "/data/compressions/' + randomSubId + '.comprFileExt",' +
+                '"fileTypeSpecificMeta": {' +
+                '}}'
+            )));
+
+            modelObj.saveLocally(); //save also locally
+        });
+    } else {
+        console.warn('uploadNewCompression: Please select a model before you upload a new compression.')
+    }
+}
+
 /** Prints general table row to tbody elem from json str */
 function printModelTableRow(tbodyidentifier, modelObj) {
     var compressionTypesList = "";
