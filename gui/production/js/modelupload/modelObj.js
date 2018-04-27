@@ -21,11 +21,11 @@ function isJsonParamValid(json) {
 }
 
 /** Constructors -------------------------------------------- */
-var ModelObj = function(json) {
+let ModelObj = function(json) {
     //TODO: overall problem (also problem of compression obj that setter not called while constructor calling!)
 
     console.log('ModelObj-Json->'+json);
-    var jsonObj = isJsonParamValid(json); //might also contain false
+    let jsonObj = isJsonParamValid(json); //might also contain false
     if (jsonObj !== false && jsonObj !== null && jsonObj !== undefined) {
         Object.defineProperties(this,{
             "description": {
@@ -90,12 +90,12 @@ var ModelObj = function(json) {
                     return jsonObj.files;
                 },
                 "set": function (files) {
-                    var filesObj = isJsonParamValid(files);
+                    let filesObj = isJsonParamValid(files);
 
-                    var compressionUUIDs = Object.keys(filesObj);
+                    let compressionUUIDs = Object.keys(filesObj);
                     console.log('Compression UUIDs: '+compressionUUIDs+";;;"+compressionUUIDs.length);
-                    var compressionObjs = []; //TODO: statt array jsonObj mit UUID als key damit ausgangsjson und result gleich!
-                    for (var i = 0;i<compressionUUIDs.length;i++) {
+                    let compressionObjs = []; //TODO: statt array jsonObj mit UUID als key damit ausgangsjson und result gleich!
+                    for (let i = 0;i<compressionUUIDs.length;i++) {
                         compressionObjs.push((new CompressionObj(compressionUUIDs[i],filesObj[compressionUUIDs[i]]))); //.files[compressionUUIDs[i]])
                         console.log(compressionObjs[i]);
                     }
@@ -105,9 +105,9 @@ var ModelObj = function(json) {
         });
 
         ModelObj.prototype.saveNewCompression = function(compressionJson) {
-            //assuming that var is compressionObj (not a json etc.)
+            //assuming that let is compressionObj (not a json etc.)
             jsonObj.files.push(compressionJson);
-            console.warn('newCompr:'+jsonObj.files);
+            console.warn('newCompr:'+JSON.stringify(jsonObj.files));
         };
 
         ModelObj.prototype.getFile =  function (compressionUUID) {
@@ -116,7 +116,7 @@ var ModelObj = function(json) {
         };
 
         ModelObj.prototype.saveLocally = function () {
-            var strModelObj = JSON.stringify((jsonObj));
+            let strModelObj = JSON.stringify((jsonObj));
             console.log("OBJ: "+strModelObj+";;"+JSON.stringify(this.files));
 
             fetch("./LocalJsonMgr.php",
@@ -154,7 +154,7 @@ ModelObj.getLocally = function(objectTripleID) {
         return fetch("./LocalJsonMgr.php?objectTripleID=" + objectTripleID)
             .then((resp) => resp.json())
             .then(function (res) {
-                    var modelObj = new ModelObj(res);
+                    let modelObj = new ModelObj(res);
                     console.log('Received json: ' + JSON.stringify(res) + " / ModelObj: " + modelObj);
                     return modelObj;
                 }
@@ -171,7 +171,7 @@ ModelObj.getAllLocally = function() {
         .then(function (res) {
                 console.log("PHP Row json: "+JSON.stringify(res));
 
-                var allModelObjs = [];
+                let allModelObjs = [];
                 for (obj of res) {
                     allModelObjs.push(new ModelObj(obj));
                 }
@@ -180,9 +180,9 @@ ModelObj.getAllLocally = function() {
         )
 };
 
-var CompressionObj = function(compressionUUID,json) {
+let CompressionObj = function(compressionUUID,json) {
     console.log('Compression->'+compressionUUID+";;"+json);
-    var jsonObj = isJsonParamValid(json); //might also contain false
+    let jsonObj = isJsonParamValid(json); //might also contain false
     console.log("New compression->"+jsonObj+";;;"+jsonObj.accessLevel+";;;"+json);
     if (jsonObj !== false && jsonObj !== null && jsonObj !== undefined) {
         Object.defineProperties(this, {
