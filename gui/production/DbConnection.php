@@ -6,27 +6,47 @@
 class DbConnection
 {
     private static $dbServername = "localhost";
-    private static $dbName = "fhKufsteinModels";
+    private static $dbName = "fhkufsteinmodels";
     private static $dbUsername = "root";
     private static $dbPassword = "";
 
     private static $dbConnection = null;
 
-    public function exec($sql) {
-        DbConnection::getDbConnection()->exec($sql);
+    //Do not use this method if database does not exist
+    public function exec($sql)
+    {
+        DbConnection::getDbConnection(true)->exec($sql);
     }
-    public function query($sql) {
-        //TODO: 
+
+    public function query($sql)
+    {
+        //TODO:
     }
 
 
     // #################################################################################
+    public function __construct()
+    {
+        $this->getDbConnection(false)->exec("CREATE DATABASE IF NOT EXISTS " . DbConnection::$dbName . ";");
+        $this->exec("USE " . DbConnection::$dbName . ";");
+        $this->exec("CREATE TABLE IF NOT EXISTS User (
+            usr_id INT PRIMARY KEY,
+            usr_username VARCHAR(100) NOT NULL,
+            usr_hashedpassword VARCHAR(250) NOT NULL, 
+            usr_salt VARCHAR(250) NOT NULL,
+            UNIQUE (usr_username)
+        );");
+
+        $this->closeConnection();
+    }
+
     //Private because only used in getDbConnection()
-    private function establishConnection()
+    private function establishConnection($doesDatabaseExist)
     {
         try {
-            $conn = new PDO("mysql:host=" . DbConnection::$dbServername . ";dbname="
-                . DbConnection::$dbName, DbConnection::$dbUsername, DbConnection::$dbPassword);
+            $conn = new PDO("mysql:host=" . DbConnection::$dbServername .
+                (($doesDatabaseExist) ? ";dbname=" . DbConnection::$dbName : ""),
+                DbConnection::$dbUsername, DbConnection::$dbPassword);
 
             // set error mode to exception so we can react to it with try catch
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -34,7 +54,7 @@ class DbConnection
             //connection successful
             return $conn;
         } catch (PDOException $e) {
-            die("Could not establish dbConnection: " . $e->getMessage());
+            die("<p>Could not establish dbConnection: " . $e->getMessage() . "</p>");
         }
     }
 
@@ -50,10 +70,10 @@ class DbConnection
     }
 
     //GETTER/SETTER -------------------------
-    public function getDbConnection()
+    public function getDbConnection($doesDatabaseExist)
     {
         if (DbConnection::$dbConnection == null) {
-            DbConnection::$dbConnection = $this->establishConnection();
+            DbConnection::$dbConnection = $this->establishConnection($doesDatabaseExist);
         }
         return DbConnection::$dbConnection;
     }

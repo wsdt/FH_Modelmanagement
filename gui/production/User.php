@@ -8,20 +8,26 @@
 
 class User
 {
+    private $id;
     private $username;
     private $hashedPassword;
     private $salt;
 
     public function setClearPassword($clearPassword) {
-        $this->setHashedPassword(openssl_digest($clearPassword.$this->getSalt(),"sha512"));
+        $this->setHashedPassword(crypt($clearPassword,$this->getSalt()));
     }
     public function isPasswordCorrect($clearPassword) {
-        //TODO:
-        return true;
+        return hash_equals($this->getHashedPassword(),crypt($clearPassword,$this->getSalt()));
     }
 
 
     //GETTER / SETTERS -------------------------------------
+    public function setId($id) {
+        $this->id = $id;
+    }
+    public function getId() {
+        return $this->id;
+    }
     public function setSalt($salt) {
         $this->salt = $salt;
     }

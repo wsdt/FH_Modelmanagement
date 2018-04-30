@@ -1,4 +1,5 @@
 <?php
+require_once "./DbConnection.php";
 
 if (!empty($_GET)) {
     if (!empty($_GET['objectTripleID'])) {
