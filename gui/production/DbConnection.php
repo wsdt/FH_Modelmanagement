@@ -12,7 +12,7 @@ class DbConnection
 
     private static $dbConnection = null;
 
-    //Do not use this method if database does not exist
+    //Do not use these methods if database does not exist
     public function exec($sql)
     {
         DbConnection::getDbConnection(true)->exec($sql);
@@ -20,7 +20,7 @@ class DbConnection
 
     public function query($sql)
     {
-        //TODO:
+        return DbConnection::getDbConnection(true)->query($sql);
     }
 
 
@@ -41,7 +41,7 @@ class DbConnection
     }
 
     //Private because only used in getDbConnection()
-    private function establishConnection($doesDatabaseExist)
+    private static function establishConnection($doesDatabaseExist)
     {
         try {
             $conn = new PDO("mysql:host=" . DbConnection::$dbServername .
@@ -50,7 +50,6 @@ class DbConnection
 
             // set error mode to exception so we can react to it with try catch
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
             //connection successful
             return $conn;
         } catch (PDOException $e) {
@@ -58,7 +57,7 @@ class DbConnection
         }
     }
 
-    private function closeConnection()
+    private static function closeConnection()
     {
         DbConnection::$dbConnection = null;
     }
@@ -70,10 +69,10 @@ class DbConnection
     }
 
     //GETTER/SETTER -------------------------
-    public function getDbConnection($doesDatabaseExist)
+    public static function getDbConnection($doesDatabaseExist)
     {
         if (DbConnection::$dbConnection == null) {
-            DbConnection::$dbConnection = $this->establishConnection($doesDatabaseExist);
+            DbConnection::$dbConnection = DbConnection::establishConnection($doesDatabaseExist);
         }
         return DbConnection::$dbConnection;
     }
