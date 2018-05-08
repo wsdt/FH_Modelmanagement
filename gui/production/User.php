@@ -15,14 +15,18 @@ class User
         $this->setSalt($salt);
     }
 
+    public static function hashPassword($clearPassword,$salt) {
+        return crypt($clearPassword, $salt);
+    }
+
     public function setClearPassword($clearPassword)
     {
-        $this->setHashedPassword(crypt($clearPassword, $this->getSalt()));
+        $this->setHashedPassword(self::hashPassword($clearPassword, $this->getSalt()));
     }
 
     private function isPasswordCorrect($clearPassword)
     {
-        return hash_equals($this->getHashedPassword(), crypt($clearPassword, $this->getSalt()));
+        return hash_equals($this->getHashedPassword(), self::hashPassword($clearPassword,$this->getSalt()));
     }
 
     public static function areUserCredentialsCorrect($dbCon, $userName, $clearpassword) {
@@ -35,6 +39,15 @@ class User
     }
 
     //DB CRUD
+    public function dbReplace($dbCon) {
+        $dbCon->exec("REPLACE INTO User (usr_id, usr_username, usr_hashedpassword, usr_salt) VALUES (
+            " . $this->getId() . ",
+            '" . $this->getUsername() . "',
+            '" . $this->getHashedPassword() . "',
+            '" . $this->getSalt() . "'
+        );");
+    }
+
     public function dbInsert($dbCon)
     {
         $dbCon->exec("INSERT INTO User (usr_id,usr_username,usr_hashedpassword,usr_salt) VALUES (
@@ -75,7 +88,7 @@ class User
             //return first (and should be only row/user which is returned from sql)
             return new User($row['usr_id'],$row['usr_username'],$row['usr_hashedpassword'],$row['usr_salt']);
         }
-        echo "User::dbQuery: Could not fetch user with id: ".$userId;
+        echo "<p>User::dbQuery: Could not fetch user with name: ".$userName."</p>";
         return null;
     }
 

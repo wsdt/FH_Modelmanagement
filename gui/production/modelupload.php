@@ -1,4 +1,12 @@
+<?php
+    require_once 'AuthenticationMiddleware.php';
+    if (!isSessionValid()) {
+        header("Location: ./login.html");
+    }
+?>
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -35,17 +43,6 @@
 
 <body class="nav-md">
 
-<!-- TODO: remove and replace with real session logic etc. -->
-<script type="text/javascript">
-    //redirect to login page to simulate login when no fragment in url
-    if (window.location.hash) { //use dummy anchor
-        console.log('User logged in.');
-    } else {
-        window.location = "./login.html";
-    }
-</script>
-<a name="isLoggedIn"></a><!-- dummy anchor-->
-<!-- END of dummy procedure -->
 
 <div class="container body">
     <div class="main_container">

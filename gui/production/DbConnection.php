@@ -1,5 +1,6 @@
 <?php
 
+include 'User.php'; //optional because only needed in insertDefaultData();
 
 /** Used PDO instead of mysqli so it should be easier to transfer
  * this to other dbms. */
@@ -11,6 +12,16 @@ class DbConnection
     private static $dbPassword = "";
 
     private static $dbConnection = null;
+
+    /** DEFAULT DATA INSERTION (Delete in production mode)
+     This method get's only called on database creation! */
+    private function insertDefaultData() {
+        $dbCon = $this->getDbConnection(true);
+
+        $salt = "dsf6sd4f5sd4f65sd4f5";
+        (new User(15654,'test',User::hashPassword('12345',$salt),$salt))->dbReplace($dbCon);
+    }
+
 
     //Do not use these methods if database does not exist
     public function exec($sql)
@@ -41,7 +52,7 @@ class DbConnection
     }
 
     //Private because only used in getDbConnection()
-    private static function establishConnection($doesDatabaseExist)
+    private function establishConnection($doesDatabaseExist)
     {
         try {
             $conn = new PDO("mysql:host=" . DbConnection::$dbServername .
@@ -51,6 +62,12 @@ class DbConnection
             // set error mode to exception so we can react to it with try catch
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             //connection successful
+
+            //if db hasn't existed before, we will insert our default data
+            if (!$doesDatabaseExist) {
+                $this->insertDefaultData();
+            }
+
             return $conn;
         } catch (PDOException $e) {
             die("<p>Could not establish dbConnection: " . $e->getMessage() . "</p>");
@@ -69,10 +86,11 @@ class DbConnection
     }
 
     //GETTER/SETTER -------------------------
-    public static function getDbConnection($doesDatabaseExist)
+    //MUST NOT BE STATIC TO force constr to be called
+    public function getDbConnection($doesDatabaseExist)
     {
         if (DbConnection::$dbConnection == null) {
-            DbConnection::$dbConnection = DbConnection::establishConnection($doesDatabaseExist);
+            DbConnection::$dbConnection = $this->establishConnection($doesDatabaseExist);
         }
         return DbConnection::$dbConnection;
     }
