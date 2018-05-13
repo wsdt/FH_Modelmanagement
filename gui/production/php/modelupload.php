@@ -1,8 +1,6 @@
 <?php
     require_once 'AuthenticationMiddleware.php';
-    if (!isSessionValid()) {
-        header("Location: ./login.html");
-    }
+    verifySession();
 ?>
 
 <!DOCTYPE html>
@@ -18,27 +16,27 @@
     <title>FH Kufstein</title>
 
     <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="../../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
-    <link href="../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <link href="../../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
     <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <link href="../../build/css/custom.min.css" rel="stylesheet">
     <!-- Dropzone.css -->
-    <link href="../vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
+    <link href="../../vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
     <!-- Dropzone.js -->
-    <script src="../vendors/dropzone/dist/min/dropzone.min.js"></script>
+    <script src="../../vendors/dropzone/dist/min/dropzone.min.js"></script>
     <!-- Modelupload JS -->
-    <script type="text/javascript" src="./js/modelupload/modelupload_general.js"></script>
-    <script type="text/javascript" src="./js/modelupload/modelObj.js"></script>
+    <script type="text/javascript" src="../js/modelupload/modelupload_general.js"></script>
+    <script type="text/javascript" src="../js/modelupload/modelObj.js"></script>
     <!-- Jquery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <script src="../../vendors/jquery/dist/jquery.min.js"></script>
     <!-- PNotify -->
-    <link href="../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
-    <link href="../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    <link href="../../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="../../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -49,7 +47,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title"><i class="fa fa-home"></i> <span>Interreg</span></a>
+                    <a href="../index.html" class="site_title"><i class="fa fa-home"></i> <span>Interreg</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -57,7 +55,7 @@
                 <!-- menu profile quick info -->
                 <div class="profile clearfix">
                     <div class="profile_pic">
-                        <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                        <img src="../images/img.jpg" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
@@ -90,7 +88,7 @@
                     <a data-toggle="tooltip" data-placement="top" title="Lock">
                         <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="../login.html">
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -110,7 +108,7 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="images/img.jpg" alt="">Your name
+                                <img src="../images/img.jpg" alt="">Your name
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -122,7 +120,7 @@
                                     </a>
                                 </li>
                                 <li><a href="javascript:;">Help</a></li>
-                                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                <li><a href="../login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                             </ul>
                         </li>
 
@@ -135,7 +133,7 @@
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                                 <li>
                                     <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image"/></span>
+                                        <span class="image"><img src="../images/img.jpg" alt="Profile Image"/></span>
                                         <span>
                           <span>System</span>
                           <span class="time">3 mins ago</span>
@@ -278,7 +276,7 @@
                                         </form>
 
                                         <!-- Drag/Upload File -->
-                                        <form action="form_upload.html" class="dropzone"></form>
+                                        <form action="../form_upload.html" class="dropzone"></form>
                                     </div>
                                 </div>
                             </div>
@@ -303,20 +301,20 @@
 
 
 <!-- jQuery -->
-<script src="../vendors/jquery/dist/jquery.min.js"></script>
+<script src="../../vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->
-<script src="../vendors/fastclick/lib/fastclick.js"></script>
+<script src="../../vendors/fastclick/lib/fastclick.js"></script>
 <!-- NProgress -->
-<script src="../vendors/nprogress/nprogress.js"></script>
+<script src="../../vendors/nprogress/nprogress.js"></script>
 <!-- jQuery Smart Wizard -->
-<script src="../vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
+<script src="../../vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
 <!-- Custom Theme Scripts -->
-<script src="../build/js/custom.min.js"></script>
+<script src="../../build/js/custom.min.js"></script>
 <!-- PNotify -->
-<script src="../vendors/pnotify/dist/pnotify.js"></script>
-<script src="../vendors/pnotify/dist/pnotify.nonblock.js"></script>
+<script src="../../vendors/pnotify/dist/pnotify.js"></script>
+<script src="../../vendors/pnotify/dist/pnotify.nonblock.js"></script>
 
 
 </body>
