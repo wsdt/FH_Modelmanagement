@@ -1,3 +1,8 @@
+<?php
+    require_once './AuthenticationMiddleware.php';
+    verifySession(false);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,19 +15,24 @@
     <title>FH Kufstein</title>
 
     <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="../../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="../vendors/animate.css/animate.min.css" rel="stylesheet">
+    <link href="../../vendors/animate.css/animate.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <link href="../../build/css/custom.min.css" rel="stylesheet">
 
     <!-- Auth (login/registration procedures) -->
-    <script type="text/javascript" src="./js/modelupload/auth.js"></script>
+    <script type="text/javascript" src="../js/modelupload/auth.js"></script>
+
+    <!-- PNotify -->
+    <link href="../../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="../../vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="../../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 </head>
 
 <body class="login">
@@ -44,7 +54,7 @@
                         </div>
                         <div>
                             <input class="btn btn-default submit" type="button" value="Log in" onclick="login(
-                                document.getElementById('userName').value, document.getElementById('clearPassword').value);" />
+                                document.getElementById('userName'), document.getElementById('clearPassword'));" />
                             <a class="reset_pass" href="#">Lost your password?</a>
                         </div>
 
@@ -81,7 +91,7 @@
                         <input type="password" class="form-control" placeholder="Password" required=""/>
                     </div>
                     <div>
-                        <a class="btn btn-default submit" href="php/modelupload.php">Submit</a>
+                        <a class="btn btn-default submit" href="modelupload.php">Submit</a>
                     </div>
 
                     <div class="clearfix"></div>
@@ -104,5 +114,15 @@
         </div>
     </div>
 </div>
+
+<!-- jQuery -->
+<script src="../../vendors/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- PNotify -->
+<script src="../../vendors/pnotify/dist/pnotify.js"></script>
+<script src="../../vendors/pnotify/dist/pnotify.buttons.js"></script>
+<script src="../../vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
 </body>
 </html>

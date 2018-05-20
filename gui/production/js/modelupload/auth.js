@@ -9,24 +9,35 @@ function handleErrors(response) {
 }
 
 /** Sends fetch request to login user (better usability) */
-function login(userName, clearPassword) {
-    let userCredentialsJson = '{"username":"'+userName+'", "clearPassword":"'+clearPassword+'"}';
+function login(elemUsername, elemClearPwd) {
+    let headers = new Headers();
+    headers.append('Accept','application/json, application/xml, text/plain, text/html, *.*');
+    headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
 
-    fetch("./php/AuthenticationMiddleware.php",
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('userName',elemUsername.value);
+    urlSearchParams.append('clearPassword',elemClearPwd.value);
+
+    fetch("./AuthenticationMiddleware.php",
         {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            body: userCredentialsJson
+            credentials: 'include',
+            method: "post",
+            headers: headers,
+            body: urlSearchParams
         })
         .then(handleErrors)
         .then((resp) => resp.json())
         .then(function(res) {
-            console.log('Submitted userCredentialsJson: '+res);
+            console.log('Submitted userCredentialsJson.');
+            window.location.href = "./modelupload.php"; //redirect to modelupload page
         })
         .catch(function(error) {
             console.error("Authentication has failed->"+error);
+            new PNotify({
+                title: 'Unauthorized',
+                text: 'Username or password is wrong.',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
         });
 }
