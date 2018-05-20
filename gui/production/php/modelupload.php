@@ -249,7 +249,6 @@
                                             </tr>
                                             </thead>
                                             <tbody id="queriedmodels"><!-- ID necessary in modelupload_general.js / Just print the whole result set now. -->
-                                            <script type="text/javascript">printAllModelTableRows("#queriedmodels", ModelObj.getAllLocally());</script>
                                             </tbody>
                                         </table>
 

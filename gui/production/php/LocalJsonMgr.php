@@ -37,7 +37,7 @@ if (!empty($_GET)) {
 
 class LocalJsonMgr
 {
-    const DATA_BASE_PATH = "./../../data/";
+    const DATA_BASE_PATH = "./../../../data/";
     const FILE_EXTENSION = "json";
 
     /** Saves downloaded json files to /data/

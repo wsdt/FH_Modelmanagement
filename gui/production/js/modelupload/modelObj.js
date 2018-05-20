@@ -177,7 +177,9 @@ ModelObj.getAllLocally = function() {
                 }
                 return allModelObjs;
             }
-        )
+        ).catch(function (error) {
+            console.error('ModelObj:getAllLocally: '+error);
+        })
 };
 
 let CompressionObj = function(compressionUUID,json) {
