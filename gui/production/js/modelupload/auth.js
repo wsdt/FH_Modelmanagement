@@ -18,6 +18,7 @@ function login(elemUsername, elemClearPwd) {
     urlSearchParams.append('userName',elemUsername.value);
     urlSearchParams.append('clearPassword',elemClearPwd.value);
 
+
     fetch("./AuthenticationMiddleware.php",
         {
             credentials: 'include',
@@ -32,12 +33,12 @@ function login(elemUsername, elemClearPwd) {
             window.location.href = "./modelupload.php"; //redirect to modelupload page
         })
         .catch(function(error) {
-            console.error("Authentication has failed->"+error);
             new PNotify({
                 title: 'Unauthorized',
                 text: 'Username or password is wrong.',
                 type: 'error',
                 styling: 'bootstrap3'
             });
+
         });
 }
