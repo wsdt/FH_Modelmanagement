@@ -16,7 +16,7 @@
         <entry file="file://$PROJECT_DIR$/gui/production/php/modelupload.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="271">
-              <caret line="110" column="104" lean-forward="false" selection-start-line="110" selection-start-column="104" selection-end-line="110" selection-end-column="104" />
+              <caret line="110" column="93" lean-forward="false" selection-start-line="110" selection-start-column="93" selection-end-line="110" selection-end-column="93" />
               <folding />
             </state>
           </provider>
@@ -62,6 +62,7 @@
       <find>remove</find>
       <find>close</find>
       <find>Upload</find>
+      <find>TEST</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -96,9 +97,9 @@
         <option value="$PROJECT_DIR$/gui/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js" />
         <option value="$PROJECT_DIR$/gui/production/js/modelupload/modelupload_general.js" />
         <option value="$PROJECT_DIR$/gui/production/php/DbConnection.php" />
-        <option value="$PROJECT_DIR$/gui/production/php/User.php" />
         <option value="$PROJECT_DIR$/gui/production/js/modelupload/auth.js" />
         <option value="$PROJECT_DIR$/gui/production/php/AuthenticationMiddleware.php" />
+        <option value="$PROJECT_DIR$/gui/production/php/User.php" />
         <option value="$PROJECT_DIR$/gui/production/php/modelupload.php" />
       </list>
     </option>
@@ -166,21 +167,6 @@
               <item name="fh_modelmanagement" type="462c0819:PsiDirectoryNode" />
               <item name="gui" type="462c0819:PsiDirectoryNode" />
               <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fh_modelmanagement" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fh_modelmanagement" type="462c0819:PsiDirectoryNode" />
-              <item name="gui" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="modelupload" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fh_modelmanagement" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fh_modelmanagement" type="462c0819:PsiDirectoryNode" />
-              <item name="gui" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
               <item name="php" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -203,11 +189,12 @@
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp2\htdocs\fh_modelmanagement\gui\production\images\user" />
+      <recent name="C:\xampp2\htdocs\fh_modelmanagement\gui\production\php" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\FH_ModelManagement\gui\production" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp2\htdocs\fh_modelmanagement\gui\production\php" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -671,12 +658,12 @@
       <workItem from="1526813953618" duration="6415000" />
       <workItem from="1528277130550" duration="1262000" />
       <workItem from="1528627276099" duration="2409000" />
-      <workItem from="1529855960368" duration="1783000" />
+      <workItem from="1529855960368" duration="2451000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102846000" />
+    <option name="totallyTimeSpent" value="103514000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -726,39 +713,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/gui/production/php/modelupload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8442">
-          <caret line="402" column="42" lean-forward="true" selection-start-line="402" selection-start-column="42" selection-end-line="402" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui/production/js/modelupload/modelupload_general.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/sampledata_1.json" />
-    <entry file="file://$PROJECT_DIR$/gui/production/php/modelupload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8127">
-          <caret line="387" column="75" lean-forward="true" selection-start-line="387" selection-start-column="75" selection-end-line="387" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui/production/js/modelupload/modelupload_general.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="20" column="73" lean-forward="false" selection-start-line="20" selection-start-column="66" selection-end-line="20" selection-end-column="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/sampledata_1.json" />
     <entry file="file://$PROJECT_DIR$/gui/production/js/modelupload/modelupload_general.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -996,30 +950,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gui/production/php/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="694">
-          <caret line="98" column="20" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
-          <folding>
-            <marker date="1528278438362" expanded="true" signature="1501:1576" ph="INSERT INTO User... " />
-            <marker date="1528278438362" expanded="true" signature="1501:1626" ph="INSERT INTO User... " />
-            <marker date="1528278438362" expanded="true" signature="1501:1670" ph="INSERT INTO User... " />
-            <marker date="1528278438362" expanded="true" signature="1501:1720" ph="INSERT INTO User... " />
-            <marker date="1528278438362" expanded="true" signature="1501:1755" ph="INSERT INTO User... " />
-            <marker date="1528278438362" expanded="true" signature="1832:2073" ph="UPDATE User... " />
-            <marker date="1528278438362" expanded="true" signature="1832:2088" ph="UPDATE User... " />
-            <marker date="1528278438362" expanded="true" signature="1832:2089" ph="UPDATE User... " />
-            <marker date="1528278438362" expanded="true" signature="1838:2073" ph="INSERT INTO User... " />
-            <marker date="1528278438362" expanded="true" signature="2188:2219" ph="DELETE FROM User... " />
-            <marker date="1528278438362" expanded="true" signature="2188:2220" ph="DELETE FROM User... " />
-            <marker date="1528278438362" expanded="true" signature="2344:2351" ph="SELECT * FRO... " />
-            <marker date="1528278438362" expanded="true" signature="2344:2425" ph="SELECT usr_i... User" />
-            <marker date="1528278438362" expanded="true" signature="2899:2986" ph="SELECT usr_i... User" />
-            <marker date="1528278438362" expanded="true" signature="2899:3001" ph="SELECT usr_i... User" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gui/production/php/AuthenticationMiddleware.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
@@ -1028,10 +958,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/gui/production/images/picture.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui/production/images/prod-1.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui/production/images/user.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui/production/images/media.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui/production/images/user/TEST.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui/production/php/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" column="77" lean-forward="false" selection-start-line="8" selection-start-column="77" selection-end-line="8" selection-end-column="77" />
+          <folding>
+            <marker date="1529858461474" expanded="true" signature="1963:2038" ph="INSERT INTO User... " />
+            <marker date="1529858461474" expanded="true" signature="1963:2088" ph="INSERT INTO User... " />
+            <marker date="1529858461474" expanded="true" signature="1963:2132" ph="INSERT INTO User... " />
+            <marker date="1529858461474" expanded="true" signature="1963:2182" ph="INSERT INTO User... " />
+            <marker date="1529858461474" expanded="true" signature="1963:2217" ph="INSERT INTO User... " />
+            <marker date="1529858461474" expanded="true" signature="2294:2535" ph="UPDATE User... " />
+            <marker date="1529858461474" expanded="true" signature="2294:2550" ph="UPDATE User... " />
+            <marker date="1529858461474" expanded="true" signature="2294:2551" ph="UPDATE User... " />
+            <marker date="1529858461474" expanded="true" signature="2300:2535" ph="INSERT INTO User... " />
+            <marker date="1529858461474" expanded="true" signature="2650:2681" ph="DELETE FROM User... " />
+            <marker date="1529858461474" expanded="true" signature="2650:2682" ph="DELETE FROM User... " />
+            <marker date="1529858461474" expanded="true" signature="2806:2813" ph="SELECT * FRO... " />
+            <marker date="1529858461474" expanded="true" signature="2806:2887" ph="SELECT usr_i... User" />
+            <marker date="1529858461474" expanded="true" signature="3361:3448" ph="SELECT usr_i... User" />
+            <marker date="1529858461474" expanded="true" signature="3361:3463" ph="SELECT usr_i... User" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gui/production/php/modelupload.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
-          <caret line="110" column="104" lean-forward="false" selection-start-line="110" selection-start-column="104" selection-end-line="110" selection-end-column="104" />
+          <caret line="110" column="93" lean-forward="false" selection-start-line="110" selection-start-column="93" selection-end-line="110" selection-end-column="93" />
           <folding />
         </state>
       </provider>

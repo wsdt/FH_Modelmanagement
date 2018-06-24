@@ -2,9 +2,16 @@
 
 class User
 {
+    /** User Id which identifies the user accross languages etc. (cleaner) */
     private $id;
+    /** Username has an unique constraint (in db), so we can also query
+     * users by their nickname (non-case-sensitive).
+     * Username is also used to determine userAvatar (in images/users/x.jpg) */
     private $username;
+    /** As usual, we only save hashed pwds. We are using the crypt() method
+     to hash passwords. */
     private $hashedPassword;
+    /** Also as usual we use salts to prevent rainbow table attacks etc. */
     private $salt;
 
     public function __construct($id, $username, $hashedPassword, $salt)
