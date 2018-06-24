@@ -88,7 +88,7 @@
                     <a data-toggle="tooltip" data-placement="top" title="Lock">
                         <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.php">
+                    <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="logout()">
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -314,6 +314,8 @@
 <!-- PNotify -->
 <script src="../../vendors/pnotify/dist/pnotify.js"></script>
 <script src="../../vendors/pnotify/dist/pnotify.nonblock.js"></script>
+<!-- Logout/Login procedures -->
+<script src="../js/modelupload/auth.js"></script>
 
 
 </body>

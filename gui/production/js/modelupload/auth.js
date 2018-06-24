@@ -8,6 +8,39 @@ function handleErrors(response) {
     return response;
 }
 
+/** Logs current user out.*/
+function logout() {
+    let headers = new Headers();
+    headers.append('Accept','application/json, application/xml, text/plain, text/html, *.*');
+    headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('logout','START_LOGOUT');
+
+    fetch("./AuthenticationMiddleware.php",
+        {
+            credentials: 'include',
+            method: "post",
+            headers: headers,
+            body: urlSearchParams
+        })
+        .then(handleErrors)
+        .then((resp) => resp.json())
+        .then(function(res) {
+            console.log('Submitted logout request.');
+            window.location.href = "./login.php"; //redirect to login page
+        })
+        .catch(function(error) {
+            new PNotify({
+                title: 'Log-Out failed',
+                text: 'Could not log you out. Please contact administrator.',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
+
+        });
+}
+
 /** Sends fetch request to login user (better usability) */
 function login(elemUsername, elemClearPwd) {
     let headers = new Headers();

@@ -8,12 +8,6 @@ require_once "./User.php";
 
 
 if (!empty($_POST)) { //only when logging in (so we can also use verifySession independently)
-    verifyLoginRequest();
-}
-
-
-function verifyLoginRequest()
-{
     if (!empty($_POST['userName']) && !empty($_POST['clearPassword'])) {
         $dbCon = (new DbConnection())->getDbConnection(true);
         $loginSuccessful = User::areUserCredentialsCorrect($dbCon, $_POST['userName'], $_POST['clearPassword']);
@@ -28,6 +22,11 @@ function verifyLoginRequest()
             http_response_code(401);
             echo '{"loggedInTimestamp":"0"}';
         }
+    } else if (!empty($_POST['logout'])) {
+        //No matter what is in logout just do it
+        logout();
+        http_response_code(200);
+        echo '{"loggedInTimestamp":"0"}';
     } else {
         http_response_code(400);
         echo '{"loggedInTimestamp":"0"}';
@@ -46,4 +45,10 @@ function verifySession($toLoginPage)
     } else if (!$isSessionInValid && !$toLoginPage) {
         header("Location: ./modelupload.php");
     } //else do nothing (session fully valid and no redirection wanted)
+}
+
+function logout() {
+    if (!session_id()) @ session_start(); //NO OUTPUT BEFORE
+    //Delete all session variables
+    session_unset();
 }
