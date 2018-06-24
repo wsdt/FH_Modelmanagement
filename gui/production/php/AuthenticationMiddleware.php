@@ -15,6 +15,7 @@ if (!empty($_POST)) { //only when logging in (so we can also use verifySession i
             //Set session etc. and redirect
             if (!session_id()) @ session_start(); //NO OUTPUT BEFORE
             $_SESSION['loggedInTimestamp'] = time();
+            $_SESSION['userName'] = htmlspecialchars(strtoupper($_POST['userName'])); //to prevent xss or similar
             //header("Location: ./modelupload.php");
             http_response_code(200);
             echo '{"loggedInTimestamp":"'.$_SESSION['loggedInTimestamp'].'"}';
@@ -37,7 +38,7 @@ if (!empty($_POST)) { //only when logging in (so we can also use verifySession i
 function verifySession($toLoginPage)
 {
     if (!session_id()) @ session_start(); //NO OUTPUT BEFORE
-    $isSessionInValid = (empty($_SESSION) || !isset($_SESSION['loggedInTimestamp']) || (time() - $_SESSION['loggedInTimestamp']) > SESSION_EXPIRATION);
+    $isSessionInValid = (empty($_SESSION) || !isset($_SESSION['loggedInTimestamp']) || (time() - $_SESSION['loggedInTimestamp']) > SESSION_EXPIRATION) || !isset($_SESSION['userName']);
 
     if ($isSessionInValid && $toLoginPage) {
         //currently is valid (add more validations)

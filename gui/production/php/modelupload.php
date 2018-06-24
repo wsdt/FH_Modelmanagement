@@ -59,7 +59,7 @@
                     </div>
                     <div class="profile_info">
                         <span>Welcome,</span>
-                        <h2>Your name</h2>
+                        <h2><?php echo $_SESSION['userName']; ?></h2>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -108,7 +108,7 @@
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
-                                <img src="../images/img.jpg" alt="">Your name
+                                <img src="../images/img.jpg" alt=""><?php echo $_SESSION['userName']; ?>
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
