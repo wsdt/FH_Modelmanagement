@@ -6,22 +6,36 @@ const SESSION_EXPIRATION = 10000; //when should session expire (seconds)
 require_once "./DbConnection.php";
 require_once "./User.php";
 
-
 if (!empty($_POST)) { //only when logging in (so we can also use verifySession independently)
     if (!empty($_POST['userName']) && !empty($_POST['clearPassword'])) {
         $dbCon = (new DbConnection())->getDbConnection(true);
-        $loginSuccessful = User::areUserCredentialsCorrect($dbCon, $_POST['userName'], $_POST['clearPassword']);
-        if ($loginSuccessful) {
-            //Set session etc. and redirect
-            if (!session_id()) @ session_start(); //NO OUTPUT BEFORE
-            $_SESSION['loggedInTimestamp'] = time();
-            $_SESSION['userName'] = htmlspecialchars(strtoupper($_POST['userName'])); //to prevent xss or similar
-            //header("Location: ./modelupload.php");
-            http_response_code(200);
-            echo '{"loggedInTimestamp":"'.$_SESSION['loggedInTimestamp'].'"}';
+
+        if (empty($_POST['eMail'])) {
+            $loginSuccessful = User::areUserCredentialsCorrect($dbCon, $_POST['userName'], $_POST['clearPassword']);
+            if ($loginSuccessful) {
+                //Set session etc. and redirect
+                if (!session_id()) @ session_start(); //NO OUTPUT BEFORE
+                $_SESSION['loggedInTimestamp'] = time();
+                $_SESSION['userName'] = htmlspecialchars(strtoupper($_POST['userName'])); //to prevent xss or similar
+                //header("Location: ./modelupload.php");
+                http_response_code(200);
+                echo '{"loggedInTimestamp":"' . $_SESSION['loggedInTimestamp'] . '"}';
+            } else {
+                http_response_code(401);
+                echo '{"loggedInTimestamp":"0"}';
+            }
         } else {
-            http_response_code(401);
-            echo '{"loggedInTimestamp":"0"}';
+            //Registration
+            $salt = User::createNewSalt();
+            if((new User(User::createUniqueId($_POST['userName'],$_POST['clearPassword'],$salt,$_POST['eMail']),
+                $_POST['userName'], $_POST['clearPassword'], $salt, $_POST['eMail']))->dbInsert($dbCon)) {
+                http_response_code(200);
+                echo '{"registrationSuccessful":true}';
+            } else {
+                //Registration failed
+                http_response_code(401);
+                echo '{"loggedInTimestamp":"0"}';
+            }
         }
     } else if (!empty($_POST['logout'])) {
         //No matter what is in logout just do it

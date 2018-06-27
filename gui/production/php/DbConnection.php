@@ -6,8 +6,8 @@ include 'User.php'; //optional because only needed in insertDefaultData();
  * this to other dbms. */
 class DbConnection
 {
-    private static $dbServername = "localhost";
-    private static $dbName = "fhkufsteinmodels";
+    private static $dbServername = "127.0.0.1";
+    private static $dbName = "fhkufmodels";
     private static $dbUsername = "root";
     private static $dbPassword = "";
 
@@ -19,7 +19,7 @@ class DbConnection
         $dbCon = $this->getDbConnection(true);
 
         $salt = "dsf6sd4f5sd4f65sd4f5";
-        (new User(15654,'test',User::hashPassword('12345',$salt),$salt))->dbReplace($dbCon);
+        (new User(crypt('test12345'.$salt.'test@test.com'),'test',User::hashPassword('12345',$salt),$salt, 'test@test.com'))->dbReplace($dbCon);
     }
 
 
@@ -41,11 +41,12 @@ class DbConnection
         $this->getDbConnection(false)->exec("CREATE DATABASE IF NOT EXISTS " . DbConnection::$dbName . ";");
         $this->exec("USE " . DbConnection::$dbName . ";");
         $this->exec("CREATE TABLE IF NOT EXISTS User (
-            usr_id INT PRIMARY KEY,
+            usr_id VARCHAR(250) PRIMARY KEY,
             usr_username VARCHAR(100) NOT NULL,
             usr_hashedpassword VARCHAR(250) NOT NULL, 
             usr_salt VARCHAR(250) NOT NULL,
-            UNIQUE (usr_username)
+            usr_email VARCHAR(500) NOT NULL,
+            UNIQUE (usr_username, usr_email)
         );");
 
         $this->closeConnection();

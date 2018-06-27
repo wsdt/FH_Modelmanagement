@@ -8,18 +8,28 @@ class User
      * users by their nickname (non-case-sensitive).
      * Username is also used to determine userAvatar (in images/users/x.jpg) */
     private $username;
+    private $email;
     /** As usual, we only save hashed pwds. We are using the crypt() method
      to hash passwords. */
     private $hashedPassword;
     /** Also as usual we use salts to prevent rainbow table attacks etc. */
     private $salt;
 
-    public function __construct($id, $username, $hashedPassword, $salt)
+    public function __construct($id, $username, $hashedPassword, $salt, $email)
     {
         $this->setId($id);
         $this->setUsername($username);
         $this->setHashedPassword($hashedPassword);
         $this->setSalt($salt);
+        $this->setEmail($email);
+    }
+
+    public static function createUniqueId($userName, $clearPassword, $salt, $email) {
+        return crypt($userName.$clearPassword.$salt.$email);
+    }
+
+    public static function createNewSalt() {
+        return uniqid(mt_rand(), true);
     }
 
     public static function hashPassword($clearPassword,$salt) {
@@ -47,43 +57,55 @@ class User
 
     //DB CRUD
     public function dbReplace($dbCon) {
-        $dbCon->exec("REPLACE INTO User (usr_id, usr_username, usr_hashedpassword, usr_salt) VALUES (
+        $affectedRowCount = $dbCon->exec("REPLACE INTO User (usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email) VALUES (
             " . $this->getId() . ",
             '" . $this->getUsername() . "',
             '" . $this->getHashedPassword() . "',
-            '" . $this->getSalt() . "'
+            '" . $this->getSalt() . "',
+            '".$this->getEmail()."'
         );");
+
+        return ($affectedRowCount <= 0) ? false : true;
     }
 
+    /** E.g. for registration to provoke exception when user exists already. */
     public function dbInsert($dbCon)
     {
-        $dbCon->exec("INSERT INTO User (usr_id,usr_username,usr_hashedpassword,usr_salt) VALUES (
+        $affectedRowCount = $dbCon->exec("INSERT INTO User (usr_id,usr_username,usr_hashedpassword,usr_salt) VALUES (
             " . $this->getId() . ",
             '" . $this->getUsername() . "',
             '" . $this->getHashedPassword() . "',
-            '" . $this->getSalt() . "'
+            '" . $this->getSalt() . "',
+            '".$this->getEmail()."'
         );");
+
+        return ($affectedRowCount <= 0) ? false : true;
     }
 
     public function dbUpdate($dbCon)
     {
-        $dbCon->exec("UPDATE User SET 
+        $affectedRowCount = $dbCon->exec("UPDATE User SET 
             usr_id = " . $this->getId() . ",
             usr_username = '" . $this->getUsername() . "',
             usr_hashedpassword = '" . $this->getHashedPassword() . "',
-            usr_salt = '" . $this->getSalt() . "' WHERE usr_id = " . $this->getId() . ";");
+            usr_salt = '" . $this->getSalt() . "',
+            usr_email = '".$this->getEmail()."' WHERE usr_id = " . $this->getId() . ";");
+
+        return ($affectedRowCount <= 0) ? false : true;
     }
 
     public function dbDelete($dbCon)
     {
-        $dbCon->exec("DELETE FROM User WHERE usr_id = " . $this->getId() . ";");
+        $affectedRowCount = $dbCon->exec("DELETE FROM User WHERE usr_id = " . $this->getId() . ";");
+
+        return ($affectedRowCount <= 0) ? false : true;
     }
 
     public static function dbQuery($dbCon, $userId)
     {
-        foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt FROM User WHERE usr_id=".$userId.";") as $row) {
+        foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email FROM User WHERE usr_id=".$userId.";") as $row) {
             //return first (and should be only row/user which is returned from sql)
-            return new User($row['usr_id'],$row['usr_username'],$row['usr_hashedpassword'],$row['usr_salt']);
+            return new User($row['usr_id'],$row['usr_username'],$row['usr_hashedpassword'],$row['usr_salt'], $row['usr_email']);
         }
         echo "User::dbQuery: Could not fetch user with id: ".$userId;
         return null;
@@ -92,8 +114,8 @@ class User
     //possible, bc. username is unique in sql
     public static function dbQueryWithUsername($dbCon, $userName) {
         foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt FROM User WHERE usr_username='".$userName."';") as $row) {
-            //return first (and should be only row/user which is returned from sql)
-            return new User($row['usr_id'],$row['usr_username'],$row['usr_hashedpassword'],$row['usr_salt']);
+            //return firdst (and should be only row/user which is returned from sql)
+            return new User($row['usr_id'],$row['usr_username'],$row['usr_hashedpassword'],$row['usr_salt'], $row['usr_email']);
         }
         echo "<p>User::dbQuery: Could not fetch user with name: ".$userName."</p>";
         return null;
@@ -139,5 +161,13 @@ class User
     public function setUsername($username)
     {
         $this->username = $username;
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    public function getEmail() {
+        return $this->email;
     }
 }

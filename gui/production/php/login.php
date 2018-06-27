@@ -54,7 +54,7 @@
                         </div>
                         <div>
                             <input class="btn btn-default submit" type="button" value="Log in" onclick="login(
-                                document.getElementById('userName'), document.getElementById('clearPassword'));" />
+                                document.getElementById('userName').value, document.getElementById('clearPassword').value);" />
                             <a class="reset_pass" href="#">Lost your password?</a>
                         </div>
 
@@ -82,16 +82,18 @@
                 <form>
                     <h1>Create Account</h1>
                     <div>
-                        <input type="text" class="form-control" placeholder="Username" required=""/>
+                        <input type="text" id="rUserName" class="form-control" placeholder="Username" required=""/>
                     </div>
                     <div>
-                        <input type="email" class="form-control" placeholder="Email" required=""/>
+                        <input type="email" id="rEMail" class="form-control" placeholder="Email" required=""/>
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="Password" required=""/>
+                        <input type="password" id="rClearPassword" class="form-control" placeholder="Password" required=""/>
                     </div>
                     <div>
-                        <a class="btn btn-default submit" href="modelupload.php">Submit</a>
+                        <input class="btn btn-default submit" type="button" value="Register" onclick="register(
+                            document.getElementById('rUserName').value,document.getElementById('rEMail').value,document.getElementById('rClearPassword').value
+                        );"/>
                     </div>
 
                     <div class="clearfix"></div>

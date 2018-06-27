@@ -48,8 +48,8 @@ function login(elemUsername, elemClearPwd) {
     headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
 
     let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('userName',elemUsername.value);
-    urlSearchParams.append('clearPassword',elemClearPwd.value);
+    urlSearchParams.append('userName',elemUsername);
+    urlSearchParams.append('clearPassword',elemClearPwd);
 
 
     fetch("./AuthenticationMiddleware.php",
@@ -69,6 +69,41 @@ function login(elemUsername, elemClearPwd) {
             new PNotify({
                 title: 'Unauthorized',
                 text: 'Username or password is wrong.',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
+
+        });
+}
+
+function register(elemUsername, elemEmail, elemClearPwd) {
+    let headers = new Headers();
+    headers.append('Accept','application/json, application/xml, text/plain, text/html, *.*');
+    headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('userName',elemUsername);
+    urlSearchParams.append('eMail',elemEmail);
+    urlSearchParams.append('clearPassword',elemClearPwd);
+
+
+    fetch("./AuthenticationMiddleware.php",
+        {
+            credentials: 'include',
+            method: "post",
+            headers: headers,
+            body: urlSearchParams
+        })
+        .then(handleErrors)
+        .then((resp) => resp.json())
+        .then(function(res) {
+            console.log('Submitted RegisterJson.');
+            window.location.href = "./modelupload.php"; //redirect to modelupload page
+        })
+        .catch(function(error) {
+            new PNotify({
+                title: 'Registration failed',
+                text: 'Unfortunately, we couldn\'t register your new account.',
                 type: 'error',
                 styling: 'bootstrap3'
             });
