@@ -25,7 +25,7 @@ class User
     }
 
     public static function createUniqueId($userName, $clearPassword, $salt, $email) {
-        return crypt($userName.$clearPassword.$salt.$email);
+        return crypt($userName.$clearPassword.$salt.$email,self::createNewSalt());
     }
 
     public static function createNewSalt() {

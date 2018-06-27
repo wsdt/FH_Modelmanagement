@@ -19,7 +19,8 @@ class DbConnection
         $dbCon = $this->getDbConnection(true);
 
         $salt = "dsf6sd4f5sd4f65sd4f5";
-        (new User(crypt('test12345'.$salt.'test@test.com'),'test',User::hashPassword('12345',$salt),$salt, 'test@test.com'))->dbReplace($dbCon);
+        (new User(User::createUniqueId('test','12345',$salt,'test@test.com'),
+            'test',User::hashPassword('12345',$salt),$salt, 'test@test.com'))->dbReplace($dbCon);
     }
 
 
