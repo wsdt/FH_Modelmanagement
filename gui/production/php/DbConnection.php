@@ -15,12 +15,21 @@ class DbConnection
 
     /** DEFAULT DATA INSERTION (Delete in production mode)
      This method get's only called on database creation! */
-    private function insertDefaultData() {
-        $dbCon = $this->getDbConnection(true);
+    private function insertDefaultData($anonymousDbCon) {
+        // Create default db
+        $anonymousDbCon->exec("CREATE DATABASE IF NOT EXISTS ".DbConnection::$dbName."; USE ".DbConnection::$dbName.";");
+        $anonymousDbCon->exec("CREATE TABLE IF NOT EXISTS User (
+          usr_id VARCHAR(500) PRIMARY KEY, 
+          usr_username VARCHAR(250), 
+          usr_hashedpassword VARCHAR(500), 
+          usr_salt VARCHAR(250), 
+          usr_email VARCHAR(250),
+          UNIQUE(usr_username)
+        );");
 
         $salt = "dsf6sd4f5sd4f65sd4f5";
         (new User(User::createUniqueId('test','12345',$salt,'test@test.com'),
-            'test',User::hashPassword('12345',$salt),$salt, 'test@test.com'))->dbReplace($dbCon);
+            'test',User::hashPassword('12345',$salt),$salt, 'test@test.com'))->dbReplace($anonymousDbCon);
     }
 
 
@@ -54,7 +63,7 @@ class DbConnection
     }
 
     //Private because only used in getDbConnection()
-    private function establishConnection($doesDatabaseExist)
+    private function establishConnection($doesDatabaseExist=false)
     {
         try {
             $conn = new PDO("mysql:host=" . DbConnection::$dbServername .
@@ -67,7 +76,7 @@ class DbConnection
 
             //if db hasn't existed before, we will insert our default data
             if (!$doesDatabaseExist) {
-                $this->insertDefaultData();
+                $this->insertDefaultData($conn);
             }
 
             return $conn;

@@ -58,7 +58,7 @@ class User
     //DB CRUD
     public function dbReplace($dbCon) {
         $affectedRowCount = $dbCon->exec("REPLACE INTO User (usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email) VALUES (
-            " . $this->getId() . ",
+            '" . $this->getId() . "',
             '" . $this->getUsername() . "',
             '" . $this->getHashedPassword() . "',
             '" . $this->getSalt() . "',
@@ -72,7 +72,7 @@ class User
     public function dbInsert($dbCon)
     {
         $affectedRowCount = $dbCon->exec("INSERT INTO User (usr_id,usr_username,usr_hashedpassword,usr_salt) VALUES (
-            " . $this->getId() . ",
+            '" . $this->getId() . "',
             '" . $this->getUsername() . "',
             '" . $this->getHashedPassword() . "',
             '" . $this->getSalt() . "',
@@ -85,7 +85,7 @@ class User
     public function dbUpdate($dbCon)
     {
         $affectedRowCount = $dbCon->exec("UPDATE User SET 
-            usr_id = " . $this->getId() . ",
+            usr_id = '" . $this->getId() . "',
             usr_username = '" . $this->getUsername() . "',
             usr_hashedpassword = '" . $this->getHashedPassword() . "',
             usr_salt = '" . $this->getSalt() . "',
@@ -96,14 +96,14 @@ class User
 
     public function dbDelete($dbCon)
     {
-        $affectedRowCount = $dbCon->exec("DELETE FROM User WHERE usr_id = " . $this->getId() . ";");
+        $affectedRowCount = $dbCon->exec("DELETE FROM User WHERE usr_id = '" . $this->getId() . "';");
 
         return ($affectedRowCount <= 0) ? false : true;
     }
 
     public static function dbQuery($dbCon, $userId)
     {
-        foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email FROM User WHERE usr_id=".$userId.";") as $row) {
+        foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email FROM User WHERE usr_id='".$userId."';") as $row) {
             //return first (and should be only row/user which is returned from sql)
             return new User($row['usr_id'],$row['usr_username'],$row['usr_hashedpassword'],$row['usr_salt'], $row['usr_email']);
         }
@@ -113,7 +113,7 @@ class User
 
     //possible, bc. username is unique in sql
     public static function dbQueryWithUsername($dbCon, $userName) {
-        foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt FROM User WHERE usr_username='".$userName."';") as $row) {
+        foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email FROM User WHERE usr_username='".$userName."';") as $row) {
             //return firdst (and should be only row/user which is returned from sql)
             return new User($row['usr_id'],$row['usr_username'],$row['usr_hashedpassword'],$row['usr_salt'], $row['usr_email']);
         }
