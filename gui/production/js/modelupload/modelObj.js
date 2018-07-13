@@ -119,7 +119,7 @@ let ModelObj = function(json) {
             let strModelObj = JSON.stringify((jsonObj));
             console.log("OBJ: "+strModelObj+";;"+JSON.stringify(this.files));
 
-            fetch("./LocalJsonMgr.php",
+            fetch("../mgr/LocalJsonMgr.php",
                 {
                     method: "POST",
                     headers: {
@@ -151,7 +151,7 @@ let ModelObj = function(json) {
 ModelObj.getLocally = function(objectTripleID) {
     if (objectTripleID !== undefined && objectTripleID !== null) {
         console.log('Sending id to ' + "./LocalJsonMgr.php?objectTripleID=" + objectTripleID);
-        return fetch("./LocalJsonMgr.php?objectTripleID=" + objectTripleID)
+        return fetch("../mgr/LocalJsonMgr.php?objectTripleID=" + objectTripleID)
             .then((resp) => resp.json())
             .then(function (res) {
                     let modelObj = new ModelObj(res);
