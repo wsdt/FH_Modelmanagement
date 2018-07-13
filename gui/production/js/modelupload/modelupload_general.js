@@ -35,7 +35,7 @@ function printModelTableRow(tbodyidentifier, modelObj) {
     let allCompressions = Object.keys(modelObj.files);
     for (let index = 0; index < allCompressions.length; ++index) {
         //TODO: place here relevant ata to string
-        compressionTypesList += "<li><img src='../images/user.png' class='avatar' alt='Avatar' data-toggle='tooltip' data-placement='top' title='" + modelObj.getFile(allCompressions[index]).compressionUUID + "'></li>";
+        compressionTypesList += "<li><img src='../../images/user.png' class='avatar' alt='Avatar' data-toggle='tooltip' data-placement='top' title='" + modelObj.getFile(allCompressions[index]).compressionUUID + "'></li>";
         //console.log("Added string to types list. ");
     }
 

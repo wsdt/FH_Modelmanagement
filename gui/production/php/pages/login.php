@@ -1,5 +1,5 @@
 <?php
-    require_once './AuthenticationMiddleware.php';
+    require_once '../middlewares/AuthenticationMiddleware.php';
     verifySession(false);
 ?>
 
@@ -15,24 +15,24 @@
     <title>FH Kufstein</title>
 
     <!-- Bootstrap -->
-    <link href="../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="../../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="../../../vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
-    <link href="../../vendors/animate.css/animate.min.css" rel="stylesheet">
+    <link href="../../../vendors/animate.css/animate.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
-    <link href="../../build/css/custom.min.css" rel="stylesheet">
+    <link href="../../../build/css/custom.min.css" rel="stylesheet">
 
     <!-- Auth (login/registration procedures) -->
-    <script type="text/javascript" src="../js/modelupload/auth.js"></script>
+    <script type="text/javascript" src="../../js/modelupload/auth.js"></script>
 
     <!-- PNotify -->
-    <link href="../../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
-    <link href="../../vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
-    <link href="../../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    <link href="../../../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="../../../vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="../../../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 </head>
 
 <body class="login">
@@ -118,13 +118,13 @@
 </div>
 
 <!-- jQuery -->
-<script src="../../vendors/jquery/dist/jquery.min.js"></script>
+<script src="../../../vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- PNotify -->
-<script src="../../vendors/pnotify/dist/pnotify.js"></script>
-<script src="../../vendors/pnotify/dist/pnotify.buttons.js"></script>
-<script src="../../vendors/pnotify/dist/pnotify.nonblock.js"></script>
+<script src="../../../vendors/pnotify/dist/pnotify.js"></script>
+<script src="../../../vendors/pnotify/dist/pnotify.buttons.js"></script>
+<script src="../../../vendors/pnotify/dist/pnotify.nonblock.js"></script>
 
 </body>
 </html>

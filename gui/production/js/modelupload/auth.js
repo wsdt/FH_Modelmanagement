@@ -17,7 +17,7 @@ function logout() {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('logout','START_LOGOUT');
 
-    fetch("./AuthenticationMiddleware.php",
+    fetch("../middlewares/AuthenticationMiddleware.php",
         {
             credentials: 'include',
             method: "post",
@@ -52,7 +52,7 @@ function login(elemUsername, elemClearPwd) {
     urlSearchParams.append('clearPassword',elemClearPwd);
 
 
-    fetch("./AuthenticationMiddleware.php",
+    fetch("../middlewares/AuthenticationMiddleware.php",
         {
             credentials: 'include',
             method: "post",
@@ -87,7 +87,7 @@ function register(elemUsername, elemEmail, elemClearPwd) {
     urlSearchParams.append('clearPassword',elemClearPwd);
 
 
-    fetch("./AuthenticationMiddleware.php",
+    fetch("../middlewares/AuthenticationMiddleware.php",
         {
             credentials: 'include',
             method: "post",

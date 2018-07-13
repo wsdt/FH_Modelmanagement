@@ -3,8 +3,8 @@
 const TAG = "AuthenticationMiddleware: ";
 const SESSION_EXPIRATION = 10000; //when should session expire (seconds)
 
-require_once "./DbConnection.php";
-require_once "./User.php";
+require_once "../mgr/DbConnection.php";
+require_once "../mgr/User.php";
 
 if (!empty($_POST)) { //only when logging in (so we can also use verifySession independently)
     if (!empty($_POST['userName']) && !empty($_POST['clearPassword'])) {
