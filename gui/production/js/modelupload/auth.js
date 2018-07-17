@@ -42,14 +42,14 @@ function logout() {
 }
 
 /** Sends fetch request to login user (better usability) */
-function login(elemUsername, elemClearPwd) {
+function login(valUsername, valClearPwd) {
     let headers = new Headers();
     headers.append('Accept','application/json, application/xml, text/plain, text/html, *.*');
     headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
 
     let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('userName',elemUsername);
-    urlSearchParams.append('clearPassword',elemClearPwd);
+    urlSearchParams.append('userName',valUsername);
+    urlSearchParams.append('clearPassword',valClearPwd);
 
 
     fetch("../middlewares/AuthenticationMiddleware.php",
@@ -77,15 +77,15 @@ function login(elemUsername, elemClearPwd) {
         });
 }
 
-function register(elemUsername, elemEmail, elemClearPwd) {
+function register(valUsername, valEmail, valClearPwd) {
     let headers = new Headers();
     headers.append('Accept','application/json, application/xml, text/plain, text/html, *.*');
     headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
 
     let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('userName',elemUsername);
-    urlSearchParams.append('eMail',elemEmail);
-    urlSearchParams.append('clearPassword',elemClearPwd);
+    urlSearchParams.append('userName',valUsername);
+    urlSearchParams.append('eMail',valEmail);
+    urlSearchParams.append('clearPassword',valClearPwd);
 
 
     fetch("../middlewares/AuthenticationMiddleware.php",
@@ -99,7 +99,13 @@ function register(elemUsername, elemEmail, elemClearPwd) {
         .then((resp) => resp.json())
         .then(function(res) {
             console.log('Submitted RegisterJson.');
-            window.location.href = "./modelupload.php"; //redirect to modelupload page
+            new PNotify({
+                title: 'Registration successfully',
+                text: 'The user "'+valUsername.value+'" has been registered successfully.',
+                type: 'success',
+                styling: 'bootstrap3'
+            });
+            // do not, user has to register: window.location.href = "./modelupload.php"; //redirect to modelupload page
         })
         .catch(function(error) {
             new PNotify({
@@ -108,6 +114,47 @@ function register(elemUsername, elemEmail, elemClearPwd) {
                 type: 'error',
                 styling: 'bootstrap3'
             });
-
         });
+}
+
+// Assumes that email is unique (see user.php)
+function lostpassword(emailVal) {
+    let headers = new Headers();
+    headers.append('Accept','application/json, application/xml, text/plain, text/html, *.*');
+    headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('eMail',emailVal);
+
+    fetch("../middlewares/AuthenticationMiddleware.php",
+        {
+            credentials: 'include',
+            method: "post",
+            headers: headers,
+            body: urlSearchParams
+        })
+        .then(handleErrors)
+        .then((resp) => resp.json())
+        .then(function(res) {
+            console.log('Submitted lostPwdJson.');
+            new PNotify({
+                title: 'Password sent',
+                text: 'We have sent you a new password to your email -> '+elemEmail.value,
+                type: 'success',
+                styling: 'bootstrap3'
+            });
+            // do not, user has to register: window.location.href = "./modelupload.php"; //redirect to modelupload page
+        })
+        .catch(function(error) {
+            new PNotify({
+                title: 'Password recovery failed',
+                text: 'Unfortunately, we couldn\'t send you a new password. ('+error+')',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
+        });
+}
+
+function createlostpwdform() {
+
 }

@@ -7,9 +7,8 @@ require_once "../mgr/DbConnection.php";
 require_once "../mgr/User.php";
 
 if (!empty($_POST)) { //only when logging in (so we can also use verifySession independently)
+    $dbCon = (new DbConnection())->getDbConnection(true);
     if (!empty($_POST['userName']) && !empty($_POST['clearPassword'])) {
-        $dbCon = (new DbConnection())->getDbConnection(true);
-
         if (empty($_POST['eMail'])) {
             $loginSuccessful = User::areUserCredentialsCorrect($dbCon, $_POST['userName'], $_POST['clearPassword']);
             if ($loginSuccessful) {
@@ -43,6 +42,47 @@ if (!empty($_POST)) { //only when logging in (so we can also use verifySession i
         logout();
         http_response_code(200);
         echo '{"loggedInTimestamp":"0"}';
+    } else if (!empty($_POST["eMail"])) {
+        // lost password
+        $newClearPwd = User::createNewSalt();
+
+        $to = $_POST['eMail'];
+        $subject = "FH Kufstein - New password";
+        $message = "<html>
+                <head>Password recovery</head>
+                <body>
+                   <h1>Password recovery</h1>
+                   <p>As you might have lost/forgotten your password, we have sent
+                   you a new pwd here. Please login with your new password.</p>
+                   <strong>".$newClearPwd."</strong>
+                   
+                   <p>If you know your password and didn't do this, please contact
+                   the administrator immediately.</p>
+                </body>
+            </html>";
+        $headers = "MIME-Version: 1.0\r\n".
+            "Content-type:text/html;charset=UTF-8\r\n".
+            "From: <pwdmgr@fh-kufstein.at>\r\n";
+
+        $user = User::dbQueryWithEmail($dbCon,$_POST["eMail"]);
+        if (!empty($user)) {
+            # Send the mail
+            if(!@mail($to, $subject, $message, $headers)) {
+                // mail sending not successful
+                header("HTTP/1.1 500 ".error_get_last()["message"]);
+                echo '{"loggedInTimestamp":"0"}';
+            } else {
+                // Only change pwd when mail sending successful
+                $user->setClearPassword($newClearPwd);
+                $user->dbReplace($dbCon);
+                http_response_code(200);
+                echo '{"pwdRecoverySuccessful":true}';
+            }
+        } else {
+            //Registration failed
+            header("HTTP/1.1 401 No user with this email address registered.");
+            echo '{"loggedInTimestamp":"0"}';
+        }
     } else {
         http_response_code(400);
         echo '{"loggedInTimestamp":"0"}';

@@ -134,6 +134,16 @@ class User
         return null;
     }
 
+    //possible, bc. username is unique in sql
+    public static function dbQueryWithEmail($dbCon, $email) {
+        foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email FROM User WHERE usr_email='".$email."';") as $row) {
+            //return firdst (and should be only row/user which is returned from sql)
+            return new User($row['usr_id'],$row['usr_username'],$row['usr_hashedpassword'],$row['usr_salt'], $row['usr_email']);
+        }
+        echo "<p>User::dbQuery: Could not fetch user with mail: ".$email."</p>";
+        return null;
+    }
+
 
     //GETTER / SETTERS -------------------------------------
     public function setId($id)

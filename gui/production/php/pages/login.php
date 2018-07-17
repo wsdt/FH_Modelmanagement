@@ -1,6 +1,6 @@
 <?php
-    require_once '../middlewares/AuthenticationMiddleware.php';
-    verifySession(false);
+require_once '../middlewares/AuthenticationMiddleware.php';
+verifySession(false);
 ?>
 
 <!DOCTYPE html>
@@ -33,11 +33,17 @@
     <link href="../../../vendors/pnotify/dist/pnotify.css" rel="stylesheet">
     <link href="../../../vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
     <link href="../../../vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
+    <style>
+        /* Add lost pwd form as it is not considered in bootstrap */
+        .lostpwd_form{position:absolute;top:0;width:100%}.lostpwd_form{z-index:21;opacity:0;width:100%}.login_form{z-index:22}#signin:target~.login_wrapper .login_form,#lostpwd:target~.login_wrapper .lostpwd_form{z-index:22;animation-name:fadeInLeft;animation-delay:.1s}#signin:target~.login_wrapper .lostpwd_form,#lostpwd:target~.login_wrapper .login_form{animation-name:fadeOutLeft}.animate{-webkit-animation-duration:.5s;-webkit-animation-timing-function:ease;-webkit-animation-fill-mode:both;-moz-animation-duration:.5s;-moz-animation-timing-function:ease;-moz-animation-fill-mode:both;-o-animation-duration:.5s;-o-animation-timing-function:ease;-o-animation-fill-mode:both;-ms-animation-duration:.5s;-ms-animation-timing-function:ease;-ms-animation-fill-mode:both;animation-duration:.5s;animation-timing-function:ease;animation-fill-mode:both}
+    </style>
 </head>
 
 <body class="login">
 <div>
     <a class="hiddenanchor" id="signup"></a>
+    <a class="hiddenanchor" id="lostpwd"></a>
     <a class="hiddenanchor" id="signin"></a>
 
     <div class="login_wrapper">
@@ -45,34 +51,38 @@
             <section class="login_content">
                 <form name="loginForm">
                     <h1>Login Form</h1>
-                        <div>
-                            <input type="text" class="form-control" placeholder="Username" required name="userName" id="userName"/>
-                        </div>
-                        <div>
-                            <input type="password" class="form-control" placeholder="Password" required
-                                   name="clearPassword" id="clearPassword"/>
-                        </div>
-                        <div>
-                            <input class="btn btn-default submit" type="button" value="Log in" onclick="login(
-                                document.getElementById('userName').value, document.getElementById('clearPassword').value);" />
-                            <a class="reset_pass" href="#">Lost your password?</a>
-                        </div>
+                    <div>
+                        <input type="text" class="form-control" placeholder="Username" required name="userName"
+                               id="userName"/>
+                    </div>
+                    <div>
+                        <input type="password" class="form-control" placeholder="Password" required
+                               name="clearPassword" id="clearPassword"/>
+                    </div>
+                    <div>
+                        <input class="btn btn-default submit" type="button" value="Log in" onclick="login(
+                                document.getElementById('userName').value, document.getElementById('clearPassword').value);"/>
+
+                        <p class="change_link">
+                            <a href="#lostpwd" class="to_register reset_pass"> Lost your password? </a>
+                        </p>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="separator">
+                        <p class="change_link">New to site?
+                            <a href="#signup" class="to_register"> Create Account </a>
+                        </p>
 
                         <div class="clearfix"></div>
+                        <br/>
 
-                        <div class="separator">
-                            <p class="change_link">New to site?
-                                <a href="#signup" class="to_register"> Create Account </a>
-                            </p>
-
-                            <div class="clearfix"></div>
-                            <br/>
-
-                            <div>
-                                <h1>FH Kufstein</h1>
-                                <p>© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms</p>
-                            </div>
+                        <div>
+                            <h1>FH Kufstein</h1>
+                            <p>© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms</p>
                         </div>
+                    </div>
                 </form>
             </section>
         </div>
@@ -88,7 +98,8 @@
                         <input type="email" id="rEMail" class="form-control" placeholder="Email" required=""/>
                     </div>
                     <div>
-                        <input type="password" id="rClearPassword" class="form-control" placeholder="Password" required=""/>
+                        <input type="password" id="rClearPassword" class="form-control" placeholder="Password"
+                               required=""/>
                     </div>
                     <div>
                         <input class="btn btn-default submit" type="button" value="Register" onclick="register(
@@ -100,6 +111,38 @@
 
                     <div class="separator">
                         <p class="change_link">Already a member ?
+                            <a href="#signin" class="to_register"> Log in </a>
+                        </p>
+
+                        <div class="clearfix"></div>
+                        <br/>
+
+                        <div>
+                            <h1>FH Kufstein</h1>
+                            <p>© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms</p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <div id="lostpwd" class="animate form lostpwd_form">
+            <section class="login_content">
+                <form>
+                    <h1>Lost password</h1>
+                    <div>
+                        <input type="email" id="lEMail" class="form-control" placeholder="Email" required=""/>
+                    </div>
+                    <div>
+                        <input class="btn btn-default submit" type="button" value="Register" onclick="lostpassword(
+                            document.getElementById('lEMail').value
+                        );"/>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="separator">
+                        <p class="change_link">Remembering your password?
                             <a href="#signin" class="to_register"> Log in </a>
                         </p>
 
