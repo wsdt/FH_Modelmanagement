@@ -12,12 +12,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="modelupload.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/gui/production/php/pages/modelupload.php">
+      <file leaf-file-name="DbConnection.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gui/production/php/mgr/DbConnection.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="460">
-              <caret line="122" column="74" lean-forward="false" selection-start-line="122" selection-start-column="74" selection-end-line="122" selection-end-column="74" />
-              <folding />
+            <state relative-caret-position="621">
+              <caret line="50" column="91" lean-forward="false" selection-start-line="50" selection-start-column="91" selection-end-line="50" selection-end-column="91" />
+              <folding>
+                <marker date="1531815984034" expanded="true" signature="768:1057" ph="CREATE TABLE... IF" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -33,7 +35,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>new PNotify({title:&quot;PNotify&quot;,type:&quot;info&quot;,text:&quot;Welcome. Try hovering over me. You can click things behind me, because I'm non-blocking.&quot;,nonblock:{nonblock:!0},addclass:&quot;dark&quot;,styling:&quot;bootstrap3&quot;,hide:!1,before_close:function(a){return a.update({title:a.options.title+&quot; - Enjoy your Stay&quot;,before_close:null}),a.queueRemove(),!1}})</find>
       <find>buttons</find>
       <find>step2_subtitle</find>
       <find>isModel</find>
@@ -63,6 +64,7 @@
       <find>../images</find>
       <find>saveNewCompression</find>
       <find>logout</find>
+      <find>usermenu</find>
     </findStrings>
     <replaceStrings>
       <replace>../../images</replace>
@@ -108,6 +110,7 @@
         <option value="$PROJECT_DIR$/gui/production/js/modelupload/modelupload_general.js" />
         <option value="$PROJECT_DIR$/gui/production/js/modelupload/modelObj.js" />
         <option value="$PROJECT_DIR$/gui/production/php/pages/modelupload.php" />
+        <option value="$PROJECT_DIR$/gui/production/php/mgr/DbConnection.php" />
       </list>
     </option>
   </component>
@@ -714,12 +717,12 @@
       <workItem from="1531322077191" duration="38000" />
       <workItem from="1531499422184" duration="3635000" />
       <workItem from="1531560462107" duration="54000" />
-      <workItem from="1531815621064" duration="78000" />
+      <workItem from="1531815621064" duration="367000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118273000" />
+    <option name="totallyTimeSpent" value="118562000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -981,13 +984,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gui/production/php/mgr/DbConnection.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="22" column="26" lean-forward="false" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gui/production/php/middlewares/AuthenticationMiddleware.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -1044,6 +1040,16 @@
         <state relative-caret-position="460">
           <caret line="122" column="74" lean-forward="false" selection-start-line="122" selection-start-column="74" selection-end-line="122" selection-end-column="74" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui/production/php/mgr/DbConnection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="50" column="91" lean-forward="false" selection-start-line="50" selection-start-column="91" selection-end-line="50" selection-end-column="91" />
+          <folding>
+            <marker date="1531815984034" expanded="true" signature="768:1057" ph="CREATE TABLE... IF" />
+          </folding>
         </state>
       </provider>
     </entry>

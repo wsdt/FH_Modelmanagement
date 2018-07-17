@@ -24,7 +24,7 @@ class DbConnection
           usr_hashedpassword VARCHAR(500), 
           usr_salt VARCHAR(250), 
           usr_email VARCHAR(250),
-          UNIQUE(usr_username)
+          UNIQUE(usr_username, usr_salt, usr_email)
         );");
 
         $salt = "dsf6sd4f5sd4f65sd4f5";
@@ -48,17 +48,7 @@ class DbConnection
     // #################################################################################
     public function __construct()
     {
-        $this->getDbConnection(false)->exec("CREATE DATABASE IF NOT EXISTS " . DbConnection::$dbName . ";");
-        $this->exec("USE " . DbConnection::$dbName . ";");
-        $this->exec("CREATE TABLE IF NOT EXISTS User (
-            usr_id VARCHAR(250) PRIMARY KEY,
-            usr_username VARCHAR(100) NOT NULL,
-            usr_hashedpassword VARCHAR(250) NOT NULL, 
-            usr_salt VARCHAR(250) NOT NULL,
-            usr_email VARCHAR(500) NOT NULL,
-            UNIQUE (usr_username, usr_email)
-        );");
-
+        $this->getDbConnection(false); // by opening with false default data get's inserted
         $this->closeConnection();
     }
 
