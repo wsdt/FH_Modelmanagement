@@ -15,6 +15,9 @@ class User
     /** Also as usual we use salts to prevent rainbow table attacks etc. */
     private $salt;
 
+    # Used to display db errors
+    public static $response_json = '{"success":true,"msg":"No information available."}';
+
     public function __construct($id, $username, $hashedPassword, $salt, $email)
     {
         $this->setId($id);
@@ -71,15 +74,25 @@ class User
     /** E.g. for registration to provoke exception when user exists already. */
     public function dbInsert($dbCon)
     {
-        $affectedRowCount = $dbCon->exec("INSERT INTO User (usr_id,usr_username,usr_hashedpassword,usr_salt,usr_email) VALUES (
+        $response_json = json_decode(User::$response_json, true);
+        try {
+            $affectedRowCount = $dbCon->exec("INSERT INTO User (usr_id,usr_username,usr_hashedpassword,usr_salt,usr_email) VALUES (
             '" . $this->getId() . "',
             '" . $this->getUsername() . "',
             '" . $this->getHashedPassword() . "',
             '" . $this->getSalt() . "',
-            '".$this->getEmail()."'
+            '" . $this->getEmail() . "'
         );");
+        } catch (PDOException $e) {
+            $response_json["msg"] = $e->getMessage();
+            $response_json["success"] = false;
+            return $response_json;
+        }
 
-        return ($affectedRowCount <= 0) ? false : true;
+        if ($affectedRowCount <= 0) {
+            $response_json["success"] = false;
+        }
+        return $response_json;
     }
 
     public function dbUpdate($dbCon)

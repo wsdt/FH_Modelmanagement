@@ -27,13 +27,14 @@ if (!empty($_POST)) { //only when logging in (so we can also use verifySession i
         } else {
             //Registration
             $salt = User::createNewSalt();
-            if((new User(User::createUniqueId($_POST['userName'],$_POST['clearPassword'],$salt,$_POST['eMail']),
-                $_POST['userName'], User::hashPassword($_POST['clearPassword'],$salt), $salt, $_POST['eMail']))->dbInsert($dbCon)) {
+            $response_json = (new User(User::createUniqueId($_POST['userName'],$_POST['clearPassword'],$salt,$_POST['eMail']),
+                $_POST['userName'], User::hashPassword($_POST['clearPassword'],$salt), $salt, $_POST['eMail']))->dbInsert($dbCon);
+            if($response_json["success"]) {
                 http_response_code(200);
                 echo '{"registrationSuccessful":true}';
             } else {
                 //Registration failed
-                http_response_code(401);
+                header("HTTP/1.1 401 ".$response_json["msg"]);
                 echo '{"loggedInTimestamp":"0"}';
             }
         }

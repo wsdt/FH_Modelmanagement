@@ -66,9 +66,10 @@ function login(elemUsername, elemClearPwd) {
             window.location.href = "./modelupload.php"; //redirect to modelupload page
         })
         .catch(function(error) {
+            console.log(error);
             new PNotify({
                 title: 'Unauthorized',
-                text: 'Username or password is wrong.',
+                text: 'Username or password is wrong ('+error+').',
                 type: 'error',
                 styling: 'bootstrap3'
             });
@@ -103,7 +104,7 @@ function register(elemUsername, elemEmail, elemClearPwd) {
         .catch(function(error) {
             new PNotify({
                 title: 'Registration failed',
-                text: 'Unfortunately, we couldn\'t register your new account.',
+                text: 'Unfortunately, we couldn\'t register your new account. ('+error+')',
                 type: 'error',
                 styling: 'bootstrap3'
             });
