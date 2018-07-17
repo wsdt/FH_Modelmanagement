@@ -20,16 +20,16 @@ class DbConnection
         $anonymousDbCon->exec("CREATE DATABASE IF NOT EXISTS ".DbConnection::$dbName."; USE ".DbConnection::$dbName.";");
         $anonymousDbCon->exec("CREATE TABLE IF NOT EXISTS User (
           usr_id VARCHAR(500) PRIMARY KEY, 
-          usr_username VARCHAR(250), 
-          usr_hashedpassword VARCHAR(500), 
-          usr_salt VARCHAR(250), 
-          usr_email VARCHAR(250),
-          UNIQUE(usr_username, usr_salt, usr_email)
+          usr_username VARCHAR(250) NOT NULL UNIQUE, 
+          usr_hashedpassword VARCHAR(500) NOT NULL UNIQUE, 
+          usr_salt VARCHAR(250) NOT NULL UNIQUE, 
+          usr_email VARCHAR(250) NOT NULL UNIQUE
         );");
 
-        $salt = "dsf6sd4f5sd4f65sd4f5";
-        (new User(User::createUniqueId('test','12345',$salt,'test@test.com'),
-            'test',User::hashPassword('12345',$salt),$salt, 'test@test.com'))->dbReplace($anonymousDbCon);
+        $salt = User::createNewSalt();
+        $clearPwd = "12345"; $email = "test@test.com"; $username = "test";
+        (new User(User::createUniqueId($username,$clearPwd,$salt,$email),
+            $username,User::hashPassword($clearPwd,$salt),$salt, $email))->dbReplace($anonymousDbCon);
     }
 
 

@@ -71,7 +71,7 @@ class User
     /** E.g. for registration to provoke exception when user exists already. */
     public function dbInsert($dbCon)
     {
-        $affectedRowCount = $dbCon->exec("INSERT INTO User (usr_id,usr_username,usr_hashedpassword,usr_salt) VALUES (
+        $affectedRowCount = $dbCon->exec("INSERT INTO User (usr_id,usr_username,usr_hashedpassword,usr_salt,usr_email) VALUES (
             '" . $this->getId() . "',
             '" . $this->getUsername() . "',
             '" . $this->getHashedPassword() . "',

@@ -28,7 +28,7 @@ if (!empty($_POST)) { //only when logging in (so we can also use verifySession i
             //Registration
             $salt = User::createNewSalt();
             if((new User(User::createUniqueId($_POST['userName'],$_POST['clearPassword'],$salt,$_POST['eMail']),
-                $_POST['userName'], $_POST['clearPassword'], $salt, $_POST['eMail']))->dbInsert($dbCon)) {
+                $_POST['userName'], User::hashPassword($_POST['clearPassword'],$salt), $salt, $_POST['eMail']))->dbInsert($dbCon)) {
                 http_response_code(200);
                 echo '{"registrationSuccessful":true}';
             } else {

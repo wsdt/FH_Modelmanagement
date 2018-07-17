@@ -15,10 +15,10 @@
       <file leaf-file-name="DbConnection.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gui/production/php/mgr/DbConnection.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="621">
-              <caret line="50" column="91" lean-forward="false" selection-start-line="50" selection-start-column="91" selection-end-line="50" selection-end-column="91" />
+            <state relative-caret-position="806">
+              <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding>
-                <marker date="1531815984034" expanded="true" signature="768:1057" ph="CREATE TABLE... IF" />
+                <marker date="1531816612291" expanded="true" signature="768:1068" ph="CREATE TABLE... IF" />
               </folding>
             </state>
           </provider>
@@ -103,13 +103,14 @@
         <option value="$PROJECT_DIR$/gui/production/php/AuthenticationMiddleware.php" />
         <option value="$PROJECT_DIR$/gui/production/php/DbConnection.php" />
         <option value="$PROJECT_DIR$/gui/production/php/User.php" />
-        <option value="$PROJECT_DIR$/gui/production/php/middlewares/AuthenticationMiddleware.php" />
         <option value="$PROJECT_DIR$/gui/production/php/pages/login.php" />
         <option value="$PROJECT_DIR$/gui/production/js/modelupload/auth.js" />
         <option value="$PROJECT_DIR$/gui/production/php/mgr/LocalJsonMgr.php" />
         <option value="$PROJECT_DIR$/gui/production/js/modelupload/modelupload_general.js" />
         <option value="$PROJECT_DIR$/gui/production/js/modelupload/modelObj.js" />
         <option value="$PROJECT_DIR$/gui/production/php/pages/modelupload.php" />
+        <option value="$PROJECT_DIR$/gui/production/php/mgr/User.php" />
+        <option value="$PROJECT_DIR$/gui/production/php/middlewares/AuthenticationMiddleware.php" />
         <option value="$PROJECT_DIR$/gui/production/php/mgr/DbConnection.php" />
       </list>
     </option>
@@ -717,12 +718,12 @@
       <workItem from="1531322077191" duration="38000" />
       <workItem from="1531499422184" duration="3635000" />
       <workItem from="1531560462107" duration="54000" />
-      <workItem from="1531815621064" duration="367000" />
+      <workItem from="1531815621064" duration="945000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118562000" />
+    <option name="totallyTimeSpent" value="119140000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -977,20 +978,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gui/production/php/mgr/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="158" column="5" lean-forward="true" selection-start-line="158" selection-start-column="5" selection-end-line="158" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui/production/php/middlewares/AuthenticationMiddleware.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" column="20" lean-forward="false" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gui/production/php/pages/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1983">
@@ -1043,12 +1030,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/gui/production/php/mgr/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+          <folding>
+            <marker date="1531816232291" expanded="true" signature="2519:2822" ph="INSERT INTO User... " />
+            <marker date="1531816232291" expanded="true" signature="2976:3284" ph="UPDATE User... " />
+            <marker date="1531816232291" expanded="true" signature="3460:3516" ph="DELETE FROM User... " />
+            <marker date="1531816232291" expanded="true" signature="3675:3780" ph="SELECT usr_i... User" />
+            <marker date="1531816232291" expanded="true" signature="4262:4375" ph="SELECT usr_i... User" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui/production/php/middlewares/AuthenticationMiddleware.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="32" column="55" lean-forward="true" selection-start-line="32" selection-start-column="55" selection-end-line="32" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gui/production/php/mgr/DbConnection.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="50" column="91" lean-forward="false" selection-start-line="50" selection-start-column="91" selection-end-line="50" selection-end-column="91" />
+        <state relative-caret-position="806">
+          <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding>
-            <marker date="1531815984034" expanded="true" signature="768:1057" ph="CREATE TABLE... IF" />
+            <marker date="1531816612291" expanded="true" signature="768:1068" ph="CREATE TABLE... IF" />
           </folding>
         </state>
       </provider>
