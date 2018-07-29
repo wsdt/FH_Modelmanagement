@@ -1,4 +1,5 @@
 <?php
+/** This file should be placed into the .gitignore (e.g. bc. of dbData) when using REAL VALUES! */
 
 /** Global configuration panel for not language-dependent values. */
 
