@@ -2,13 +2,16 @@
 require_once "../mgr/_conf.php";
 require_once "../mgr/_MGR_FACTORY.php";
 
+//Load languagepack
+$LANG_PACK = _MGR_FACTORY::getMgrLanguage()->getLanguageJson();
+
 /** Receives post request from login form */
 const TAG = "AuthenticationMiddleware: ";
 
 require_once "../classes/User.php";
 
 if (!empty($_POST)) { //only when logging in (so we can also use verifySession independently)
-    $dbCon = _MGR_FACTORY::getFactory()->getMgrDb()->getDbConnection(true);
+    $dbCon = _MGR_FACTORY::getMgrDb()->getDbConnection(true);
     if (!empty($_POST['userName']) && !empty($_POST['clearPassword'])) {
         if (empty($_POST['eMail'])) {
             $loginSuccessful = \classes\User::areUserCredentialsCorrect($dbCon, $_POST['userName'], $_POST['clearPassword']);
@@ -48,17 +51,15 @@ if (!empty($_POST)) { //only when logging in (so we can also use verifySession i
         $newClearPwd = \classes\User::createNewSalt();
 
         $to = $_POST['eMail'];
-        $subject = "FH Kufstein - New password";
+        $subject = $LANG_PACK['pages']['login_php']['lostpwd_recovery']['subject'];
         $message = "<html>
-                <head>Password recovery</head>
+                <head>".$LANG_PACK['pages']['login_php']['lostpwd_recovery']['head']."</head>
                 <body>
-                   <h1>Password recovery</h1>
-                   <p>As you might have lost/forgotten your password, we have sent
-                   you a new pwd here. Please login with your new password.</p>
+                   <h1>".$LANG_PACK['pages']['login_php']['lostpwd_recovery']['head']."</h1>
+                   <p>".$LANG_PACK['pages']['login_php']['lostpwd_recovery']['body_intro']."</p>
                    <strong>".$newClearPwd."</strong>
                    
-                   <p>If you know your password and didn't do this, please contact
-                   the administrator immediately.</p>
+                   <p>".$LANG_PACK['pages']['login_php']['lostpwd_recovery']['body_conclusion']."</p>
                 </body>
             </html>";
         $headers = "MIME-Version: 1.0\r\n".
@@ -81,7 +82,7 @@ if (!empty($_POST)) { //only when logging in (so we can also use verifySession i
             }
         } else {
             //Registration failed
-            header("HTTP/1.1 401 No user with this email address registered.");
+            header("HTTP/1.1 401 ".$LANG_PACK['pages']['login_php']['lostpwd_recovery']['mail_notfound']);
             echo '{"loggedInTimestamp":"0"}';
         }
     } else {

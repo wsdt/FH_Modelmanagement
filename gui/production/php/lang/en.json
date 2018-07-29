@@ -1,6 +1,8 @@
 {
   "general": {
-    "owner":"FH Kufstein"
+	"project_name":"Interreg",
+    "owner":"FH Kufstein",
+	  "copyright_notice": "© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms"
   },
   "pages": {
     "login_php": {
@@ -12,10 +14,50 @@
       "a_login": "Log in",
       "h_lostpwd": "Lost password",
       "lostpwd_login_intro": "Remembering your password?",
-      "copyright_notice": "© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms"
+      "lostpwd_recovery": {
+        "mail_notfound":"No user with this email address registered.",
+        "subject":"FH Kufstein - New password",
+        "head":"Password recovery",
+        "body_intro":"As you might have lost/forgotten your password, we have sent you a new pwd here. Please login with your new password.",
+        "body_conclusion":"If you know your password and didn't do this, please contact the administrator immediately."
+      }
     },
     "modelupload_php": {
-      //TODO
+		"nav":{
+			"profile_welcome":"Welcome,",
+			"page_name":"Modelupload",
+			"section_gen":"General",
+			"profile":"Profile",
+			"settings":"Settings",
+			"help":"Help",
+			"logout":"Log Out",
+			"see_all_alerts":"See All Alerts",
+			"sync":"Synchronize"
+		},
+		"wizard":{
+			"h_modelupload":"Model Upload - Wizard",
+			"h_modelmanagement":"Model Management",
+			"subH_uploadnewmodel":"Upload new model",
+			"descr":"This is a basic wizard for adding new models.",
+			"step":"Step",
+			"step1":{
+				"h":"Search and Select",
+				"descr":"This step focuses on searching for available models. After selecting a model you can add new variations of it.",
+				"thcol_descr":"Description",
+				"thcol_compr":"Compressions",
+				"thcol_status":"Status",
+				"thcol_edit":"Edit"
+			},
+			"step2":{
+				"h":"Upload new compression",
+				"descr":"Drag (multiple) files or upload them manually by clicking onto the dropzone.",
+				"form_license":"License",
+				"form_accesslvl":"Accesslevel",
+				"form_accesslvl_public":"public",
+				"form_accesslvl_visit":"visit",
+				"form_accesslvl_private":"private"
+			}
+		}
     }
   }
 }

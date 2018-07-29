@@ -1,8 +1,14 @@
 <?php
 require_once '../middlewares/AuthenticationMiddleware.php';
 verifySession(false);
-require_once '../mgr/LanguageMgr.php';
+require_once '../mgr/_MGR_FACTORY.php';
 
+//Load languagepack
+$LANG_PACK = _MGR_FACTORY::getMgrLanguage()->getLanguageJson();
+
+function printCopyrightNotice($LANG_PACK) {
+    echo "<div><h1>".$LANG_PACK["general"]["owner"]."</h1><p>".$LANG_PACK["general"]["copyright_notice"]."</p></div>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +20,7 @@ require_once '../mgr/LanguageMgr.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>FH Kufstein</title>
+    <title><?php echo $LANG_PACK["general"]["owner"]; ?></title>
 
     <!-- Bootstrap -->
     <link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -52,7 +58,7 @@ require_once '../mgr/LanguageMgr.php';
         <div class="animate form login_form">
             <section class="login_content">
                 <form name="loginForm">
-                    <h1>Login Form</h1>
+                    <h1><?php echo $LANG_PACK["pages"]["login_php"]["h_loginform"]; ?></h1>
                     <div>
                         <input type="text" class="form-control" placeholder="Username" required name="userName"
                                id="userName"/>
@@ -66,24 +72,21 @@ require_once '../mgr/LanguageMgr.php';
                                 document.getElementById('userName').value, document.getElementById('clearPassword').value);"/>
 
                         <p class="change_link">
-                            <a href="#lostpwd" class="to_register reset_pass"> Lost your password? </a>
+                            <a href="#lostpwd" class="to_register reset_pass"> <?php echo $LANG_PACK["pages"]["login_php"]["lost_pwd"]; ?> </a>
                         </p>
                     </div>
 
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link">New to site?
-                            <a href="#signup" class="to_register"> Create Account </a>
+                        <p class="change_link"><?php echo $LANG_PACK["pages"]["login_php"]["register_intro"]; ?>
+                            <a href="#signup" class="to_register"> <?php echo $LANG_PACK["pages"]["login_php"]["a_register"]; ?> </a>
                         </p>
 
                         <div class="clearfix"></div>
                         <br/>
 
-                        <div>
-                            <h1>FH Kufstein</h1>
-                            <p>© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms</p>
-                        </div>
+                        <?php printCopyrightNotice($LANG_PACK); ?>
                     </div>
                 </form>
             </section>
@@ -92,7 +95,7 @@ require_once '../mgr/LanguageMgr.php';
         <div id="register" class="animate form registration_form">
             <section class="login_content">
                 <form>
-                    <h1>Create Account</h1>
+                    <h1><?php echo $LANG_PACK["pages"]["login_php"]["a_register"]; ?></h1>
                     <div>
                         <input type="text" id="rUserName" class="form-control" placeholder="Username" required=""/>
                     </div>
@@ -112,17 +115,14 @@ require_once '../mgr/LanguageMgr.php';
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link">Already a member ?
-                            <a href="#signin" class="to_register"> Log in </a>
+                        <p class="change_link"><?php echo $LANG_PACK["pages"]["login_php"]["register_login_intro"]; ?>
+                            <a href="#signin" class="to_register"> <?php echo $LANG_PACK["pages"]["login_php"]["a_login"]; ?> </a>
                         </p>
 
                         <div class="clearfix"></div>
                         <br/>
 
-                        <div>
-                            <h1>FH Kufstein</h1>
-                            <p>© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms</p>
-                        </div>
+                        <?php printCopyrightNotice($LANG_PACK); ?>
                     </div>
                 </form>
             </section>
@@ -131,12 +131,12 @@ require_once '../mgr/LanguageMgr.php';
         <div id="lostpwd" class="animate form lostpwd_form">
             <section class="login_content">
                 <form>
-                    <h1>Lost password</h1>
+                    <h1><?php echo $LANG_PACK["pages"]["login_php"]["h_lostpwd"]; ?></h1>
                     <div>
                         <input type="email" id="lEMail" class="form-control" placeholder="Email" required=""/>
                     </div>
                     <div>
-                        <input class="btn btn-default submit" type="button" value="Register" onclick="lostpassword(
+                        <input class="btn btn-default submit" type="button" value="Send mail" onclick="lostpassword(
                             document.getElementById('lEMail').value
                         );"/>
                     </div>
@@ -144,17 +144,14 @@ require_once '../mgr/LanguageMgr.php';
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link">Remembering your password?
-                            <a href="#signin" class="to_register"> Log in </a>
+                        <p class="change_link"><?php echo $LANG_PACK["pages"]["login_php"]["lostpwd_login_intro"]; ?>
+                            <a href="#signin" class="to_register"> <?php echo $LANG_PACK["pages"]["login_php"]["a_login"]; ?> </a>
                         </p>
 
                         <div class="clearfix"></div>
                         <br/>
 
-                        <div>
-                            <h1>FH Kufstein</h1>
-                            <p>© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms</p>
-                        </div>
+                        <?php printCopyrightNotice($LANG_PACK); ?>
                     </div>
                 </form>
             </section>

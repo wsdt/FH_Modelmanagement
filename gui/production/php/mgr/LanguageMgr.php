@@ -15,7 +15,7 @@ namespace mgr {
         private function loadLanguageJson()
         {
             if (empty($this->languageJson)) {
-                $this->languageJson = json_decode(file_get_contents("lang/" . strtolower(LANG) . ".json"));
+                $this->languageJson = json_decode(file_get_contents("../lang/" . strtolower(LANG) . ".json"),true);
             }
             return $this->languageJson;
         }

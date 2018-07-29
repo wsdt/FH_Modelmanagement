@@ -1,6 +1,11 @@
 <?php
     require_once '../middlewares/AuthenticationMiddleware.php';
     verifySession(true);
+    require_once '../mgr/_MGR_FACTORY.php';
+
+    //Load languagepack
+    $LANG_PACK = _MGR_FACTORY::getMgrLanguage()->getLanguageJson();
+
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +18,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>FH Kufstein</title>
+    <title><?php echo $LANG_PACK["general"]["owner"];?></title>
 
     <!-- Bootstrap -->
     <link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -47,7 +52,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="../../index.html" class="site_title"><i class="fa fa-home"></i> <span>Interreg</span></a>
+                    <a href="../../index.html" class="site_title"><i class="fa fa-home"></i> <span><?php echo $LANG_PACK["general"]["project_name"];?></span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -58,7 +63,7 @@
                         <img src="../../images/user/<?php echo $_SESSION['userName']; ?>.jpg" alt="..." class="img-circle profile_img">
                     </div>
                     <div class="profile_info">
-                        <span>Welcome,</span>
+                        <span><?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["profile_welcome"];?></span>
                         <h2><?php echo $_SESSION['userName']; ?></h2>
                     </div>
                 </div>
@@ -69,9 +74,9 @@
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                     <div class="menu_section">
-                        <h3>General</h3>
+                        <h3><?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["section_gen"];?></h3>
                         <ul class="nav side-menu">
-                           <li class="active"><a><i class="fa fa-home"></i> Modelupload</a></li>
+                           <li class="active"><a><i class="fa fa-home"></i> <?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["page_name"];?></a></li>
                         </ul>
                     </div>
                 </div>
@@ -112,15 +117,15 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;"> Profile</a></li>
+                                <li><a href="javascript:;"> <?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["profile"];?></a></li>
                                 <li>
                                     <a href="javascript:;">
                                         <span class="badge bg-red pull-right">50%</span>
-                                        <span>Settings</span>
+                                        <span><?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["settings"];?></span>
                                     </a>
                                 </li>
-                                <li><a href="javascript:;">Help</a></li>
-                                <li><a href="login.php" onclick="logout()"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                <li><a href="javascript:;"><?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["help"];?></a></li>
+                                <li><a href="login.php" onclick="logout()"><i class="fa fa-sign-out pull-right"></i> <?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["logout"];?></a></li>
                             </ul>
                         </li>
 
@@ -146,7 +151,7 @@
                                 <li>
                                     <div class="text-center">
                                         <a>
-                                            <strong>See All Alerts</strong>
+                                            <strong><?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["see_all_alerts"];?></strong>
                                             <i class="fa fa-angle-right"></i>
                                         </a>
                                     </div>
@@ -164,7 +169,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3>Model Upload - Wizard</h3>
+                        <h3><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["h_modelupload"];?></h3>
                     </div>
 
                     <!-- if you want you could here place the search bar -->
@@ -176,8 +181,8 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>Model Management
-                                    <small>Upload new model</small>
+                                <h2><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["h_modelmanagement"];?>
+                                    <small><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["subH_uploadnewmodel"];?></small>
                                 </h2>
                                 <ul class="nav navbar-right panel_toolbox">
                                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -186,7 +191,7 @@
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                            aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#" title="Reloads all data" onclick="printAllModelTableRows('#queriedmodels', ModelObj.getAllLocally());">Synchronize</a> <!-- TODO: Place here synchronize/refresh logic -->
+                                            <li><a href="#" title="Reloads all data" onclick="printAllModelTableRows('#queriedmodels', ModelObj.getAllLocally());"><?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["sync"];?></a> <!-- TODO: Place here synchronize/refresh logic -->
                                             </li>
                                         </ul>
                                     </li>
@@ -199,15 +204,15 @@
 
 
                                 <!-- Smart Wizard -->
-                                <p>This is a basic wizard for adding new models.</p>
+                                <p><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["descr"];?></p>
                                 <div id="wizard" class="form_wizard wizard_horizontal">
                                     <ul class="wizard_steps">
                                         <li>
                                             <a href="#step-1">
                                                 <span class="step_no">1</span>
                                                 <span class="step_descr">
-                                              Step 1<br/>
-                                              <small>Search and Select</small>
+                                              <?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step"];?> 1<br/>
+                                              <small><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step1"]["h"];?></small>
                                           </span>
                                             </a>
                                         </li>
@@ -215,16 +220,15 @@
                                             <a href="#step-2">
                                                 <span class="step_no">2</span>
                                                 <span class="step_descr">
-                                              Step 2<br/>
-                                              <small>Upload new compression</small>
+                                              <?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step"];?> 2<br/>
+                                              <small><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step2"]["h"];?></small>
                                           </span>
                                             </a>
                                         </li>
                                     </ul>
                                     <div id="step-1">
-                                        <h2 class="StepTitle">Step 1: Search and Select</h2>
-                                        <p>This step focuses on searching for available models. After selecting a model
-                                            you can add new variations of it.</p>
+                                        <h2 class="StepTitle"><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step"];?> 1: <?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step1"]["h"];?></h2>
+                                        <p><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step1"]["descr"];?></p>
                                         <div class="title_right">
                                             <div class="col-md-5 col-sm-5 col-xs-12 form-group top_search">
                                                 <div class="input-group">
@@ -242,10 +246,10 @@
                                             <thead>
                                             <tr>
                                                 <th style="width: 1%">#</th>
-                                                <th style="width: 20%">Description</th>
-                                                <th>Compressions</th>
-                                                <th>Status</th>
-                                                <th style="width: 20%">#Edit</th>
+                                                <th style="width: 20%"><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step1"]["thcol_descr"];?></th>
+                                                <th><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step1"]["thcol_compr"];?></th>
+                                                <th><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step1"]["thcol_status"];?></th>
+                                                <th style="width: 20%">#<?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step1"]["thcol_edit"];?></th>
                                             </tr>
                                             </thead>
                                             <tbody id="queriedmodels"><!-- ID necessary in modelupload_general.js / Just print the whole result set now. -->
@@ -255,21 +259,21 @@
                                     </div>
                                     <div id="step-2">
                                         <!-- ID used for updating with TrippleUUID (usability) -->
-                                        <h2 class="StepTitle" id="step2_title">Step 2: Upload new compression</h2>
-                                        <p>Drag (multiple) files or upload them manually by clicking onto the dropzone.</p>
+                                        <h2 class="StepTitle" id="step2_title"><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step"];?> 2: <?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step2"]["h"];?></h2>
+                                        <p><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step2"]["descr"];?></p>
 
                                         <form class="form-horizontal form-label-left">
                                             <div class="form-group">
-                                                <label>License</label>
+                                                <label><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step2"]["form_license"];?></label>
                                                 <!-- If I know which data to place here I would make something more special here -->
                                                 <input type="text" id="license" class="form-control" placeholder="Enter license">
                                             </div>
                                             <div class="form-group">
-                                                <label for="accessLevels">Accesslevel</label>
+                                                <label for="accessLevels"><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step2"]["form_accesslvl"];?></label>
                                                 <select id="accessLevels" class="form-control" required>
-                                                    <option value="public">public</option>
-                                                    <option value="visit">visit</option>
-                                                    <option value="private">private</option>
+                                                    <option value="public"><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step2"]["form_accesslvl_public"];?></option>
+                                                    <option value="visit"><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step2"]["form_accesslvl_visit"];?></option>
+                                                    <option value="private"><?php echo $LANG_PACK["pages"]["modelupload_php"]["wizard"]["step2"]["form_accesslvl_private"];?></option>
                                                 </select>
                                             </div>
                                         </form>

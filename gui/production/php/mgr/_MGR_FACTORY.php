@@ -3,39 +3,31 @@
 //SINGLETON and FACTORY PATTERN
 class _MGR_FACTORY
 {
-    private static $SELF_REF;
-    private $mgr_language;
-    private $mgr_db;
-    private $mgr_localJson;
+    private static $mgr_language;
+    private static $mgr_db;
+    private static $mgr_localJson;
 
-    public static function getFactory() {
-        if (empty(_MGR_FACTORY::$SELF_REF)) {
-            _MGR_FACTORY::$SELF_REF = new _MGR_FACTORY();
-        }
-        return _MGR_FACTORY::$SELF_REF;
-    }
-
-    public function getMgrLanguage() {
+    public static function getMgrLanguage() {
         require_once "LanguageMgr.php";
-        if (empty($this->mgr_language)) {
-            $this->mgr_language = new mgr\LanguageMgr();
+        if (empty(_MGR_FACTORY::$mgr_language)) {
+            _MGR_FACTORY::$mgr_language = new mgr\LanguageMgr();
         }
-        return $this->mgr_language;
+        return _MGR_FACTORY::$mgr_language;
     }
 
-    public function getMgrDb() {
+    public static function getMgrDb() {
         require_once "DbMgr.php";
-        if (empty($this->mgr_db)) {
-            $this->mgr_db = new mgr\DbMgr();
+        if (empty(_MGR_FACTORY::$mgr_db)) {
+            _MGR_FACTORY::$mgr_db = new mgr\DbMgr();
         }
-        return $this->mgr_db;
+        return _MGR_FACTORY::$mgr_db;
     }
 
-    public function getMgrLocalJson() {
+    public static function getMgrLocalJson() {
         require_once "LocalJsonMgr.php";
-        if (empty($this->mgr_localJson)) {
-            $this->mgr_localJson = new mgr\LocalJsonMgr();
+        if (empty(_MGR_FACTORY::$mgr_localJson)) {
+            _MGR_FACTORY::$mgr_localJson = new mgr\LocalJsonMgr();
         }
-        return $this->mgr_localJson;
+        return _MGR_FACTORY::$mgr_localJson;
     }
 }
