@@ -37,7 +37,6 @@ function logout() {
                 type: 'error',
                 styling: 'bootstrap3'
             });
-
         });
 }
 
@@ -153,8 +152,4 @@ function lostpassword(emailVal) {
                 styling: 'bootstrap3'
             });
         });
-}
-
-function createlostpwdform() {
-
 }

@@ -1,0 +1,21 @@
+{
+  "general": {
+    "owner":"FH Kufstein"
+  },
+  "pages": {
+    "login_php": {
+      "h_loginform": "Login form",
+      "lost_pwd": "Lost your password?",
+      "register_intro": "New to site?",
+      "a_register": "Create Account",
+      "register_login_intro": "Already a member ?",
+      "a_login": "Log in",
+      "h_lostpwd": "Lost password",
+      "lostpwd_login_intro": "Remembering your password?",
+      "copyright_notice": "© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms"
+    },
+    "modelupload_php": {
+      //TODO
+    }
+  }
+}

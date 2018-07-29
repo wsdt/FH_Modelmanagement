@@ -1,16 +1,17 @@
 <?php
+require_once "../mgr/_conf.php";
+require_once "../mgr/_MGR_FACTORY.php";
+
 /** Receives post request from login form */
 const TAG = "AuthenticationMiddleware: ";
-const SESSION_EXPIRATION = 10000; //when should session expire (seconds)
 
-require_once "../mgr/DbConnection.php";
-require_once "../mgr/User.php";
+require_once "../classes/User.php";
 
 if (!empty($_POST)) { //only when logging in (so we can also use verifySession independently)
-    $dbCon = (new DbConnection())->getDbConnection(true);
+    $dbCon = _MGR_FACTORY::getFactory()->getMgrDb()->getDbConnection(true);
     if (!empty($_POST['userName']) && !empty($_POST['clearPassword'])) {
         if (empty($_POST['eMail'])) {
-            $loginSuccessful = User::areUserCredentialsCorrect($dbCon, $_POST['userName'], $_POST['clearPassword']);
+            $loginSuccessful = \classes\User::areUserCredentialsCorrect($dbCon, $_POST['userName'], $_POST['clearPassword']);
             if ($loginSuccessful) {
                 //Set session etc. and redirect
                 if (!session_id()) @ session_start(); //NO OUTPUT BEFORE
@@ -25,9 +26,9 @@ if (!empty($_POST)) { //only when logging in (so we can also use verifySession i
             }
         } else {
             //Registration
-            $salt = User::createNewSalt();
-            $response_json = (new User(User::createUniqueId($_POST['userName'],$_POST['clearPassword'],$salt,$_POST['eMail']),
-                $_POST['userName'], User::hashPassword($_POST['clearPassword'],$salt), $salt, $_POST['eMail']))->dbInsert($dbCon);
+            $salt = \classes\User::createNewSalt();
+            $response_json = (new \classes\User(\classes\User::createUniqueId($_POST['userName'],$_POST['clearPassword'],$salt,$_POST['eMail']),
+                $_POST['userName'], \classes\User::hashPassword($_POST['clearPassword'],$salt), $salt, $_POST['eMail']))->dbInsert($dbCon);
             if($response_json["success"]) {
                 http_response_code(200);
                 echo '{"registrationSuccessful":true}';
@@ -44,7 +45,7 @@ if (!empty($_POST)) { //only when logging in (so we can also use verifySession i
         echo '{"loggedInTimestamp":"0"}';
     } else if (!empty($_POST["eMail"])) {
         // lost password
-        $newClearPwd = User::createNewSalt();
+        $newClearPwd = \classes\User::createNewSalt();
 
         $to = $_POST['eMail'];
         $subject = "FH Kufstein - New password";
@@ -64,7 +65,7 @@ if (!empty($_POST)) { //only when logging in (so we can also use verifySession i
             "Content-type:text/html;charset=UTF-8\r\n".
             "From: <pwdmgr@fh-kufstein.at>\r\n";
 
-        $user = User::dbQueryWithEmail($dbCon,$_POST["eMail"]);
+        $user = \classes\User::dbQueryWithEmail($dbCon,$_POST["eMail"]);
         if (!empty($user)) {
             # Send the mail
             if(!@mail($to, $subject, $message, $headers)) {
@@ -93,7 +94,7 @@ if (!empty($_POST)) { //only when logging in (so we can also use verifySession i
 function verifySession($toLoginPage)
 {
     if (!session_id()) @ session_start(); //NO OUTPUT BEFORE
-    $isSessionInValid = (empty($_SESSION) || !isset($_SESSION['loggedInTimestamp']) || (time() - $_SESSION['loggedInTimestamp']) > SESSION_EXPIRATION) || !isset($_SESSION['userName']);
+    $isSessionInValid = (empty($_SESSION) || !isset($_SESSION['loggedInTimestamp']) || (time() - $_SESSION['loggedInTimestamp']) > \SESSION\SESSION_EXPIRATION) || !isset($_SESSION['userName']);
 
     if ($isSessionInValid && $toLoginPage) {
         //currently is valid (add more validations)

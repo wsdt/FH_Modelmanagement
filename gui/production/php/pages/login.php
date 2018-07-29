@@ -1,6 +1,8 @@
 <?php
 require_once '../middlewares/AuthenticationMiddleware.php';
 verifySession(false);
+require_once '../mgr/LanguageMgr.php';
+
 ?>
 
 <!DOCTYPE html>
