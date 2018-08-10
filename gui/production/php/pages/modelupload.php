@@ -124,7 +124,12 @@
                                         <span><?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["settings"];?></span>
                                     </a>
                                 </li>
-                                <li><a href="javascript:;"><?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["help"];?></a></li>
+                                <li><a onclick=" new PNotify({
+                                        title: 'Helptext missing',
+                                        text: 'Documentation in progress, but not available.',
+                                        type: 'info',
+                                        styling: 'bootstrap3'
+                                    });"><?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["help"];?></a></li>
                                 <li><a href="login.php" onclick="logout()"><i class="fa fa-sign-out pull-right"></i> <?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["logout"];?></a></li>
                             </ul>
                         </li>
@@ -191,7 +196,15 @@
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                            aria-expanded="false"><i class="fa fa-wrench"></i></a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#" title="Reloads all data" onclick="printAllModelTableRows('#queriedmodels', ModelObj.getAllLocally());"><?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["sync"];?></a> <!-- TODO: Place here synchronize/refresh logic -->
+                                            <li><a href="#" title="Reloads all data"
+                                                   onclick="printAllModelTableRows('#queriedmodels', ModelObj.getAllLocally());
+                                                             new PNotify({
+                                                                            title: 'Synchronized',
+                                                                            text: 'Models successfully synchronized.',
+                                                                            type: 'success',
+                                                                            styling: 'bootstrap3'
+                                                                        });
+                                                         "><?php echo $LANG_PACK["pages"]["modelupload_php"]["nav"]["sync"];?></a>
                                             </li>
                                         </ul>
                                     </li>

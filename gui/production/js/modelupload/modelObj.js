@@ -172,8 +172,9 @@ ModelObj.getAllLocally = function() {
                 console.log("PHP Row json: "+JSON.stringify(res));
 
                 let allModelObjs = [];
-                for (obj of res) {
+                for (let obj of res) {
                     allModelObjs.push(new ModelObj(obj));
+                    console.log("ModelObj:getAllLocally: Parsed modelobj -> "+JSON.stringify(obj));
                 }
                 return allModelObjs;
             }

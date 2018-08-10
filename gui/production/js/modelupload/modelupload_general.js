@@ -105,26 +105,32 @@ function selectModel(objectTrippleUUID) {
  *
  *      --> Search happens on Server and resultset gets delivered so in production just print resultSet with printAllTableRows()*/
 function searchInResultSet(searchTerm, resultSet) {
-    let filteredResultSet = [];
+    console.log("search: "+resultSet+"//"+JSON.stringify(resultSet));
 
+    let filteredResultSet = [];
     if (resultSet !== undefined && resultSet !== null && searchTerm !== undefined && searchTerm !== null) {
         //Result set is a promise!
         resultSet.then(function(resultSetValue) {
+            console.log("search:: "+resultSetValue+"//"+JSON.stringify(resultSetValue));
+
             for (let i = 0; i < resultSetValue.length; i++) {
+                console.log('search: '+searchTerm+"//"+JSON.stringify(resultSet)+JSON.stringify(resultSetValue[i]).toLowerCase()+"//"+JSON.stringify(resultSetValue).toLowerCase());
+
+
                 //console.log('searchInResultSet:Search->'+JSON.stringify(resultSet[i]).toLowerCase()+" searching for "+searchTerm.toString().toLowerCase());
-                if (JSON.stringify(resultSetValue[i]).toLowerCase().indexOf(resultSetValue.toString().toLowerCase()) !== (-1)) {
+                  if (JSON.stringify(resultSetValue[i]).toLowerCase().indexOf(resultSetValue.toString().toLowerCase()) !== (-1)) {
                     //found sth
                     console.log('searchInResultSet: Found entry->' + resultSetValue[i]);
                     filteredResultSet.push(resultSetValue[i]);
                 }
             }
-            console.log('searchInResultSet: Length of resultSet->' + resultSetValue.length);
+            console.log('searchInResultSet: Length of resultSet->' + filteredResultSet.length);
         });
 
     } else {
         console.warn('searchInResultSet: Resultset or searchterm equals null or undefined.');
     }
-    console.log('searchInResultSet: searchResults->' + filteredResultSet);
+    console.log('searchInResultSet: searchResults->' + JSON.stringify(filteredResultSet));
     return filteredResultSet;
 }
 
