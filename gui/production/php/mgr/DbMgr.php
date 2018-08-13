@@ -20,15 +20,17 @@ namespace mgr {
           usr_username VARCHAR(250) NOT NULL UNIQUE, 
           usr_hashedpassword VARCHAR(500) NOT NULL UNIQUE, 
           usr_salt VARCHAR(250) NOT NULL UNIQUE, 
-          usr_email VARCHAR(250) NOT NULL UNIQUE
+          usr_email VARCHAR(250) NOT NULL UNIQUE,
+          usr_pref_lang VARCHAR(10) NOT NULL
         );");
 
             $salt = \classes\User::createNewSalt();
             $clearPwd = "12345";
             $email = "test@test.com";
             $username = "test";
+            require_once '_conf.php';
             (new \classes\User(\classes\User::createUniqueId($username, $clearPwd, $salt, $email),
-                $username, \classes\User::hashPassword($clearPwd, $salt), $salt, $email))->dbReplace($anonymousDbCon);
+                $username, \classes\User::hashPassword($clearPwd, $salt), $salt, $email, DEFAULT_LANG))->dbReplace($anonymousDbCon);
         }
 
 

@@ -6,7 +6,7 @@
 /** Preconfigured json in txt>lang>*.json will be loaded.
  E.g. for "en" a file named "en.json" (not case sensitive) will be loaded.*/
 namespace { //global namespace
-    const LANG = "en";
+    const DEFAULT_LANG = "en";
 }
 
 /** In how many seconds should the session expire? (user get's logged out automatically after that time)*/

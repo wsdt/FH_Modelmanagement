@@ -1,4 +1,6 @@
 <?php
+if (!session_id()) @ session_start(); //NO OUTPUT BEFORE
+
 require_once "../mgr/_conf.php";
 require_once "../mgr/_MGR_FACTORY.php";
 

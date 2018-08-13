@@ -1,6 +1,12 @@
 <?php
 
 namespace classes {
+
+    use mgr\LanguageMgr;
+
+    require_once '../mgr/_conf.php';
+    require_once '../mgr/LanguageMgr.php';
+
     class User
     {
         /** User Id which identifies the user accross languages etc. (cleaner) */
@@ -15,17 +21,21 @@ namespace classes {
         private $hashedPassword;
         /** Also as usual we use salts to prevent rainbow table attacks etc. */
         private $salt;
+        /** User preferences ------------------------------------
+        -> User language (displaying language of contents) */
+        private $pref_lang;
 
         # Used to display db errors
         public static $response_json = '{"success":true,"msg":"No information available."}';
 
-        public function __construct($id, $username, $hashedPassword, $salt, $email)
+        public function __construct($id, $username, $hashedPassword, $salt, $email, $pref_Lang)
         {
             $this->setId($id);
             $this->setUsername($username);
             $this->setHashedPassword($hashedPassword);
             $this->setSalt($salt);
             $this->setEmail($email);
+            $this->setPref_Lang($pref_Lang);
         }
 
         public static function createUniqueId($userName, $clearPassword, $salt, $email)
@@ -66,12 +76,13 @@ namespace classes {
         //DB CRUD
         public function dbReplace($dbCon)
         {
-            $affectedRowCount = $dbCon->exec("REPLACE INTO User (usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email) VALUES (
+            $affectedRowCount = $dbCon->exec("REPLACE INTO User (usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email, usr_pref_lang) VALUES (
             '" . $this->getId() . "',
             '" . $this->getUsername() . "',
             '" . $this->getHashedPassword() . "',
             '" . $this->getSalt() . "',
-            '" . $this->getEmail() . "'
+            '" . $this->getEmail() . "',
+            '". $this->getPref_Lang()."'
         );");
 
             return ($affectedRowCount <= 0) ? false : true;
@@ -82,12 +93,13 @@ namespace classes {
         {
             $response_json = json_decode(User::$response_json, true);
             try {
-                $affectedRowCount = $dbCon->exec("INSERT INTO User (usr_id,usr_username,usr_hashedpassword,usr_salt,usr_email) VALUES (
+                $affectedRowCount = $dbCon->exec("INSERT INTO User (usr_id,usr_username,usr_hashedpassword,usr_salt,usr_email,usr_pref_lang) VALUES (
             '" . $this->getId() . "',
             '" . $this->getUsername() . "',
             '" . $this->getHashedPassword() . "',
             '" . $this->getSalt() . "',
-            '" . $this->getEmail() . "'
+            '" . $this->getEmail() . "',
+            '".$this->getPref_Lang()."'
         );");
             } catch (PDOException $e) {
                 $response_json["msg"] = $e->getMessage();
@@ -108,7 +120,8 @@ namespace classes {
             usr_username = '" . $this->getUsername() . "',
             usr_hashedpassword = '" . $this->getHashedPassword() . "',
             usr_salt = '" . $this->getSalt() . "',
-            usr_email = '" . $this->getEmail() . "' WHERE usr_id = " . $this->getId() . ";");
+            usr_email = '" . $this->getEmail() . "',
+             usr_pref_lang = '".$this->getPref_Lang()."' WHERE usr_id = " . $this->getId() . ";");
 
             return ($affectedRowCount <= 0) ? false : true;
         }
@@ -122,9 +135,9 @@ namespace classes {
 
         public static function dbQuery($dbCon, $userId)
         {
-            foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email FROM User WHERE usr_id='" . $userId . "';") as $row) {
+            foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email, usr_pref_lang FROM User WHERE usr_id='" . $userId . "';") as $row) {
                 //return first (and should be only row/user which is returned from sql)
-                return new User($row['usr_id'], $row['usr_username'], $row['usr_hashedpassword'], $row['usr_salt'], $row['usr_email']);
+                return new User($row['usr_id'], $row['usr_username'], $row['usr_hashedpassword'], $row['usr_salt'], $row['usr_email'], $row['usr_pref_lang']);
             }
             echo "User::dbQuery: Could not fetch user with id: " . $userId;
             return null;
@@ -133,9 +146,9 @@ namespace classes {
         //possible, bc. username is unique in sql
         public static function dbQueryWithUsername($dbCon, $userName)
         {
-            foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email FROM User WHERE usr_username='" . $userName . "';") as $row) {
+            foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email, usr_pref_lang FROM User WHERE usr_username='" . $userName . "';") as $row) {
                 //return firdst (and should be only row/user which is returned from sql)
-                return new User($row['usr_id'], $row['usr_username'], $row['usr_hashedpassword'], $row['usr_salt'], $row['usr_email']);
+                return new User($row['usr_id'], $row['usr_username'], $row['usr_hashedpassword'], $row['usr_salt'], $row['usr_email'], $row['usr_pref_lang']);
             }
             echo "<p>User::dbQuery: Could not fetch user with name: " . $userName . "</p>";
             return null;
@@ -144,9 +157,9 @@ namespace classes {
         //possible, bc. username is unique in sql
         public static function dbQueryWithEmail($dbCon, $email)
         {
-            foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email FROM User WHERE usr_email='" . $email . "';") as $row) {
+            foreach ($dbCon->query("SELECT usr_id, usr_username, usr_hashedpassword, usr_salt, usr_email, usr_pref_lang FROM User WHERE usr_email='" . $email . "';") as $row) {
                 //return firdst (and should be only row/user which is returned from sql)
-                return new User($row['usr_id'], $row['usr_username'], $row['usr_hashedpassword'], $row['usr_salt'], $row['usr_email']);
+                return new User($row['usr_id'], $row['usr_username'], $row['usr_hashedpassword'], $row['usr_salt'], $row['usr_email'], $row['usr_pref_lang']);
             }
             echo "<p>User::dbQuery: Could not fetch user with mail: " . $email . "</p>";
             return null;
@@ -202,6 +215,16 @@ namespace classes {
         public function getEmail()
         {
             return $this->email;
+        }
+        public function getPref_Lang() {
+            return $this->pref_lang;
+        }
+        public function setPref_Lang($pref_Lang) {
+            if (!LanguageMgr::isLanguageSupported($pref_Lang)) {
+                $this->pref_lang = DEFAULT_LANG;
+            } else {
+                $this->pref_lang = $pref_Lang;
+            }
         }
     }
 }
