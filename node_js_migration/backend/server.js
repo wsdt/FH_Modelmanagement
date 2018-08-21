@@ -1,13 +1,12 @@
-const mod_express = require('express');
-const express_app = mod_express();
+const express_app = require('express')();
+let https_server = setup_443();
 
 /* SERVER CONFIGURATION ***********************************/
 /** If true, then all requests to 80 get redirected to 443. */
 const HTTPS_REDIRECT = true;
 
 
-// Set up server ++++++++++++++++++++++++++
-setup_443();
+// Set up other ports than 443 ++++++++++++++++++++++++++
 if (HTTPS_REDIRECT) {
     setup_80();
 }
@@ -37,9 +36,10 @@ function setup_443() {
         passphrase: con_secret_pwd
     };
 
-    mod_https.createServer(options, express_app).listen(443);
     console.log('server.js:setup_443: Port 443 setup done.');
+    return mod_https.createServer(options, express_app).listen(443);
 }
+
 
 // Export to other files (to export multiple see: https://stackoverflow.com/questions/8595509/how-do-you-share-constants-in-nodejs-modules)
 module.exports = express_app;

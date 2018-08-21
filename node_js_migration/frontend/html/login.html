@@ -6,9 +6,7 @@ require_once '../mgr/_MGR_FACTORY.php';
 //Load languagepack
 $LANG_PACK = _MGR_FACTORY::getMgrLanguage()->getLanguageJson();
 
-function printCopyrightNotice($LANG_PACK) {
-    echo "<div><h1>".$LANG_PACK["general"]["owner"]."</h1><p>".$LANG_PACK["general"]["copyright_notice"]."</p></div>";
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +18,7 @@ function printCopyrightNotice($LANG_PACK) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title><?php echo $LANG_PACK["general"]["owner"]; ?></title>
+    <title>${translate("Interreg")}</title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -44,7 +42,49 @@ function printCopyrightNotice($LANG_PACK) {
 
     <style>
         /* Add lost pwd form as it is not considered in bootstrap */
-        .lostpwd_form{position:absolute;top:0;width:100%}.lostpwd_form{z-index:21;opacity:0;width:100%}.login_form{z-index:22}#signin:target~.login_wrapper .login_form,#lostpwd:target~.login_wrapper .lostpwd_form{z-index:22;animation-name:fadeInLeft;animation-delay:.1s}#signin:target~.login_wrapper .lostpwd_form,#lostpwd:target~.login_wrapper .login_form{animation-name:fadeOutLeft}.animate{-webkit-animation-duration:.5s;-webkit-animation-timing-function:ease;-webkit-animation-fill-mode:both;-moz-animation-duration:.5s;-moz-animation-timing-function:ease;-moz-animation-fill-mode:both;-o-animation-duration:.5s;-o-animation-timing-function:ease;-o-animation-fill-mode:both;-ms-animation-duration:.5s;-ms-animation-timing-function:ease;-ms-animation-fill-mode:both;animation-duration:.5s;animation-timing-function:ease;animation-fill-mode:both}
+        .lostpwd_form {
+            position: absolute;
+            top: 0;
+            width: 100%
+        }
+
+        .lostpwd_form {
+            z-index: 21;
+            opacity: 0;
+            width: 100%
+        }
+
+        .login_form {
+            z-index: 22
+        }
+
+        #signin:target ~ .login_wrapper .login_form, #lostpwd:target ~ .login_wrapper .lostpwd_form {
+            z-index: 22;
+            animation-name: fadeInLeft;
+            animation-delay: .1s
+        }
+
+        #signin:target ~ .login_wrapper .lostpwd_form, #lostpwd:target ~ .login_wrapper .login_form {
+            animation-name: fadeOutLeft
+        }
+
+        .animate {
+            -webkit-animation-duration: .5s;
+            -webkit-animation-timing-function: ease;
+            -webkit-animation-fill-mode: both;
+            -moz-animation-duration: .5s;
+            -moz-animation-timing-function: ease;
+            -moz-animation-fill-mode: both;
+            -o-animation-duration: .5s;
+            -o-animation-timing-function: ease;
+            -o-animation-fill-mode: both;
+            -ms-animation-duration: .5s;
+            -ms-animation-timing-function: ease;
+            -ms-animation-fill-mode: both;
+            animation-duration: .5s;
+            animation-timing-function: ease;
+            animation-fill-mode: both
+        }
     </style>
 </head>
 
@@ -58,7 +98,7 @@ function printCopyrightNotice($LANG_PACK) {
         <div class="animate form login_form">
             <section class="login_content">
                 <form name="loginForm">
-                    <h1><?php echo $LANG_PACK["pages"]["login_php"]["h_loginform"]; ?></h1>
+                    <h1>${translate("Login form")}</h1>
                     <div>
                         <input type="text" class="form-control" placeholder="Username" required name="userName"
                                id="userName"/>
@@ -72,21 +112,22 @@ function printCopyrightNotice($LANG_PACK) {
                                 document.getElementById('userName').value, document.getElementById('clearPassword').value);"/>
 
                         <p class="change_link">
-                            <a href="#lostpwd" class="to_register reset_pass"> <?php echo $LANG_PACK["pages"]["login_php"]["lost_pwd"]; ?> </a>
+                            <a href="#lostpwd" class="to_register reset_pass">${translate("Lost your password?")}</a>
                         </p>
                     </div>
 
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link"><?php echo $LANG_PACK["pages"]["login_php"]["register_intro"]; ?>
-                            <a href="#signup" class="to_register"> <?php echo $LANG_PACK["pages"]["login_php"]["a_register"]; ?> </a>
+                        <p class="change_link">${translate("New to site?")}
+                            <a href="#signup" class="to_register"> ${translate("Create Account")} </a>
                         </p>
 
                         <div class="clearfix"></div>
                         <br/>
 
-                        <?php printCopyrightNotice($LANG_PACK); ?>
+                        <div><h1>${translate("Interreg")}</h1>
+                            <p>${translate("© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms")}</p></div>
                     </div>
                 </form>
             </section>
@@ -95,7 +136,7 @@ function printCopyrightNotice($LANG_PACK) {
         <div id="register" class="animate form registration_form">
             <section class="login_content">
                 <form>
-                    <h1><?php echo $LANG_PACK["pages"]["login_php"]["a_register"]; ?></h1>
+                    <h1>${translate("Create Account")}</h1>
                     <div>
                         <input type="text" id="rUserName" class="form-control" placeholder="Username" required=""/>
                     </div>
@@ -115,14 +156,15 @@ function printCopyrightNotice($LANG_PACK) {
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link"><?php echo $LANG_PACK["pages"]["login_php"]["register_login_intro"]; ?>
-                            <a href="#signin" class="to_register"> <?php echo $LANG_PACK["pages"]["login_php"]["a_login"]; ?> </a>
+                        <p class="change_link">${translate("Already a member?")}
+                            <a href="#signin" class="to_register"> ${translate("Log in")} </a>
                         </p>
 
                         <div class="clearfix"></div>
                         <br/>
 
-                        <?php printCopyrightNotice($LANG_PACK); ?>
+                        <div><h1>${translate("Interreg")}</h1>
+                            <p>${translate("© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms")}</p></div>
                     </div>
                 </form>
             </section>
@@ -131,7 +173,7 @@ function printCopyrightNotice($LANG_PACK) {
         <div id="lostpwd" class="animate form lostpwd_form">
             <section class="login_content">
                 <form>
-                    <h1><?php echo $LANG_PACK["pages"]["login_php"]["h_lostpwd"]; ?></h1>
+                    <h1>${translate("Password recovery")}</h1>
                     <div>
                         <input type="email" id="lEMail" class="form-control" placeholder="Email" required=""/>
                     </div>
@@ -144,14 +186,16 @@ function printCopyrightNotice($LANG_PACK) {
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link"><?php echo $LANG_PACK["pages"]["login_php"]["lostpwd_login_intro"]; ?>
-                            <a href="#signin" class="to_register"> <?php echo $LANG_PACK["pages"]["login_php"]["a_login"]; ?> </a>
+                        <p class="change_link">${translate("Remembering your password?")}
+                            <a href="#signin"
+                               class="to_register"> ${translate("Log in")} </a>
                         </p>
 
                         <div class="clearfix"></div>
                         <br/>
 
-                        <?php printCopyrightNotice($LANG_PACK); ?>
+                        <div><h1>${translate("Interreg")}</h1>
+                            <p>${translate("© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms")}</p></div>
                     </div>
                 </form>
             </section>
