@@ -6,7 +6,8 @@
   "scripts": {},
   "dependencies": {
     "npm": "^6.4.0",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "localize":"^0.4.7"
   },
   "engines": {},
   "repository": {
