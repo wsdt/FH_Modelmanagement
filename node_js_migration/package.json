@@ -1,0 +1,27 @@
+{
+  "name": "fh-kufstein-modelmanagement",
+  "version": "0.0.2",
+  "description": "Enables you to upload new compressions for your model management system.",
+  "main": "app.js",
+  "scripts": {},
+  "dependencies": {
+    "npm": "^6.4.0",
+    "express": "^4.16.3"
+  },
+  "engines": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wsdt/fh_modelmanagement"
+  },
+  "keywords": [
+    "fh",
+    "kufstein",
+    "interreg",
+    "model",
+    "management",
+    "upload",
+    "compression"
+  ],
+  "author": "Kevin A. Riedl (WSDT)",
+  "license": "UNLICENSED"
+}
