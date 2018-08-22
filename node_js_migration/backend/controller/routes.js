@@ -14,32 +14,45 @@ module.exports = {
         "get": get_upload
     },
     "/model": {
-        "get": get_all_models
+        "get": get_models
     }
 };
 
 /** Route methods ***********************************/
 const page_dir = "./frontend/html/";
+const data_dir = "./backend/data/";
 
 //TODO: add middleware
-function get_all_models(req, res) {
-    const path = "./backend/data/";
+function get_models(req, res) {
+    let modelId = req.query.objectTripleID; //$_GET["objectTripleID"]
 
-    Mod_fs.readdir(path, function (err, items) {
-        console.log("routes:get_all_models: Found models -> " + items);
-
-        let resultJsonArr = [];
-        if (err || items === undefined || items === null) {
-            console.warn("routes:get_all_models: Found no models.");
+    if (modelId !== undefined && modelId !== null && modelId !== "") {
+        //Only return one json obj
+        console.log("routes:get_models: Requested model -> "+modelId);
+        let modelJson = JSON.parse(Mod_fs.readFileSync(data_dir+modelId, "utf8"));
+        if (modelJson === undefined || modelJson === null || modelJson === {} || modelJson === []) {
+            console.error("routes:get_models: Requested model NOT found.");
+            return {};
         } else {
-            items.forEach(function (model) {
-                resultJsonArr.push(JSON.parse(Mod_fs.readFileSync(path + model, "utf8")));
-            });
+            return modelJson;
         }
+    } else {
+        Mod_fs.readdir(data_dir, function (err, items) {
+            console.log("routes:get_models: Found models -> " + items);
 
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify(resultJsonArr));
-    });
+            let resultJsonArr = [];
+            if (err || items === undefined || items === null) {
+                console.warn("routes:get_all_models: Found no models.");
+            } else {
+                items.forEach(function (model) {
+                    resultJsonArr.push(JSON.parse(Mod_fs.readFileSync(data_dir + model, "utf8")));
+                });
+            }
+
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(resultJsonArr));
+        });
+    }
 }
 
 //TODO: Add middleware for session (automatic redirect to login)

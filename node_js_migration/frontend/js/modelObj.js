@@ -151,7 +151,7 @@ let ModelObj = function(json) {
 ModelObj.getLocally = function(objectTripleID) {
     if (objectTripleID !== undefined && objectTripleID !== null) {
         console.log('Sending id to ' + "./LocalJsonMgr.php?objectTripleID=" + objectTripleID);
-        return fetch("../mgr/LocalJsonMgr.php?objectTripleID=" + objectTripleID)
+        return fetch("/model?objectTripleID=" + objectTripleID)
             .then((resp) => resp.json())
             .then(function (res) {
                     let modelObj = new ModelObj(res);
