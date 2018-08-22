@@ -166,7 +166,7 @@ ModelObj.getLocally = function(objectTripleID) {
    returnedPromise.then(function(value) {console.log(value);}
 */
 ModelObj.getAllLocally = function() {
-    return fetch("../mgr/LocalJsonMgr.php?getAllModelObjs=true")
+    return fetch("/model")
         .then((resp) => resp.json())
         .then(function (res) {
                 console.log("PHP Row json: "+JSON.stringify(res));

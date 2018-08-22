@@ -21,8 +21,14 @@
     <!-- Custom Theme Style -->
     <link href="/build/css/custom.min.css" rel="stylesheet" type="text/css">
 
+    <!-- jQuery -->
+    <script src="/vendors/jquery/dist/jquery.min.js" type="text/javascript"></script>
+
     <!-- Auth (login/registration procedures) -->
     <script type="text/javascript" src="../../js/modelupload/auth.js"></script>
+
+    <!-- Lang Mgr -->
+    <script type="text/javascript" src="/js/language.js"></script>
 
     <!-- PNotify -->
     <link href="/vendors/pnotify/dist/pnotify.css" rel="stylesheet" type="text/css">
@@ -83,6 +89,15 @@
     <a class="hiddenanchor" id="lostpwd"></a>
     <a class="hiddenanchor" id="signin"></a>
 
+
+    <!-- Language picker
+     TODO: make nice -->
+    <select id="lang_switcher" onchange="changeLang(this.options[this.selectedIndex].value);">
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+    </select>
+
+
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
@@ -108,7 +123,7 @@
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link" data-localize="pages.login_php.register_intro">New to site?
+                        <p class="change_link"><span data-localize="pages.login_php.register_intro">New to site?</span>
                             <a href="#signup" class="to_register" data-localize="pages.login_php.a_register"> Create Account </a>
                         </p>
 
@@ -145,8 +160,8 @@
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link" data-localize="pages.login_php.register_login_intro">Already a member?
-                            <a href="#signin" class="to_register" data-localize="pages.login_php.a_login"> Log in </a>
+                        <p class="change_link"><span data-localize="pages.login_php.register_login_intro">Already a member?</span>
+                            <a href="#signin" class="to_register"> <span data-localize="pages.login_php.a_login">Log in</span> </a>
                         </p>
 
                         <div class="clearfix"></div>
@@ -175,9 +190,9 @@
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link" data-localize="pages.login_php.lostpwd_login_intro">Remembering your password?
+                        <p class="change_link"><span data-localize="pages.login_php.lostpwd_login_intro">Remembering your password?</span>
                             <a href="#signin"
-                               class="to_register" data-localize="pages.login_php.a_login"> Log in </a>
+                               class="to_register"> <span data-localize="pages.login_php.a_login">Log in</span> </a>
                         </p>
 
                         <div class="clearfix"></div>
@@ -192,8 +207,7 @@
     </div>
 </div>
 
-<!-- jQuery -->
-<script src="/vendors/jquery/dist/jquery.min.js" type="text/javascript"></script>
+
 <!-- Localization -->
 <script src="/js/jquery.localize.min.js" type="text/javascript"></script>
 <!--TODO: WORKS but make it dynamic

@@ -1,8 +1,8 @@
 {
   "general": {
-	"project_name":"Interreg",
-    "owner":"FH Kufstein",
-	  "copyright_notice": "© 2018 Alle Rechte vorbehalten. FH Kufstein. Datenschutz und Geschäftsbedingungen"
+    "project_name": "Interreg",
+    "owner": "FH Kufstein",
+    "copyright_notice": "© 2018 Alle Rechte vorbehalten. FH Kufstein. Datenschutz und Geschäftsbedingungen"
   },
   "pages": {
     "login_php": {
@@ -15,49 +15,49 @@
       "h_lostpwd": "Passwort vergessen",
       "lostpwd_login_intro": "Passwort wieder eingefallen?",
       "lostpwd_recovery": {
-        "mail_notfound":"Kein Nutzer mit dieser Mail registriert.",
-        "subject":"FH Kufstein - Neues Passwort",
-        "head":"Password-Wiederherstellung",
-        "body_intro":"Wie gewünscht hier dein neues Passwort. Du kannst dich damit ab sofort einloggen.",
-        "body_conclusion":"Wenn du dein Passwort nicht vergessen hast und diese Aktion nicht durchgeführt hast, dann kontaktiere bitte den Systemadministrator."
+        "mail_notfound": "Kein Nutzer mit dieser Mail registriert.",
+        "subject": "FH Kufstein - Neues Passwort",
+        "head": "Password-Wiederherstellung",
+        "body_intro": "Wie gewünscht hier dein neues Passwort. Du kannst dich damit ab sofort einloggen.",
+        "body_conclusion": "Wenn du dein Passwort nicht vergessen hast und diese Aktion nicht durchgeführt hast, dann kontaktiere bitte den Systemadministrator."
       }
     },
     "modelupload_php": {
-		"nav":{
-			"profile_welcome":"Willkommen,",
-			"page_name":"Modell-Upload",
-			"section_gen":"Allgemein",
-			"profile":"Profil",
-			"settings":"Einstellungen",
-			"help":"Hilfe",
-			"logout":"Logout",
-			"see_all_alerts":"Alle sehen",
-			"sync":"Synchronisieren"
-		},
-		"wizard":{
-			"h_modelupload":"Modell Upload - Assistent",
-			"h_modelmanagement":"Modell Management",
-			"subH_uploadnewmodel":"Neues Modell hochladen",
-			"descr":"Dies ist ein einfacher Assistant zum Hochladen neuer Modelle.",
-			"step":"Schritt",
-			"step1":{
-				"h":"Suche und finde",
-				"descr":"Dieser Schritt dient dazu, nach verfügbaren Modellen zu suchen. Nach Auswählen eines Modells kannst du neue Kompressionen hochladen.",
-				"thcol_descr":"Beschreibung",
-				"thcol_compr":"Kompression",
-				"thcol_status":"Status",
-				"thcol_edit":"Menü"
-			},
-			"step2":{
-				"h":"Neue Kompression hochladen",
-				"descr":"Du kannst (mehrere) Dateien per Drag and Drop sowie per Button manuell hochladen.",
-				"form_license":"Lizenz",
-				"form_accesslvl":"Zugang",
-				"form_accesslvl_public":"öffentlich",
-				"form_accesslvl_visit":"visit",
-				"form_accesslvl_private":"privat"
-			}
-		}
+      "nav": {
+        "profile_welcome": "Willkommen,",
+        "page_name": "Modell-Upload",
+        "section_gen": "Allgemein",
+        "profile": "Profil",
+        "settings": "Einstellungen",
+        "help": "Hilfe",
+        "logout": "Logout",
+        "see_all_alerts": "Alle sehen",
+        "sync": "Synchronisieren"
+      },
+      "wizard": {
+        "h_modelupload": "Modell Upload - Assistent",
+        "h_modelmanagement": "Modell Management",
+        "subH_uploadnewmodel": "Neues Modell hochladen",
+        "descr": "Dies ist ein einfacher Assistant zum Hochladen neuer Modelle.",
+        "step": "Schritt",
+        "step1": {
+          "h": "Suche und finde",
+          "descr": "Dieser Schritt dient dazu, nach verfügbaren Modellen zu suchen. Nach Auswählen eines Modells kannst du neue Kompressionen hochladen.",
+          "thcol_descr": "Beschreibung",
+          "thcol_compr": "Kompression",
+          "thcol_status": "Status",
+          "thcol_edit": "Menü"
+        },
+        "step2": {
+          "h": "Neue Kompression hochladen",
+          "descr": "Du kannst (mehrere) Dateien per Drag and Drop sowie per Button manuell hochladen.",
+          "form_license": "Lizenz",
+          "form_accesslvl": "Zugang",
+          "form_accesslvl_public": "öffentlich",
+          "form_accesslvl_visit": "visit",
+          "form_accesslvl_private": "privat"
+        }
+      }
     }
   }
 }
