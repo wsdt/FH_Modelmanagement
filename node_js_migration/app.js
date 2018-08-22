@@ -1,10 +1,9 @@
 const express_app = require('./backend/server.js');
-const contr_lang = require('./backend/controller/language.js');
+//const contr_lang = require('./backend/controller/language.js');
 const routes = require('./backend/controller/routes.js');
 
 //Setup everything **********************************
 setup_routes();
-setup_locale();
 
 /** React to pre-configured routes (from routes.js) */
 function setup_routes() {
@@ -48,18 +47,4 @@ function setup_routes() {
         ([key, methods]) => setup_route(key, methods)
     );
 }
-
-function setup_locale() {
-    express_app.use(function(req,resp,next) {
-        let lang = "en";//req.session.lang || "en";
-        contr_lang.setLocale(lang);
-        next();
-    });
-
-
-    express_app.helpers({
-        translate: contr_lang.translate
-    });
-}
-
 

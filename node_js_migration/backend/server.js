@@ -1,4 +1,5 @@
-const express_app = require('express')();
+const express = require('express');
+const express_app = express();
 let https_server = setup_443();
 
 /* SERVER CONFIGURATION ***********************************/
@@ -35,6 +36,9 @@ function setup_443() {
         cert: mod_fs.readFileSync(con_secret_cert),
         passphrase: con_secret_pwd
     };
+
+    //Set static base url for all inline refs (stylesheets, js)
+    express_app.use(express.static("frontend"));
 
     console.log('server.js:setup_443: Port 443 setup done.');
     return mod_https.createServer(options, express_app).listen(443);
