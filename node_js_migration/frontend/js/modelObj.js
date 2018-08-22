@@ -119,11 +119,10 @@ let ModelObj = function(json) {
             let strModelObj = JSON.stringify((jsonObj));
             console.log("OBJ: "+strModelObj+";;"+JSON.stringify(this.files));
 
-            fetch("../mgr/LocalJsonMgr.php",
+            fetch("/model",
                 {
                     method: "POST",
                     headers: {
-                        'Accept': 'application/json, text/plain, */*',
                         'Content-Type': 'application/json'
                     },
                     body: strModelObj

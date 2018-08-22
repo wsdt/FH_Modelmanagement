@@ -14,7 +14,8 @@ module.exports = {
         "get": get_upload
     },
     "/model": {
-        "get": get_models
+        "get": get_models,
+        "post": post_model
     }
 };
 
@@ -22,7 +23,22 @@ module.exports = {
 const page_dir = "./frontend/html/";
 const data_dir = "./backend/data/";
 
+//TODO: add middleware sess
+/** Saves new model/compression */
+function post_model(req, res) {
+    let newModel = JSON.parse(req.body);
+    if (newModel !== undefined && newModel !== null) {
+        Mod_fs.writeFile(data_dir+newModel.objectTripleID+".json",newModel, "utf8"); //no callback
+        console.log("routes:post_model: Tried to save new model.");
+    } else {
+        console.error("routes:post_model: Could not save new model -> "+newModel);
+    }
+
+    }
+
 //TODO: add middleware
+/** Returns specific model (via get-param) or if not provided
+ * all saved models. */
 function get_models(req, res) {
     let modelId = req.query.objectTripleID; //$_GET["objectTripleID"]
 

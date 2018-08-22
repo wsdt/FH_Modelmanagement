@@ -39,6 +39,8 @@ function setup_443() {
 
     //Set static base url for all inline refs (stylesheets, js)
     express_app.use(express.static("frontend"));
+    //enable json data body parsing
+    express_app.use(express.json());
 
     console.log('server.js:setup_443: Port 443 setup done.');
     return mod_https.createServer(options, express_app).listen(443);
