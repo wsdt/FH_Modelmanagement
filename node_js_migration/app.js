@@ -19,7 +19,7 @@ function setup_routes() {
         * No method must be provided for an uri. */
 
         let evaluate_route = function (method_name, method_func) {
-
+            console.log("app:evaluate_route: Setting up route -> "+key+" : "+method_name);
             switch (method_name.toLowerCase()) {
                 case "post":
                     express_app.post(key, method_func);

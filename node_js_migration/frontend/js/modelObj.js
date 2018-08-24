@@ -119,7 +119,7 @@ let ModelObj = function(json) {
             let strModelObj = JSON.stringify((jsonObj));
             console.log("OBJ: "+strModelObj+";;"+JSON.stringify(this.files));
 
-            fetch("/model",
+            fetch("/v1/model",
                 {
                     method: "POST",
                     headers: {
@@ -165,7 +165,7 @@ ModelObj.getLocally = function(objectTripleID) {
    returnedPromise.then(function(value) {console.log(value);}
 */
 ModelObj.getAllLocally = function() {
-    return fetch("/model")
+    return fetch("/v1/model")
         .then((resp) => resp.json())
         .then(function (res) {
                 console.log("PHP Row json: "+JSON.stringify(res));

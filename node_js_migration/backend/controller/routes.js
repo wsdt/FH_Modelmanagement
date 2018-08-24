@@ -7,13 +7,13 @@ module.exports = {
     "/": {
         "get": get_login
     },
-    "/login": {
+    "/v1/login": {
         "get": get_login
     },
-    "/upload": {
+    "/v1/upload": {
         "get": get_upload
     },
-    "/model": {
+    "/v1/model": {
         "get": get_models,
         "post": post_model
     }
@@ -26,15 +26,19 @@ const data_dir = "./backend/data/";
 //TODO: add middleware sess
 /** Saves new model/compression */
 function post_model(req, res) {
-    let newModel = JSON.parse(req.body);
-    if (newModel !== undefined && newModel !== null) {
-        Mod_fs.writeFile(data_dir+newModel.objectTripleID+".json",newModel, "utf8"); //no callback
-        console.log("routes:post_model: Tried to save new model.");
+    let newModel = req.body;
+    if (newModel !== undefined && newModel !== null && newModel !== "") {
+        try {
+            newModel = JSON.parse(newModel);
+            Mod_fs.writeFile(data_dir + newModel.objectTripleID + ".json", newModel, "utf8"); //no callback
+            console.log("routes:post_model: Tried to save new model.");
+        } catch(e) {
+            console.error("routes:post_model: Could not save new model, as it is not valid JSON -> " + JSON.stringify(newModel)+ "\n"+JSON.stringify(e));
+        }
     } else {
-        console.error("routes:post_model: Could not save new model -> "+newModel);
+        console.error("routes:post_model: Could not save new model as no data might be available -> " + newModel);
     }
-
-    }
+}
 
 //TODO: add middleware
 /** Returns specific model (via get-param) or if not provided
@@ -44,8 +48,8 @@ function get_models(req, res) {
 
     if (modelId !== undefined && modelId !== null && modelId !== "") {
         //Only return one json obj
-        console.log("routes:get_models: Requested model -> "+modelId);
-        let modelJson = JSON.parse(Mod_fs.readFileSync(data_dir+modelId, "utf8"));
+        console.log("routes:get_models: Requested model -> " + modelId);
+        let modelJson = JSON.parse(Mod_fs.readFileSync(data_dir + modelId, "utf8"));
         if (modelJson === undefined || modelJson === null || modelJson === {} || modelJson === []) {
             console.error("routes:get_models: Requested model NOT found.");
             return {};

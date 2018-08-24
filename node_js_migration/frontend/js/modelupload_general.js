@@ -56,13 +56,17 @@ function printAllModelTableRows(tbodyidentifier, modelObjs) {
     if (modelObjs !== null && modelObjs !== undefined) {
         //ModelObjs is now a future! So we want to get it
         modelObjs.then(function(modelObjArr) {
-            for (let i = 0; i < modelObjArr.length; i++) {
-                //console.log('Trying to print table row of provided array->'+JSON.stringify(jsonObjs[i]));
-                printModelTableRow(tbodyidentifier, modelObjArr[i]);
+            if (modelObjArr !== undefined && modelObjArr !== null) {
+                for (let i = 0; i < modelObjArr.length; i++) {
+                    //console.log('Trying to print table row of provided array->'+JSON.stringify(jsonObjs[i]));
+                    printModelTableRow(tbodyidentifier, modelObjArr[i]);
+                }
+            } else {
+                console.error('modelupload_general:printAllModelTableRows: Could not print table bc. resolved jsonObj[] is null|undefined (maybe no modelObjs at all saved).');
             }
         });
     } else {
-        console.error('Could not print table rows, because jsonObj[] is null!');
+        console.error('modelupload_general:printAllModelTableRows: Could not print table rows, because jsonObj[] promise is null!');
     }
 }
 
