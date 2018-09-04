@@ -1,5 +1,7 @@
 const express = require('express');
 const express_app = express();
+const db = require('./controller/db');
+const db_con = new db(express_app); //make instance (execute constr. automatically)
 let https_server = setup_443();
 
 /* SERVER CONFIGURATION ***********************************/
@@ -41,44 +43,12 @@ function setup_443() {
     express_app.use(express.static("frontend"));
     //enable json data body parsing
     express_app.use(express.json());
-    //use orm module
-    setup_db();
 
     console.log('server.js:setup_443: Port 443 setup done.');
     return mod_https.createServer(options, express_app).listen(443);
 }
 
-function setup_db() {
-    const mod_orm = require('orm');
-    const mod_bcrypt = require('bcrypt');
 
-    express_app.use(mod_orm.express("mysql://root:@localhost/fhkuf_models", {
-        define: function (db, models) {
-            models.user = db.define("user", {
-                usr_id : String,
-                usr_name : String,
-                usr_email : String,
-                usr_hashedpwd : String,
-                usr_salt : String,
-                usr_preflang : String
-            }, {
-                methods: {
-                    setClearPassword: function(clearPwd) {
-                        mod_bcrypt.hash(clearPwd, 10, (err, hash) => {
-                            this.usr_hashedpwd = hash;
-                            console.log("server:setup_db:setClearPwd: Have set clear pwd after hashing it.");
-                        });
-                    },
-                    isPasswordCorrect: function (clearPwd) {
-                        return mod_bcrypt.compare(clearPwd, this.usr_hashedpwd, (err, res)=>{
-                            return res;
-                        });
-                    }
-                }
-            });
-        }
-    }));
-}
 
 
 // Export to other files (to export multiple see: https://stackoverflow.com/questions/8595509/how-do-you-share-constants-in-nodejs-modules)
