@@ -22,14 +22,17 @@ class Db {
     static _setup_db(expressInstance) {
         console.log("Db:setup_db: Setting up db.");
 
-        //Establish anonymous connection to create db etc. if necessary
-        mod_orm.express((DB_CONNECTION_PROPS.driver + "://" +
-            +DB_CONNECTION_PROPS.user + ":" + DB_CONNECTION_PROPS.pwd + "@" +
-            DB_CONNECTION_PROPS.host), function (err, db) {
+        const mod_mysql = require('mysql');
+        let anonym_con = mod_mysql.createConnection({
+            host: DB_CONNECTION_PROPS.host,
+            user: DB_CONNECTION_PROPS.user,
+            password: ""
+        });
+        anonym_con.connect(function (err) {
             if (err) throw err;
-
+            console.log("Db:setup_db: Established anonymous connection.");
             //Create database
-            db.driver.execQuery("CREATE DATABASE IF NOT EXISTS " + DB_CONNECTION_PROPS.db_name + ";", function (err, data) {
+            anonym_con.query("CREATE DATABASE IF NOT EXISTS " + DB_CONNECTION_PROPS.db_name + ";", function (err, data) {
                 if (err) {
                     console.error("Db:_setup_db: Database couldn't be created.");
                     throw err;
@@ -67,6 +70,8 @@ class Db {
                 console.log("Db:_setup_db: Db setup successfully.");
             });
         });
+
+
     }
 }
 
