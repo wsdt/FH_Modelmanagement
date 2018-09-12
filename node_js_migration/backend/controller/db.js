@@ -22,7 +22,7 @@ class Db {
     static _setup_db(expressInstance) {
         console.log("Db:setup_db: Setting up db.");
 
-        const mod_mysql = require('mysql');
+        /*const mod_mysql = require('mysql');
         let anonym_con = mod_mysql.createConnection({
             host: DB_CONNECTION_PROPS.host,
             user: DB_CONNECTION_PROPS.user,
@@ -71,7 +71,7 @@ class Db {
             });
         });
 
-
+*/
     }
 }
 
