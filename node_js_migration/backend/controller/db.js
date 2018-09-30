@@ -7,7 +7,7 @@ const DB_CONNECTION_PROPS = {
     db_name: "fhkuf_models"
 };
 const DB_CONNECTION_STRING = DB_CONNECTION_PROPS.driver + "://" +
-    +DB_CONNECTION_PROPS.user + ":" + DB_CONNECTION_PROPS.pwd + "@" +
+    DB_CONNECTION_PROPS.user + ":" + DB_CONNECTION_PROPS.pwd + "@" +
     DB_CONNECTION_PROPS.host + "/" + DB_CONNECTION_PROPS.db_name;
 let isDbConfigured = false;
 
@@ -22,11 +22,11 @@ class Db {
     static _setup_db(expressInstance) {
         console.log("Db:setup_db: Setting up db.");
 
-        /*const mod_mysql = require('mysql');
+        const mod_mysql = require('mysql');
         let anonym_con = mod_mysql.createConnection({
             host: DB_CONNECTION_PROPS.host,
             user: DB_CONNECTION_PROPS.user,
-            password: ""
+            password: DB_CONNECTION_PROPS.pwd
         });
         anonym_con.connect(function (err) {
             if (err) throw err;
@@ -67,11 +67,9 @@ class Db {
                     }
                 }));
                 isDbConfigured = true;
-                console.log("Db:_setup_db: Db setup successfully.");
+                console.log("Db:_setup_db: Db setup successfully: "+DB_CONNECTION_PROPS.user+";;"+DB_CONNECTION_STRING);
             });
         });
-
-*/
     }
 }
 
