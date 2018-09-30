@@ -1,4 +1,5 @@
 const mod_orm = require('orm');
+const mod_mysql = require('mysql');
 const DB_CONNECTION_PROPS = {
     driver: "mysql",
     user: "root",
@@ -12,17 +13,22 @@ const DB_CONNECTION_STRING = DB_CONNECTION_PROPS.driver + "://" +
 let isDbConfigured = false;
 
 class Db {
+
     constructor(expressInstance) {
         if (!isDbConfigured) {
             Db._setup_db(expressInstance);
         }
     }
 
+    /** Returns connection obj. */
+    static returnConnectable() {
+        return mod_mysql.createConnection(DB_CONNECTION_STRING);
+    }
+
     //pseudo_private
     static _setup_db(expressInstance) {
         console.log("Db:setup_db: Setting up db.");
 
-        const mod_mysql = require('mysql');
         let anonym_con = mod_mysql.createConnection({
             host: DB_CONNECTION_PROPS.host,
             user: DB_CONNECTION_PROPS.user,

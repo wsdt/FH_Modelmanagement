@@ -1,4 +1,5 @@
-let crypto = require('crypto');
+const crypto = require('crypto');
+const db = require('../controller/db');
 
 class User {
     constructor(usr_id, usr_name, usr_mail, usr_hashedPwd, usr_salt, usr_prefLang) {
@@ -53,6 +54,15 @@ class User {
             return $user->isPasswordCorrect($clearpassword);
         }
     }*/
+    }
+
+    /** @param id: User id to identify user.
+     * @param fErr: Callback function which will be called if user can't be queried.
+     * @param fSuc: Callback function which is called on success.*/
+    db_queryUserById(id, fErr, fSuc) {
+        //db.returnConnectable().query("SELECT * FROM user;", function (fErr, ) {
+          //TODO
+        //});
     }
 }
 
