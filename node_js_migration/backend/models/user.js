@@ -43,26 +43,55 @@ class User {
         return (User.hashPassword(clearPwd, this.salt) === this.hashedPwd);
     }
 
-    areUserCredentialsCorrect() {
-        //TODO
-        /*public static function areUserCredentialsCorrect($dbCon, $userName, $clearpassword)
-    {
-        $user = User::dbQueryWithUsername($dbCon, $userName);
-        if (empty($user)) {
-            return false;
+    static areUserCredentialsCorrect(userName, clearPwd, fErr, fSuc) {
+        let user = User.db_queryUserByName(userName,fErr,null); //always delegate null when success happens in superior method
+        if (user !== undefined && user !== null) {
+            if (User.isFunction(fSuc)) {fSuc(user.isPasswordCorrect(clearPwd));}
         } else {
-            return $user->isPasswordCorrect($clearpassword);
+            if (User.isFunction(fSuc)) {fErr();}
         }
-    }*/
+    }
+
+    static isFunction(functionVar) {
+        return typeof functionVar === "function";
+    }
+
+    /** Should be already extracted from the array.*/
+    static mapDbRowToUser(jsonObj) {
+        return new User(jsonObj.usr_id,jsonObj.usr_name,jsonObj.usr_mail,
+            jsonObj.usr_hashedPwd,jsonObj.usr_salt,jsonObj.usr_prefLang);
     }
 
     /** @param id: User id to identify user.
      * @param fErr: Callback function which will be called if user can't be queried.
      * @param fSuc: Callback function which is called on success.*/
-    db_queryUserById(id, fErr, fSuc) {
-        //db.returnConnectable().query("SELECT * FROM user;", function (fErr, ) {
-          //TODO
-        //});
+    static db_queryUserById(id, fErr, fSuc) {
+        let con = db.returnConnectable();
+        con.connect(function (err) {
+            if (err) {if (User.isFunction(fErr)) {fErr();}throw err;}
+            let userRes = con.query("SELECT * FROM user where usr_id='"+id+"';", function (err, result, field) {
+                if (err || result === undefined) {if (User.isFunction(fErr)) {fErr();}throw err;}
+                let queriedUser = User.mapDbRowToUser(result[0]);
+                if (User.isFunction(fSuc)) {fSuc(queriedUser);}
+                con.end();
+            });
+        });
+    }
+
+    /** @param name: User name to identify user (needs to be unique too, but is not the primary key).
+     * @param fErr: Callback function which will be called if user can't be queried.
+     * @param fSuc: Callback function which is called on success.*/
+    static db_queryUserByName(name, fErr, fSuc) {
+        let con = db.returnConnectable();
+        con.connect(function (err) {
+            if (err) {if (User.isFunction(fErr)) {fErr();}throw err;}
+            let userRes = con.query("SELECT * FROM user where usr_name='"+name+"';", function (err, result, field) {
+                if (err || result === undefined) {if (User.isFunction(fErr)) {fErr();}throw err;}
+                let queriedUser = User.mapDbRowToUser(result[0]);
+                if (User.isFunction(fSuc)) {fSuc(queriedUser);}
+                con.end();
+            });
+        });
     }
 }
 

@@ -5,7 +5,7 @@ const DB_CONNECTION_PROPS = {
     user: "root",
     pwd: "",
     host: "localhost",
-    db_name: "fhkuf_models"
+    db_name: "fhkuf_filemgr"
 };
 const DB_CONNECTION_STRING = DB_CONNECTION_PROPS.driver + "://" +
     DB_CONNECTION_PROPS.user + ":" + DB_CONNECTION_PROPS.pwd + "@" +
@@ -45,14 +45,14 @@ class Db {
                 }
 
                 anonym_con.end();
-                let con = mod_mysql.createConnection(DB_CONNECTION_STRING);
+                let con = Db.returnConnectable();
                 con.connect(function (err) {
                    if (err) throw err;
                    console.log("Db:setup_db: Established non-anonymous connection.");
                    //Create tables
                     con.query("CREATE TABLE IF NOT EXISTS user (" +
                         "usr_id VARCHAR(20)," +
-                        "usr_name VARCHAR(100)," +
+                        "usr_name VARCHAR(100) UNIQUE," +
                         "usr_mail VARCHAR(120)," +
                         "usr_hashedPwd VARCHAR(128)," +
                         "usr_salt VARCHAR(64)," +
@@ -63,13 +63,18 @@ class Db {
                     //insert default user
                     const mod_user = require("../models/user");
                     const testuser_salt = mod_user.createNewSalt();
-                    con.query("INSERT INTO user (usr_id,usr_name,usr_mail,usr_hashedPwd,usr_salt,usr_prefLang) VALUES ('" +
-                        mod_user.createUniqueId()+"','test','test@test.gmail.com','"+mod_user.hashPassword("12345",testuser_salt)+"','"+testuser_salt+"','de'"+
+                    // IMPORTANT: We are inserting a pre-defined id, as we don't want infinite users on start. Silent failure when user exists already.
+                    con.query("INSERT IGNORE INTO user (usr_id,usr_name,usr_mail,usr_hashedPwd,usr_salt,usr_prefLang) VALUES ('" +
+                        "id-umckh39gjpo','test','test@test.gmail.com','"+mod_user.hashPassword("12345",testuser_salt)+"','"+testuser_salt+"','de'"+
                         ");");
                     con.end();
                 });
                 isDbConfigured = true;
                 console.log("Db:_setup_db: Db setup successfully.");
+
+
+                const user = require('../models/user');
+                user.db_queryUserById("id-umckh39gjpo", new function () {}, new function () {});
             });
         });
     }
