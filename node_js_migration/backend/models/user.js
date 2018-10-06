@@ -48,7 +48,7 @@ class User {
         if (user !== undefined && user !== null) {
             if (User.isFunction(fSuc)) {fSuc(user.isPasswordCorrect(clearPwd));}
         } else {
-            if (User.isFunction(fSuc)) {fErr();}
+            if (User.isFunction(fErr)) {fErr();}
         }
     }
 
@@ -86,7 +86,7 @@ class User {
         con.connect(function (err) {
             if (err) {if (User.isFunction(fErr)) {fErr();}throw err;}
             let userRes = con.query("SELECT * FROM user where usr_name='"+name+"';", function (err, result, field) {
-                if (err || result === undefined) {if (User.isFunction(fErr)) {fErr();}throw err;}
+                if (err || result === undefined || result[0] === undefined) {if (User.isFunction(fErr)) {fErr();}throw err;}
                 let queriedUser = User.mapDbRowToUser(result[0]);
                 if (User.isFunction(fSuc)) {fSuc(queriedUser);}
                 con.end();

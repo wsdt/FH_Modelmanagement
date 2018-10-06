@@ -1,14 +1,16 @@
 const Mod_fs = require('fs');
+const mod_user = require('../models/user');
 
 /** Define routes **********************************
  * Allowed http-methods:
  * >> post, get, put, delete */
 module.exports = {
     "/": {
-        "get": get_login
+        "get": get_login,
     },
     "/v1/login": {
-        "get": get_login
+        "get": get_login,
+        "post": post_login
     },
     "/v1/upload": {
         "get": get_upload
@@ -23,6 +25,43 @@ module.exports = {
 const page_dir = "./frontend/html/";
 const data_dir = "./backend/data/";
 
+function post_login(req, res) {
+    let login_req = req.body;
+    if (login_req !== undefined && login_req !== null && login_req !== "") {
+        try {
+            mod_user.areUserCredentialsCorrect(login_req.usr_name, login_req.usr_clearPwd, null,
+                new function (isLoginSuccessful) {
+                    if (isLoginSuccessful) {
+                        window.location.href = "/upload"; //redirect to modelupload page
+                    } else {
+                        res.json({
+                            user_authenticated: false,
+                            res_title: "Unauthorized",
+                            res_text: "Password is wrong.",
+                            notification_type: "error"
+                        });
+                    }
+                });
+        } catch (e) {
+            console.error("routes:post_login: Could not login due to an unknown error.");
+            res.json({
+                user_authenticated: false,
+                res_title: "Unauthorized",
+                res_text: "Something seems to be wrong with your credentials.",
+                notification_type: "error"
+            });
+        }
+    } else {
+        console.error("routes:post_login: Could not login as no data might be available -> " + login_req);
+        res.json({
+            user_authenticated: false,
+            res_title: "Pre-Condition failed",
+            res_text: "Request malformed.",
+            notification_type: "error"
+        });
+    }
+}
+
 //TODO: add middleware sess
 /** Saves new model/compression */
 function post_model(req, res) {
@@ -32,11 +71,12 @@ function post_model(req, res) {
             newModel = JSON.parse(newModel);
             Mod_fs.writeFile(data_dir + newModel.objectTripleID + ".json", newModel, "utf8"); //no callback
             console.log("routes:post_model: Tried to save new model.");
-        } catch(e) {
-            console.error("routes:post_model: Could not save new model, as it is not valid JSON -> " + JSON.stringify(newModel)+ "\n"+JSON.stringify(e));
+        } catch (e) {
+            console.error("routes:post_model: Could not save new model, as it is not valid JSON -> " + JSON.stringify(newModel) + "\n" + JSON.stringify(e));
         }
     } else {
         console.error("routes:post_model: Could not save new model as no data might be available -> " + newModel);
+        //TODO: add notification
     }
 }
 

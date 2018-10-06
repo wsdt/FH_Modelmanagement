@@ -1,6 +1,3 @@
-/** Contains login and registration procedures */
-const mod_user = require('../user')
-
 /** Throws an generic error so we know that authentication has failed.*/
 function handleErrors(response) {
     if (!response.ok) {
@@ -12,11 +9,11 @@ function handleErrors(response) {
 /** Logs current user out.*/
 function logout() {
     let headers = new Headers();
-    headers.append('Accept','application/json, application/xml, text/plain, text/html, *.*');
-    headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
+    headers.append('Accept', 'application/json, application/xml, text/plain, text/html, *.*');
+    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
 
     let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('logout','START_LOGOUT');
+    urlSearchParams.append('logout', 'START_LOGOUT');
 
     fetch("../middlewares/AuthenticationMiddleware.php",
         {
@@ -27,11 +24,11 @@ function logout() {
         })
         .then(handleErrors)
         .then((resp) => resp.json())
-        .then(function(res) {
+        .then(function (res) {
             console.log('Submitted logout request.');
             window.location.href = "./login.php"; //redirect to login page
         })
-        .catch(function(error) {
+        .catch(function (error) {
             new PNotify({
                 title: 'Log-Out failed',
                 text: 'Could not log you out. Please contact administrator.',
@@ -43,6 +40,35 @@ function logout() {
 
 /** Sends fetch request to login user (better usability) */
 function login(valUsername, valClearPwd) {
+    fetch('/v1/login', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({usr_name: valUsername, usr_clearPwd: valClearPwd})
+    }).then((res) => res.json())
+        .then(new function (res) {
+            if (res !== undefined && res !== null && res !== "") {
+                new PNotify({
+                    title: res.res_title,
+                    text: res.res_text,
+                    type: res.notification_type,
+                    styling: 'bootstrap3'
+                });
+            }
+        })
+        .catch(new function () {
+            new PNotify({
+                title: 'Server Error',
+                text: 'An error occurred. Please try it again.',
+                type: 'error',
+                styling: 'bootstrap3'
+            });
+        });
+
+
+    /*
     let headers = new Headers();
     headers.append('Accept','application/json, application/xml, text/plain, text/html, *.*');
     headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
@@ -74,18 +100,18 @@ function login(valUsername, valClearPwd) {
                 styling: 'bootstrap3'
             });
 
-        });
+        });*/
 }
 
 function register(valUsername, valEmail, valClearPwd) {
     let headers = new Headers();
-    headers.append('Accept','application/json, application/xml, text/plain, text/html, *.*');
-    headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
+    headers.append('Accept', 'application/json, application/xml, text/plain, text/html, *.*');
+    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
 
     let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('userName',valUsername);
-    urlSearchParams.append('eMail',valEmail);
-    urlSearchParams.append('clearPassword',valClearPwd);
+    urlSearchParams.append('userName', valUsername);
+    urlSearchParams.append('eMail', valEmail);
+    urlSearchParams.append('clearPassword', valClearPwd);
 
 
     fetch("../middlewares/AuthenticationMiddleware.php",
@@ -97,20 +123,20 @@ function register(valUsername, valEmail, valClearPwd) {
         })
         .then(handleErrors)
         .then((resp) => resp.json())
-        .then(function(res) {
+        .then(function (res) {
             console.log('Submitted RegisterJson.');
             new PNotify({
                 title: 'Registration successfully',
-                text: 'The user "'+valUsername.value+'" has been registered successfully.',
+                text: 'The user "' + valUsername.value + '" has been registered successfully.',
                 type: 'success',
                 styling: 'bootstrap3'
             });
             // do not, user has to register: window.location.href = "./modelupload.php"; //redirect to modelupload page
         })
-        .catch(function(error) {
+        .catch(function (error) {
             new PNotify({
                 title: 'Registration failed',
-                text: 'Unfortunately, we couldn\'t register your new account. ('+error+')',
+                text: 'Unfortunately, we couldn\'t register your new account. (' + error + ')',
                 type: 'error',
                 styling: 'bootstrap3'
             });
@@ -120,11 +146,11 @@ function register(valUsername, valEmail, valClearPwd) {
 // Assumes that email is unique (see user.php)
 function lostpassword(emailVal) {
     let headers = new Headers();
-    headers.append('Accept','application/json, application/xml, text/plain, text/html, *.*');
-    headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
+    headers.append('Accept', 'application/json, application/xml, text/plain, text/html, *.*');
+    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
 
     let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('eMail',emailVal);
+    urlSearchParams.append('eMail', emailVal);
 
     fetch("../middlewares/AuthenticationMiddleware.php",
         {
@@ -135,20 +161,20 @@ function lostpassword(emailVal) {
         })
         .then(handleErrors)
         .then((resp) => resp.json())
-        .then(function(res) {
+        .then(function (res) {
             console.log('Submitted lostPwdJson.');
             new PNotify({
                 title: 'Password sent',
-                text: 'We have sent you a new password to your email -> '+elemEmail.value,
+                text: 'We have sent you a new password to your email -> ' + elemEmail.value,
                 type: 'success',
                 styling: 'bootstrap3'
             });
             // do not, user has to register: window.location.href = "./modelupload.php"; //redirect to modelupload page
         })
-        .catch(function(error) {
+        .catch(function (error) {
             new PNotify({
                 title: 'Password recovery failed',
-                text: 'Unfortunately, we couldn\'t send you a new password. ('+error+')',
+                text: 'Unfortunately, we couldn\'t send you a new password. (' + error + ')',
                 type: 'error',
                 styling: 'bootstrap3'
             });
