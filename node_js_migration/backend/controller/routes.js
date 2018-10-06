@@ -6,7 +6,7 @@ const mod_user = require('../models/user');
  * >> post, get, put, delete */
 module.exports = {
     "/": {
-        "get": get_login,
+        "get": get_login
     },
     "/v1/login": {
         "get": get_login,
