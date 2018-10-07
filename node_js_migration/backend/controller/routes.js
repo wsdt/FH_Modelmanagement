@@ -29,25 +29,30 @@ function post_login(req, res) {
     let login_req = req.body;
     if (login_req !== undefined && login_req !== null && login_req !== "") {
         try {
-            mod_user.areUserCredentialsCorrect(login_req.usr_name, login_req.usr_clearPwd, null,
-                new function (isLoginSuccessful) {
+            mod_user.areUserCredentialsCorrect(login_req.usr_name, login_req.usr_clearPwd,
+                isLoginSuccessful => {
                     if (isLoginSuccessful) {
-                        window.location.href = "/upload"; //redirect to modelupload page
+                        res.json({
+                            user_authenticated: true,
+                            res_title: "Authorized",
+                            res_text: "Password and user are valid.",
+                            notification_type: "success"
+                        });
                     } else {
                         res.json({
                             user_authenticated: false,
                             res_title: "Unauthorized",
-                            res_text: "Password is wrong.",
+                            res_text: "Password or user is wrong.",
                             notification_type: "error"
                         });
                     }
                 });
         } catch (e) {
-            console.error("routes:post_login: Could not login due to an unknown error.");
+            console.error("routes:post_login: Could not login due to an unknown error -> "+JSON.stringify(e));
             res.json({
                 user_authenticated: false,
                 res_title: "Unauthorized",
-                res_text: "Something seems to be wrong with your credentials.",
+                res_text: "Something seems to be wrong with your credentials or a deep nested error occurred.",
                 notification_type: "error"
             });
         }

@@ -43,13 +43,16 @@ class User {
         return (User.hashPassword(clearPwd, this.salt) === this.hashedPwd);
     }
 
-    static areUserCredentialsCorrect(userName, clearPwd, fErr, fSuc) {
-        let user = User.db_queryUserByName(userName,fErr,null); //always delegate null when success happens in superior method
-        if (user !== undefined && user !== null) {
-            if (User.isFunction(fSuc)) {fSuc(user.isPasswordCorrect(clearPwd));}
-        } else {
-            if (User.isFunction(fErr)) {fErr();}
-        }
+    static areUserCredentialsCorrect(userName, clearPwd, fSuc) {
+        User.db_queryUserByName(userName, msg => {
+            console.log("user:areUserCredentialsCorrect: User does not exist. User msg -> "+JSON.stringify(msg));
+            fSuc(false); //e.g. user does not exist!!, just say pwd/user wrong
+        }, user => {
+            //Success will be only executed if user exists
+            if (User.isFunction(fSuc)) {
+                fSuc(user.isPasswordCorrect(clearPwd));
+            }
+        });
     }
 
     static isFunction(functionVar) {
@@ -58,8 +61,8 @@ class User {
 
     /** Should be already extracted from the array.*/
     static mapDbRowToUser(jsonObj) {
-        return new User(jsonObj.usr_id,jsonObj.usr_name,jsonObj.usr_mail,
-            jsonObj.usr_hashedPwd,jsonObj.usr_salt,jsonObj.usr_prefLang);
+        return new User(jsonObj.usr_id, jsonObj.usr_name, jsonObj.usr_mail,
+            jsonObj.usr_hashedPwd, jsonObj.usr_salt, jsonObj.usr_prefLang);
     }
 
     /** @param id: User id to identify user.
@@ -68,11 +71,23 @@ class User {
     static db_queryUserById(id, fErr, fSuc) {
         let con = db.returnConnectable();
         con.connect(function (err) {
-            if (err) {if (User.isFunction(fErr)) {fErr();}throw err;}
-            let userRes = con.query("SELECT * FROM user where usr_id='"+id+"';", function (err, result, field) {
-                if (err || result === undefined) {if (User.isFunction(fErr)) {fErr();}throw err;}
+            if (err) {
+                if (User.isFunction(fErr)) {
+                    fErr();
+                }
+                throw err;
+            }
+            let userRes = con.query("SELECT * FROM user where usr_id='" + id + "';", function (err, result, field) {
+                if (err || result === undefined) {
+                    if (User.isFunction(fErr)) {
+                        fErr();
+                    }
+                    throw err;
+                }
                 let queriedUser = User.mapDbRowToUser(result[0]);
-                if (User.isFunction(fSuc)) {fSuc(queriedUser);}
+                if (User.isFunction(fSuc)) {
+                    fSuc(queriedUser);
+                }
                 con.end();
             });
         });
@@ -84,13 +99,27 @@ class User {
     static db_queryUserByName(name, fErr, fSuc) {
         let con = db.returnConnectable();
         con.connect(function (err) {
-            if (err) {if (User.isFunction(fErr)) {fErr();}throw err;}
-            let userRes = con.query("SELECT * FROM user where usr_name='"+name+"';", function (err, result, field) {
-                if (err || result === undefined || result[0] === undefined) {if (User.isFunction(fErr)) {fErr();}throw err;}
-                let queriedUser = User.mapDbRowToUser(result[0]);
-                if (User.isFunction(fSuc)) {fSuc(queriedUser);}
+            if (err) {
+                if (User.isFunction(fErr)) {
+                    fErr();
+                }
+                throw err;
+            }
+            let userRes = con.query("SELECT * FROM user where usr_name='" + name + "';", function (err, result, field) {
+                if (err || result === undefined || result[0] === undefined) {
+                    if (User.isFunction(fErr)) {
+                        fErr("User does not exist");
+                    }
+                    /*throw err; Do not throw error just bc. user not found*/
+                } else {
+                    let queriedUser = User.mapDbRowToUser(result[0]);
+                    if (User.isFunction(fSuc)) {
+                        fSuc(queriedUser);
+                    }
+                }
                 con.end();
             });
+
         });
     }
 }

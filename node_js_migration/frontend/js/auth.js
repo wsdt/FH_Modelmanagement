@@ -48,8 +48,11 @@ function login(valUsername, valClearPwd) {
         },
         body: JSON.stringify({usr_name: valUsername, usr_clearPwd: valClearPwd})
     }).then((res) => res.json())
-        .then(new function (res) {
+        .then(res => {
             if (res !== undefined && res !== null && res !== "") {
+                if (res.user_authenticated) {
+                    window.location = "/v1/upload";
+                }
                 new PNotify({
                     title: res.res_title,
                     text: res.res_text,
@@ -58,7 +61,8 @@ function login(valUsername, valClearPwd) {
                 });
             }
         })
-        .catch(new function () {
+        .catch(error => {
+            console.error("auth:login: Could not login -> "+JSON.stringify(error));
             new PNotify({
                 title: 'Server Error',
                 text: 'An error occurred. Please try it again.',
