@@ -1,6 +1,7 @@
 const mod_nodemailer = require('nodemailer');
 
 const _CRED_GMAIL_USER = "fhkuf.modelmanagement@gmail.com";
+// That is not the current password, if you want to try this just add your own email here please.
 const _CRED_GMAIL_PWD = "15qOf8mE8c9e2cf5";
 
 class mail {
