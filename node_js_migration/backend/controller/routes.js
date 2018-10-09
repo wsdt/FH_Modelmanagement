@@ -15,6 +15,9 @@ module.exports = {
     "/v1/register": {
         "post": post_register
     },
+    "/v1/lostpwd": {
+        "post": post_lostpwd
+    },
     "/v1/upload": {
         "get": get_upload
     },
@@ -32,12 +35,68 @@ function isValueNotEmpty(val) {
     return (val !== undefined && val !== null && val !== "");
 }
 
+function post_lostpwd(req, res) {
+    let lostpwd_req = req.body;
+    if (isValueNotEmpty(lostpwd_req)) {
+        try {
+            if (isValueNotEmpty(lostpwd_req.usr_mail)) {
+                mod_user.db_queryUserByMail(lostpwd_req.usr_mail, () => {
+                    res.json({
+                        pwd_resetted: false,
+                        res_title: "Db error",
+                        res_text: "Could not reset your password. Maybe user does not exist.",
+                        notification_type: "error"
+                    });
+                },(userObj) => {
+                    userObj.resetPassword(() => {
+                        res.json({
+                            pwd_resetted: false,
+                            res_title: "Db error",
+                            res_text: "Your user exists but we could not reset your password due to an internal error.",
+                            notification_type: "error"
+                        });
+                    }, () => {
+                        res.json({
+                            pwd_resetted: true,
+                            res_title: "Password resetted",
+                            res_text: "We resetted your password successfully. Please look into your mails.",
+                            notification_type: "success"
+                        });
+                    });
+                });
+            } else {
+                res.json({
+                    pwd_resetted: false,
+                    res_title: "Invalid",
+                    res_text: "Please provide a mail.",
+                    notification_type: "error"
+                });
+            }
+        } catch (e) {
+            console.error("routes:post_lostpwd: Could not reset user pwd due to an unknown error -> "+JSON.stringify(e));
+            res.json({
+                pwd_resetted: false,
+                res_title: "Error",
+                res_text: "An unknown error occurred. Try it later again or contact administrator.",
+                notification_type: "error"
+            });
+        }
+    } else {
+        console.error("routes:post_lostpwd: Could not reset pwd as no data might be available -> " + lostpwd_req);
+        res.json({
+            pwd_resetted: false,
+            res_title: "Invalid request",
+            res_text: "Please do not send random requests to this url.",
+            notification_type: "error"
+        });
+    }
+}
+
 function post_register(req, res) {
     let register_req = req.body;
     if (isValueNotEmpty(register_req)) {
         try {
             if (isValueNotEmpty(register_req.usr_name) && isValueNotEmpty(register_req.usr_mail) && isValueNotEmpty(register_req.usr_clearPwd)) {
-                //usr_name, usr_mail, usr_hashedPwd, usr_salt, usr_prefLang
                 let usr_salt = mod_user.createNewSalt();
                 let newUser = new mod_user(
                     mod_user.createUniqueId(),

@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const db = require('../controller/db');
+const mail = require('../controller/mail');
 
 class User {
     constructor(usr_id, usr_name, usr_mail, usr_hashedPwd, usr_salt, usr_prefLang) {
@@ -43,6 +44,50 @@ class User {
         return (User.hashPassword(clearPwd, this.salt) === this.hashedPwd);
     }
 
+    /** non-static to require that the user has to exist. */
+    resetPassword(fErr, fSuc) {
+        let newPwd = User.createUniqueId();
+        this.hashedPwd = User.hashPassword(newPwd,this.salt);
+        this.dbReplace(db.returnConnectable(), fErr, () => {
+            mail.sendGMail(this.mail,"Resetted password","Your new password is -> "+newPwd);
+            fSuc();
+        });
+    }
+
+    dbReplace(dbCon, fErr, fSuc) {
+        dbCon.query("REPLACE INTO user (usr_id, usr_name, usr_mail, usr_hashedPwd, usr_salt, usr_prefLang) VALUES ('" +this.id+
+            "','"+this.name+"', '"+this.mail+"','"+this.hashedPwd+"','"+this.salt+"','"+this.prefLang+"');", function (err, result) {
+            if (err) {
+                if (User.isFunction(fErr)) {
+                    fErr();
+                }
+                //throw err; do not throw error
+            }
+
+            if (User.isFunction(fSuc)) {
+                fSuc();
+            }
+            dbCon.end();
+        });
+    }
+
+    dbSave(dbCon, fErr, fSuc) {
+        dbCon.query("INSERT INTO user (usr_id, usr_name, usr_mail, usr_hashedPwd, usr_salt, usr_prefLang) VALUES ('" +this.id+
+            "','"+this.name+"', '"+this.mail+"','"+this.hashedPwd+"','"+this.salt+"','"+this.prefLang+"');", function (err, result) {
+            if (err) {
+                if (User.isFunction(fErr)) {
+                    fErr();
+                }
+                //throw err; do not throw error
+            }
+
+            if (User.isFunction(fSuc)) {
+                fSuc();
+            }
+            dbCon.end();
+        });
+    }
+
     /** Provide already mapped userObj to register a new user. */
     static registerNewUser(userObj, fErr, fSuc) {
         let con = db.returnConnectable();
@@ -54,20 +99,7 @@ class User {
                 throw err;
             }
 
-            con.query("INSERT INTO user (usr_id, usr_name, usr_mail, usr_hashedPwd, usr_salt, usr_prefLang) VALUES ('" +userObj.id+
-                "','"+userObj.name+"', '"+userObj.mail+"','"+userObj.hashedPwd+"','"+userObj.salt+"','"+userObj.prefLang+"');", function (err, result) {
-                if (err) {
-                    if (User.isFunction(fErr)) {
-                        fErr();
-                    }
-                    throw err;
-                }
-
-                if (User.isFunction(fSuc)) {
-                    fSuc();
-                }
-                con.end();
-            });
+            userObj.dbSave(con, fErr, fSuc);
         });
     }
 
@@ -134,6 +166,36 @@ class User {
                 throw err;
             }
             let userRes = con.query("SELECT * FROM user where usr_name='" + name + "';", function (err, result, field) {
+                if (err || result === undefined || result[0] === undefined) {
+                    if (User.isFunction(fErr)) {
+                        fErr("User does not exist");
+                    }
+                    /*throw err; Do not throw error just bc. user not found*/
+                } else {
+                    let queriedUser = User.mapDbRowToUser(result[0]);
+                    if (User.isFunction(fSuc)) {
+                        fSuc(queriedUser);
+                    }
+                }
+                con.end();
+            });
+
+        });
+    }
+
+    /** @param mail: User mail to identify user (needs to be unique too, but is not the primary key).
+     * @param fErr: Callback function which will be called if user can't be queried.
+     * @param fSuc: Callback function which is called on success.*/
+    static db_queryUserByMail(mail, fErr, fSuc) {
+        let con = db.returnConnectable();
+        con.connect(function (err) {
+            if (err) {
+                if (User.isFunction(fErr)) {
+                    fErr();
+                }
+                throw err;
+            }
+            let userRes = con.query("SELECT * FROM user where usr_mail='" + mail + "';", function (err, result, field) {
                 if (err || result === undefined || result[0] === undefined) {
                     if (User.isFunction(fErr)) {
                         fErr("User does not exist");

@@ -107,36 +107,32 @@ function register(valUsername, valEmail, valClearPwd) {
 
 // Assumes that email is unique (see user.php)
 function lostpassword(emailVal) {
-    let headers = new Headers();
-    headers.append('Accept', 'application/json, application/xml, text/plain, text/html, *.*');
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-
-    let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('eMail', emailVal);
-
-    fetch("../middlewares/AuthenticationMiddleware.php",
-        {
-            credentials: 'include',
-            method: "post",
-            headers: headers,
-            body: urlSearchParams
+    fetch('/v1/lostpwd', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({usr_mail:emailVal})
+    }).then((res) => res.json())
+        .then(res => {
+            if (res !== undefined && res !== null && res !== "") {
+                if (res.pwd_resetted) {
+                    window.location = "/#signin";
+                }
+                new PNotify({
+                    title: res.res_title,
+                    text: res.res_text,
+                    type: res.notification_type,
+                    styling: 'bootstrap3'
+                });
+            }
         })
-        .then(handleErrors)
-        .then((resp) => resp.json())
-        .then(function (res) {
-            console.log('Submitted lostPwdJson.');
+        .catch(error => {
+            console.error("auth:register: Could not register user -> "+JSON.stringify(error));
             new PNotify({
-                title: 'Password sent',
-                text: 'We have sent you a new password to your email -> ' + elemEmail.value,
-                type: 'success',
-                styling: 'bootstrap3'
-            });
-            // do not, user has to register: window.location.href = "./modelupload.php"; //redirect to modelupload page
-        })
-        .catch(function (error) {
-            new PNotify({
-                title: 'Password recovery failed',
-                text: 'Unfortunately, we couldn\'t send you a new password. (' + error + ')',
+                title: 'Server Error',
+                text: 'An error occurred. Please try it again.',
                 type: 'error',
                 styling: 'bootstrap3'
             });
