@@ -43,6 +43,34 @@ class User {
         return (User.hashPassword(clearPwd, this.salt) === this.hashedPwd);
     }
 
+    /** Provide already mapped userObj to register a new user. */
+    static registerNewUser(userObj, fErr, fSuc) {
+        let con = db.returnConnectable();
+        con.connect(function (err) {
+            if (err) {
+                if (User.isFunction(fErr)) {
+                    fErr();
+                }
+                throw err;
+            }
+
+            con.query("INSERT INTO user (usr_id, usr_name, usr_mail, usr_hashedPwd, usr_salt, usr_prefLang) VALUES ('" +userObj.id+
+                "','"+userObj.name+"', '"+userObj.mail+"','"+userObj.hashedPwd+"','"+userObj.salt+"','"+userObj.prefLang+"');", function (err, result) {
+                if (err) {
+                    if (User.isFunction(fErr)) {
+                        fErr();
+                    }
+                    throw err;
+                }
+
+                if (User.isFunction(fSuc)) {
+                    fSuc();
+                }
+                con.end();
+            });
+        });
+    }
+
     static areUserCredentialsCorrect(userName, clearPwd, fSuc) {
         User.db_queryUserByName(userName, msg => {
             console.log("user:areUserCredentialsCorrect: User does not exist. User msg -> "+JSON.stringify(msg));

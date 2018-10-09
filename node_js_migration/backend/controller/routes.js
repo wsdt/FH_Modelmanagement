@@ -12,6 +12,9 @@ module.exports = {
         "get": get_login,
         "post": post_login
     },
+    "/v1/register": {
+        "post": post_register
+    },
     "/v1/upload": {
         "get": get_upload
     },
@@ -25,9 +28,73 @@ module.exports = {
 const page_dir = "./frontend/html/";
 const data_dir = "./backend/data/";
 
+function isValueNotEmpty(val) {
+    return (val !== undefined && val !== null && val !== "");
+}
+
+function post_register(req, res) {
+    let register_req = req.body;
+    if (isValueNotEmpty(register_req)) {
+        try {
+            if (isValueNotEmpty(register_req.usr_name) && isValueNotEmpty(register_req.usr_mail) && isValueNotEmpty(register_req.usr_clearPwd)) {
+                //usr_name, usr_mail, usr_hashedPwd, usr_salt, usr_prefLang
+                let usr_salt = mod_user.createNewSalt();
+                let newUser = new mod_user(
+                    mod_user.createUniqueId(),
+                    register_req.usr_name,
+                    register_req.usr_mail,
+                    mod_user.hashPassword(register_req.usr_clearPwd,usr_salt),
+                    usr_salt,
+                    "de" /* German by default */
+                );
+
+                mod_user.registerNewUser(newUser,() => {
+                    res.json({
+                        user_registered: false,
+                        res_title: "Db error",
+                        res_text: "Could not register new user. Maybe user already exists. Mail, username and id needs to be unique.",
+                        notification_type: "error"
+                    });
+                },() => {
+                    res.json({
+                        user_registered: true,
+                        res_title: "User registered",
+                        res_text: "Your user "+register_req.usr_name+" has been registered successfully.",
+                        notification_type: "success"
+                    });
+                });
+
+            } else {
+                res.json({
+                    user_registered: false,
+                    res_title: "Invalid",
+                    res_text: "Please provide a username, mail and a password.",
+                    notification_type: "error"
+                });
+            }
+        } catch (e) {
+            console.error("routes:post_register: Could not register user due to an unknown error -> "+JSON.stringify(e));
+            res.json({
+                user_registered: false,
+                res_title: "Error",
+                res_text: "An unknown error occurred. Try it later again or contact administrator.",
+                notification_type: "error"
+            });
+        }
+    } else {
+        console.error("routes:post_login: Could not login as no data might be available -> " + register_req);
+        res.json({
+            user_registered: false,
+            res_title: "Invalid request",
+            res_text: "Please do not send random requests to this url.",
+            notification_type: "error"
+        });
+    }
+}
+
 function post_login(req, res) {
     let login_req = req.body;
-    if (login_req !== undefined && login_req !== null && login_req !== "") {
+    if (isValueNotEmpty(login_req)) {
         try {
             mod_user.areUserCredentialsCorrect(login_req.usr_name, login_req.usr_clearPwd,
                 isLoginSuccessful => {

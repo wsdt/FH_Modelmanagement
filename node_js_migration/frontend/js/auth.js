@@ -70,77 +70,35 @@ function login(valUsername, valClearPwd) {
                 styling: 'bootstrap3'
             });
         });
-
-
-    /*
-    let headers = new Headers();
-    headers.append('Accept','application/json, application/xml, text/plain, text/html, *.*');
-    headers.append('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
-
-    let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('userName',valUsername);
-    urlSearchParams.append('clearPassword',valClearPwd);
-
-
-    fetch("../../backend/controller/serverAuth.js",
-        {
-            credentials: 'include',
-            method: "post",
-            headers: headers,
-            body: urlSearchParams
-        })
-        .then(handleErrors)
-        .then((resp) => resp.json())
-        .then(function(res) {
-            console.log('Submitted userCredentialsJson.');
-            window.location.href = "/upload"; //redirect to modelupload page
-        })
-        .catch(function(error) {
-            console.log(error);
-            new PNotify({
-                title: 'Unauthorized',
-                text: 'Username or password is wrong ('+error+').',
-                type: 'error',
-                styling: 'bootstrap3'
-            });
-
-        });*/
 }
 
 function register(valUsername, valEmail, valClearPwd) {
-    let headers = new Headers();
-    headers.append('Accept', 'application/json, application/xml, text/plain, text/html, *.*');
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-
-    let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('userName', valUsername);
-    urlSearchParams.append('eMail', valEmail);
-    urlSearchParams.append('clearPassword', valClearPwd);
-
-
-    fetch("../middlewares/AuthenticationMiddleware.php",
-        {
-            credentials: 'include',
-            method: "post",
-            headers: headers,
-            body: urlSearchParams
+    fetch('/v1/register', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({usr_name: valUsername, usr_clearPwd: valClearPwd, usr_mail:valEmail})
+    }).then((res) => res.json())
+        .then(res => {
+            if (res !== undefined && res !== null && res !== "") {
+                if (res.user_registered) {
+                    window.location = "/#signin";
+                }
+                new PNotify({
+                    title: res.res_title,
+                    text: res.res_text,
+                    type: res.notification_type,
+                    styling: 'bootstrap3'
+                });
+            }
         })
-        .then(handleErrors)
-        .then((resp) => resp.json())
-        .then(function (res) {
-            console.log('Submitted RegisterJson.');
+        .catch(error => {
+            console.error("auth:register: Could not register user -> "+JSON.stringify(error));
             new PNotify({
-                title: 'Registration successfully',
-                text: 'The user "' + valUsername.value + '" has been registered successfully.',
-                type: 'success',
-                styling: 'bootstrap3'
-            });
-            // do not, user has to register: window.location.href = "./modelupload.php"; //redirect to modelupload page
-        })
-        .catch(function (error) {
-            new PNotify({
-                title: 'Registration failed',
-                text: 'Unfortunately, we couldn\'t register your new account. (' + error + ')',
+                title: 'Server Error',
+                text: 'An error occurred. Please try it again.',
                 type: 'error',
                 styling: 'bootstrap3'
             });

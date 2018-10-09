@@ -53,7 +53,7 @@ class Db {
                     con.query("CREATE TABLE IF NOT EXISTS user (" +
                         "usr_id VARCHAR(20)," +
                         "usr_name VARCHAR(100) UNIQUE," +
-                        "usr_mail VARCHAR(120)," +
+                        "usr_mail VARCHAR(120) UNIQUE," +
                         "usr_hashedPwd VARCHAR(128)," +
                         "usr_salt VARCHAR(64)," +
                         "usr_prefLang VARCHAR(6)," +
