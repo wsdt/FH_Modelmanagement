@@ -1,5 +1,6 @@
 const Mod_fs = require('fs');
 const mod_user = require('../models/user');
+const mod_sessionMiddleware = require('../middleware/sessionMiddleware');
 
 /** Define routes **********************************
  * Allowed http-methods:
@@ -11,6 +12,9 @@ module.exports = {
     "/v1/login": {
         "get": get_login,
         "post": post_login
+    },
+    "/v1/logout": {
+        "post": post_logout
     },
     "/v1/register": {
         "post": post_register
@@ -33,6 +37,28 @@ const data_dir = "./backend/data/";
 
 function isValueNotEmpty(val) {
     return (val !== undefined && val !== null && val !== "");
+}
+
+function post_logout(req, res) {
+    //just delete session (redirect on frontend)
+    let logout_req = req.body;
+
+    if (isValueNotEmpty(logout_req) && isValueNotEmpty(logout_req.logout) && logout_req.logout === true) {
+        mod_sessionMiddleware.sessLogout(req);
+        res.json({
+            loggedOut: true,
+            res_title: "Logged out",
+            res_text: "You have been logged out successfully.",
+            notification_type: "success"
+        });
+    } else {
+        res.json({
+            loggedOut: false,
+            res_title: "Request malformed",
+            res_text: "Could not logout. Please try again.",
+            notification_type: "error"
+        });
+    }
 }
 
 function post_lostpwd(req, res) {
@@ -158,6 +184,9 @@ function post_login(req, res) {
             mod_user.areUserCredentialsCorrect(login_req.usr_name, login_req.usr_clearPwd,
                 isLoginSuccessful => {
                     if (isLoginSuccessful) {
+                        //set also session
+                        mod_sessionMiddleware.sessLogin(req,login_req.usr_name);
+
                         res.json({
                             user_authenticated: true,
                             res_title: "Authorized",
@@ -193,67 +222,87 @@ function post_login(req, res) {
     }
 }
 
-//TODO: add middleware sess
 /** Saves new model/compression */
 function post_model(req, res) {
     let newModel = req.body;
-    if (newModel !== undefined && newModel !== null && newModel !== "") {
-        try {
-            newModel = JSON.parse(newModel);
-            Mod_fs.writeFile(data_dir + newModel.objectTripleID + ".json", newModel, "utf8"); //no callback
-            console.log("routes:post_model: Tried to save new model.");
-        } catch (e) {
-            console.error("routes:post_model: Could not save new model, as it is not valid JSON -> " + JSON.stringify(newModel) + "\n" + JSON.stringify(e));
+
+    if (mod_sessionMiddleware.isSessionValid(req)) {
+        if (newModel !== undefined && newModel !== null && newModel !== "") {
+            try {
+                newModel = JSON.parse(newModel);
+                Mod_fs.writeFile(data_dir + newModel.objectTripleID + ".json", newModel, "utf8"); //no callback
+                console.log("routes:post_model: Tried to save new model.");
+            } catch (e) {
+                console.error("routes:post_model: Could not save new model, as it is not valid JSON -> " + JSON.stringify(newModel) + "\n" + JSON.stringify(e));
+            }
+        } else {
+            console.error("routes:post_model: Could not save new model as no data might be available -> " + newModel);
+            //TODO: add notification
         }
     } else {
-        console.error("routes:post_model: Could not save new model as no data might be available -> " + newModel);
-        //TODO: add notification
+        console.error("routes:post_model: User not logged in.");
+        //no redirect necessary as it is a post request.
     }
 }
 
-//TODO: add middleware
 /** Returns specific model (via get-param) or if not provided
  * all saved models. */
 function get_models(req, res) {
-    let modelId = req.query.objectTripleID; //$_GET["objectTripleID"]
 
-    if (modelId !== undefined && modelId !== null && modelId !== "") {
-        //Only return one json obj
-        console.log("routes:get_models: Requested model -> " + modelId);
-        let modelJson = JSON.parse(Mod_fs.readFileSync(data_dir + modelId, "utf8"));
-        if (modelJson === undefined || modelJson === null || modelJson === {} || modelJson === []) {
-            console.error("routes:get_models: Requested model NOT found.");
-            return {};
+    if (mod_sessionMiddleware.isSessionValid(req)) {
+        let modelId = req.query.objectTripleID;
+        if (modelId !== undefined && modelId !== null && modelId !== "") {
+            //Only return one json obj
+            console.log("routes:get_models: Requested model -> " + modelId);
+            let modelJson = JSON.parse(Mod_fs.readFileSync(data_dir + modelId, "utf8"));
+            if (modelJson === undefined || modelJson === null || modelJson === {} || modelJson === []) {
+                console.error("routes:get_models: Requested model NOT found.");
+                return {};
+            } else {
+                return modelJson;
+            }
         } else {
-            return modelJson;
+            Mod_fs.readdir(data_dir, function (err, items) {
+                console.log("routes:get_models: Found models -> " + items);
+
+                let resultJsonArr = [];
+                if (err || items === undefined || items === null) {
+                    console.warn("routes:get_all_models: Found no models.");
+                } else {
+                    items.forEach(function (model) {
+                        resultJsonArr.push(JSON.parse(Mod_fs.readFileSync(data_dir + model, "utf8")));
+                    });
+                }
+
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(resultJsonArr));
+            });
         }
     } else {
-        Mod_fs.readdir(data_dir, function (err, items) {
-            console.log("routes:get_models: Found models -> " + items);
-
-            let resultJsonArr = [];
-            if (err || items === undefined || items === null) {
-                console.warn("routes:get_all_models: Found no models.");
-            } else {
-                items.forEach(function (model) {
-                    resultJsonArr.push(JSON.parse(Mod_fs.readFileSync(data_dir + model, "utf8")));
-                });
-            }
-
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify(resultJsonArr));
-        });
+        console.error("routes:get_all_models: User session not valid. Redirecting ...");
+        res.writeHead(301, {Location: '/'});
+        res.end();
     }
 }
 
-//TODO: Add middleware for session (automatic redirect to login)
 function get_upload(req, res) {
-    openFile(page_dir + "modelupload.html", req, res);
+    if (mod_sessionMiddleware.isSessionValid(req)) {
+        openFile(page_dir + "modelupload.html", req, res);
+    } else {
+        console.error("routes:get_upload: User session not valid. Redirecting ...");
+        res.writeHead(301, {Location: '/'});
+        res.end();
+    }
 }
 
-//TODO: Add session middleware (if logged in redirect to upload)
 function get_login(req, res) {
-    openFile(page_dir + "login.html", req, res);
+    if (!mod_sessionMiddleware.isSessionValid(req)) {
+        openFile(page_dir + "login.html", req, res);
+    } else {
+        console.warn("routes:get_login: User session valid. Redirecting ...");
+        res.writeHead(301, {Location: '/v1/upload'});
+        res.end();
+    }
 }
 
 function openFile(file, req, res) {

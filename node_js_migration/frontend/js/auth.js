@@ -8,30 +8,32 @@ function handleErrors(response) {
 
 /** Logs current user out.*/
 function logout() {
-    let headers = new Headers();
-    headers.append('Accept', 'application/json, application/xml, text/plain, text/html, *.*');
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
-
-    let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('logout', 'START_LOGOUT');
-
-    fetch("../middlewares/AuthenticationMiddleware.php",
-        {
-            credentials: 'include',
-            method: "post",
-            headers: headers,
-            body: urlSearchParams
+    fetch('/v1/logout', {
+        method: 'post',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({logout: true})
+    }).then((res) => res.json())
+        .then(res => {
+            if (res !== undefined && res !== null && res !== "") {
+                if (res.loggedOut) {
+                    window.location = "/";
+                }
+                new PNotify({
+                    title: res.res_title,
+                    text: res.res_text,
+                    type: res.notification_type,
+                    styling: 'bootstrap3'
+                });
+            }
         })
-        .then(handleErrors)
-        .then((resp) => resp.json())
-        .then(function (res) {
-            console.log('Submitted logout request.');
-            window.location.href = "./login.php"; //redirect to login page
-        })
-        .catch(function (error) {
+        .catch(error => {
+            console.error("auth:login: Could not logout -> "+JSON.stringify(error));
             new PNotify({
-                title: 'Log-Out failed',
-                text: 'Could not log you out. Please contact administrator.',
+                title: 'Server Error',
+                text: 'An error occurred. Please try it again.',
                 type: 'error',
                 styling: 'bootstrap3'
             });
