@@ -1,0 +1,15 @@
+{
+  "namespace": "fhkuf",
+  "fsNamespace": "fhkuf",
+  "loader": "../fhkuf.js",
+  "corePolyfilled": "es5-build-disabled.js",
+  "core": "fhkuf.core.js",
+  "components": {
+    "kev-kevin": {
+      "bundleIds": {
+        "$": "kev-kevin"
+      },
+      "encapsulation": "shadow"
+    }
+  }
+}

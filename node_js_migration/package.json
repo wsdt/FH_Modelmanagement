@@ -1,9 +1,18 @@
 {
   "name": "fh-kufstein-modelmanagement",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Enables you to upload new compressions for your model management system.",
   "main": "app.js",
-  "scripts": {},
+  "scripts": {
+    "build": "stencil build",
+    "prestart": "stencil build --dev",
+	"start":"node app.js",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll"
+  },
+  "devDependencies": {
+    "@stencil/core": "~0.13.2"
+  },
   "dependencies": {
     "bcrypt": "^3.0.0",
     "express": "^4.16.3",
@@ -29,5 +38,6 @@
     "compression"
   ],
   "author": "Kevin A. Riedl (WSDT)",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/wsdt"
 }
