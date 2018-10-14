@@ -2,3 +2,5 @@
 /.idea/
 /node_js_migration/node_modules/
 /node_modules/
+/node_js_migration/.stencil/
+/.stencil/
