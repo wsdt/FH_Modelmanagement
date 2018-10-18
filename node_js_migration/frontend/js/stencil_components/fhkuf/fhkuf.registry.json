@@ -10,6 +10,12 @@
         "$": "kev-kevin"
       },
       "encapsulation": "shadow"
+    },
+    "profile-pic": {
+      "bundleIds": {
+        "$": "profile-pic"
+      },
+      "encapsulation": "shadow"
     }
   }
 }

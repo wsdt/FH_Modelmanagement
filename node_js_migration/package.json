@@ -21,7 +21,8 @@
     "node-mysql": "^0.4.2",
     "nodemailer": "^4.6.8",
     "npm": "^6.4.0",
-    "orm": "^5.0.2"
+    "orm": "^5.0.2",
+    "ejs": "^2.6.1"
   },
   "engines": {},
   "repository": {

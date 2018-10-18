@@ -287,7 +287,7 @@ function get_models(req, res) {
 
 function get_upload(req, res) {
     if (mod_sessionMiddleware.isSessionValid(req)) {
-        openFile(page_dir + "modelupload.html", req, res);
+        openFile("modelupload", req, res, {userName:req.session.userName});
     } else {
         console.error("routes:get_upload: User session not valid. Redirecting ...");
         res.writeHead(301, {Location: '/'});
@@ -297,7 +297,7 @@ function get_upload(req, res) {
 
 function get_login(req, res) {
     if (!mod_sessionMiddleware.isSessionValid(req)) {
-        openFile(page_dir + "login.html", req, res);
+        openFile("login", req, res, {});
     } else {
         console.warn("routes:get_login: User session valid. Redirecting ...");
         res.writeHead(301, {Location: '/v1/upload'});
@@ -305,13 +305,14 @@ function get_login(req, res) {
     }
 }
 
-function openFile(file, req, res) {
-    Mod_fs.readFile(file, "utf8", function (err, data) {
+function openFile(file, req, res, optionJson) {
+    res.render(file,optionJson);
+    /*Mod_fs.readFile(file, "utf8", function (err, data) {
         if (err) {
             throw err;
         } else {
             res.send(data);
         }
-    })
+    })*/
 }
 

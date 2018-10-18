@@ -44,6 +44,11 @@ function setup_443() {
     //enable json data body parsing
     express_app.use(express.json());
 
+    //Render engine
+    express_app.engine('html',require('ejs').renderFile);
+    express_app.set('view engine','html');
+    express_app.set('views', require('path').join(__dirname, '../frontend/html'));
+
     console.log('server.js:setup_443: Port 443 setup done.');
     return mod_https.createServer(options, express_app).listen(443);
 }
