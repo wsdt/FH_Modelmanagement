@@ -10,7 +10,6 @@ function uploadNewCompression() {
         let randomSubId = "TripleID" + parseInt(Math.random() * 1000, 10);
 
         modelObjPromise.then(function(modelObj) {
-
             modelObj.saveNewCompression((new CompressionObj(randomSubId,
                 '{"uploadDate": "' + (new Date().toLocaleString()) + '",' +
                 '"accessLevel": "' + document.getElementById('accessLevels').value + '",' +
@@ -120,7 +119,6 @@ function searchInResultSet(searchTerm, resultSet) {
             for (let i = 0; i < resultSetValue.length; i++) {
                 console.log('search: '+searchTerm+"//"+JSON.stringify(resultSet)+JSON.stringify(resultSetValue[i]).toLowerCase()+"//"+JSON.stringify(resultSetValue).toLowerCase());
 
-
                 //console.log('searchInResultSet:Search->'+JSON.stringify(resultSet[i]).toLowerCase()+" searching for "+searchTerm.toString().toLowerCase());
                   if (JSON.stringify(resultSetValue[i]).toLowerCase().indexOf(resultSetValue.toString().toLowerCase()) !== (-1)) {
                     //found sth
@@ -130,7 +128,6 @@ function searchInResultSet(searchTerm, resultSet) {
             }
             console.log('searchInResultSet: Length of resultSet->' + filteredResultSet.length);
         });
-
     } else {
         console.warn('searchInResultSet: Resultset or searchterm equals null or undefined.');
     }
