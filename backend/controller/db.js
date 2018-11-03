@@ -50,6 +50,9 @@ class Db {
                    if (err) throw err;
                    console.log("Db:setup_db: Established non-anonymous connection.");
                    //Create tables
+                    con.query("CREATE TABLE IF NOT EXISTS settings (" +
+                    "set_id VARCHAR(1) PRIMARY KEY, set_login BOOLEAN);");
+
                     con.query("CREATE TABLE IF NOT EXISTS user (" +
                         "usr_id VARCHAR(20)," +
                         "usr_name VARCHAR(100) UNIQUE," +
@@ -67,14 +70,14 @@ class Db {
                     con.query("INSERT IGNORE INTO user (usr_id,usr_name,usr_mail,usr_hashedPwd,usr_salt,usr_prefLang) VALUES ('" +
                         "id-umckh39gjpo','test','test@test.gmail.com','"+mod_user.hashPassword("12345",testuser_salt)+"','"+testuser_salt+"','de'"+
                         ");");
+
+                    //insert default settings
+                    con.query("INSERT IGNORE INTO settings (set_id, set_login) VALUES ('0',1);"); //1 = true, 0=false
                     con.end();
                 });
+
                 isDbConfigured = true;
                 console.log("Db:_setup_db: Db setup successfully.");
-
-
-                const user = require('../models/user');
-                user.db_queryUserById("id-umckh39gjpo", new function () {}, new function () {});
             });
         });
     }
