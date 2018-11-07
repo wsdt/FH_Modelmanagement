@@ -1,3 +1,5 @@
+import * as d from "@stencil/core/dist/declarations/index";
+
 function isJsonParamValid(json) {
     if (json === null) {
         console.warn('isJsonParamValid: Provided json is null. Created empty obj.');

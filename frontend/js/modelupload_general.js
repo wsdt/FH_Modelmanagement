@@ -52,7 +52,6 @@ function printModelTableRow(tbodyidentifier, modelObj) {
 function printAllModelTableRows(tbodyidentifier, modelObjs) {
     //Remove all previous content/rows of element (e.g. when searching for sth we only want filtered results)
     $(tbodyidentifier).html('');
-    $(tbodyidentifier).empty();
 
     if (modelObjs !== null && modelObjs !== undefined) {
         //ModelObjs is now a future! So we want to get it

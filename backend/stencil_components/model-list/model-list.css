@@ -1,0 +1,6 @@
+@import "../../../frontend/vendors/iCheck/skins/flat/green.css";
+@import "../../../frontend/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css";
+@import "../../../frontend/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css";
+@import "../../../frontend/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css";
+@import "../../../frontend/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css";
+@import "../../../frontend/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css";

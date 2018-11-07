@@ -23,6 +23,9 @@ export namespace Components {
     'middle'?: string;
   }
 
+  interface ModelList {}
+  interface ModelListAttributes extends StencilHTMLAttributes {}
+
   interface ProfilePic {
     'alt_msg': string;
     'class_name': string;
@@ -38,11 +41,13 @@ export namespace Components {
 declare global {
   interface StencilElementInterfaces {
     'KevKevin': Components.KevKevin;
+    'ModelList': Components.ModelList;
     'ProfilePic': Components.ProfilePic;
   }
 
   interface StencilIntrinsicElements {
     'kev-kevin': Components.KevKevinAttributes;
+    'model-list': Components.ModelListAttributes;
     'profile-pic': Components.ProfilePicAttributes;
   }
 
@@ -53,6 +58,12 @@ declare global {
     new (): HTMLKevKevinElement;
   };
 
+  interface HTMLModelListElement extends Components.ModelList, HTMLStencilElement {}
+  var HTMLModelListElement: {
+    prototype: HTMLModelListElement;
+    new (): HTMLModelListElement;
+  };
+
   interface HTMLProfilePicElement extends Components.ProfilePic, HTMLStencilElement {}
   var HTMLProfilePicElement: {
     prototype: HTMLProfilePicElement;
@@ -61,11 +72,13 @@ declare global {
 
   interface HTMLElementTagNameMap {
     'kev-kevin': HTMLKevKevinElement
+    'model-list': HTMLModelListElement
     'profile-pic': HTMLProfilePicElement
   }
 
   interface ElementTagNameMap {
     'kev-kevin': HTMLKevKevinElement;
+    'model-list': HTMLModelListElement;
     'profile-pic': HTMLProfilePicElement;
   }
 
