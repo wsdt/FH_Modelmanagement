@@ -34,16 +34,17 @@ function printModelTableRow(tbodyidentifier, modelObj) {
     let allCompressions = Object.keys(modelObj.files);
     for (let index = 0; index < allCompressions.length; ++index) {
         //TODO: place here relevant ata to string
-        compressionTypesList += "<li><img src='../../images/user.png' class='avatar' alt='Avatar' data-toggle='tooltip' data-placement='top' title='" + modelObj.getFile(allCompressions[index]).compressionUUID + "'></li>";
+        compressionTypesList += "<img src='../images/users/TEST.jpg' class='avatar' alt='Avatar' data-toggle='tooltip' data-placement='top' title='" + modelObj.getFile(allCompressions[index]).compressionUUID + "'>";
         //console.log("Added string to types list. ");
     }
 
+    let printFunction = $(tbodyidentifier).append("<tr id='"+modelObj.objectTripleID+"'>"+
+        "<td><a href='#' class='btn btn-info btn-xs' onclick='selectModel(&apos;" + modelObj.objectTripleID + "&apos;)'><i class='fa fa-pencil'></i> Select</a></td>"+
+        "<td>"+modelObj.objectTripleID+"</td><td>"+modelObj.mediaTripleID+"</td>"+
+        "<td>"+modelObj.description+"</td><td>"+modelObj.createDate+" by "+modelObj.creator+"</td>"+
+        "<td>"+modelObj.owner+"</td><td>"+modelObj.MIMEtype+"</td><td>"+compressionTypesList+"</td></tr>").fadeIn('slow');
+
     //objectTripleUUID as Row ID, so we can get id as reference when selecting an action btn
-    let printFunction = $(tbodyidentifier).append("<tr id='" + modelObj.objectTripleID + "'><td>#</td><td><a>" + modelObj.description + "</a><br/>" +
-        "<small data-toggle='tooltip' data-placement='top' title='Owner: " + modelObj.owner + " / Creator: " + modelObj.creator + "'>Created on " + modelObj.createDate + "</small>" +
-        "</td><td><ul class='list-inline'>" + compressionTypesList + "</ul></td>" +
-        "<td><button type='button' class='btn btn-success btn-xs'>Active</button></td>" +
-        "<td><a href='#' class='btn btn-info btn-xs' onclick='selectModel(&apos;" + modelObj.objectTripleID + "&apos;)'><i class='fa fa-pencil'></i> Select</a></td></tr>").fadeIn('slow');
     //console.log("Tried to execute printModelTableRow(): "+tbodyidentifier+";;"+JSON.stringify(jsonObj));
 }
 
@@ -51,6 +52,7 @@ function printModelTableRow(tbodyidentifier, modelObj) {
 function printAllModelTableRows(tbodyidentifier, modelObjs) {
     //Remove all previous content/rows of element (e.g. when searching for sth we only want filtered results)
     $(tbodyidentifier).html('');
+    $(tbodyidentifier).empty();
 
     if (modelObjs !== null && modelObjs !== undefined) {
         //ModelObjs is now a future! So we want to get it
