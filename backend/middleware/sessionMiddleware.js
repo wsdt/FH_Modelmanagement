@@ -26,7 +26,8 @@ class sessionMiddleware {
 
     // Set session if login is deactivated
     static isSessionValid(req) {
-        mod_settings.loginWithoutAuth(req, null,null);
+        // Login toggle functionality deactivated as requirements changed
+        //mod_settings.loginWithoutAuth(req, null,null);
 
         return (req !== undefined && req !== null &&
             req.session !== undefined && req.session !== null &&
