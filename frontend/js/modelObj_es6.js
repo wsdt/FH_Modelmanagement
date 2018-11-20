@@ -101,7 +101,7 @@ var AccessLevel;
     AccessLevel["Private"] = "private";
     AccessLevel["Visit"] = "visit";
     AccessLevel["Public"] = "public";
-})(AccessLevel = exports.AccessLevel || (exports.AccessLevel = {}));
+})(AccessLevel || (AccessLevel = {}));
 var Compression = /** @class */ (function () {
     function Compression(compressUUID, uploadDate, accessLevel, license, fileSize, paths, fileTypeSpecificMeta) {
         this.compressionUUID = compressUUID;
@@ -140,4 +140,5 @@ var Compression = /** @class */ (function () {
     };
     return Compression;
 }());
-exports.Compression = Compression;
+exports.default = ModelObj;
+module.exports = ModelObj;

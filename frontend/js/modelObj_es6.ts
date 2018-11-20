@@ -1,5 +1,3 @@
-import * as d from "@stencil/core/dist/declarations";
-
 function parseJson(json) {
     let jsonObj;
     if (json === null) {
@@ -22,6 +20,7 @@ function parseJson(json) {
     }
     return jsonObj;
 }
+
 
 export class ModelObj {
     objectTripleID: string;
@@ -146,7 +145,6 @@ export class Compression {
         this.paths = paths;
         this.fileTypeSpecificMeta = fileTypeSpecificMeta;
     }
-
 
 
     /**

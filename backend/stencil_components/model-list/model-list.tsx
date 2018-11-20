@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { ModelObj, Compression } from '../../../frontend/js/modelObj_es6';
+import { ModelObj } from '../../../frontend/js/modelObj_es6';
 import '../../../frontend/vendors/iCheck/icheck.min.js';
 import '../../../frontend/vendors/datatables.net/js/jquery.dataTables.min.js';
 import '../../../frontend/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js';
