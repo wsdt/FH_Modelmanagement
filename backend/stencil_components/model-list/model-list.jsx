@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@stencil/core");
-var modelObj_es6_1 = require("../../../frontend/js/modelObj_es6");
+var modelObj_es6_1 = require("./modelObj_es6");
 require("../../../frontend/vendors/iCheck/icheck.min.js");
 require("../../../frontend/vendors/datatables.net/js/jquery.dataTables.min.js");
 require("../../../frontend/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js");

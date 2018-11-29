@@ -1,5 +1,6 @@
 import { Component, Prop } from '@stencil/core';
-import { ModelObj } from '../../../frontend/js/modelObj_es6';
+import {ModelObj} from "./modelObj_es6";
+
 import '../../../frontend/vendors/iCheck/icheck.min.js';
 import '../../../frontend/vendors/datatables.net/js/jquery.dataTables.min.js';
 import '../../../frontend/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js';
@@ -16,6 +17,7 @@ import '../../../frontend/vendors/datatables.net-scroller/js/dataTables.scroller
 import '../../../frontend/vendors/jszip/dist/jszip.min.js';
 import '../../../frontend/vendors/pdfmake/build/pdfmake.min.js';
 import '../../../frontend/vendors/pdfmake/build/vfs_fonts.js';
+
 
 @Component({
   tag: 'model-list',

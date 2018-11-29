@@ -249,3 +249,4 @@ let CompressionObj = function(compressionUUID,json) {
         });
     } //no else necessary bc. last statement (return empty obj)
 };
+
