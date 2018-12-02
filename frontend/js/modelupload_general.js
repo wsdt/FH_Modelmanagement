@@ -85,7 +85,7 @@ function selectModel(objectTrippleUUID) {
         console.log('Tried to set bgcolor.');
 
         //Update heading for step 2 (usability)
-        //todo document.getElementById('step2_title').innerHTML = "Step 2: Upload new compression for " + objectTrippleUUID;
+        document.getElementById('step2_title').innerHTML = "Step 2: Upload new compression for " + objectTrippleUUID;
 
         //TODO: Do here sth stuff (e.g. send to basket with ajax or similar etc.) and then receive HERE a valid json str
 
