@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import {ModelObj} from "../../../frontend/js/modelObj_es6";
+//import {ModelObj} from "../../../frontend/js/modelObj_es6";
 
 import '../../../frontend/vendors/iCheck/icheck.min.js';
 import '../../../frontend/vendors/datatables.net/js/jquery.dataTables.min.js';
@@ -26,6 +26,7 @@ import '../../../frontend/vendors/pdfmake/build/vfs_fonts.js';
 })
 export class ModelList {
   render() {
+      //<-- ModelList.printAllModelTableRows(ModelObj.getAllLocally()) }-->
     return <table id="datatable-buttons" class="table table-striped table-bordered">
           <thead>
           <tr>
@@ -41,7 +42,7 @@ export class ModelList {
           </thead>
 
           <tbody>
-          { ModelList.printAllModelTableRows(ModelObj.getAllLocally()) }
+
           </tbody>
       </table>;
   }

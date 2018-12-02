@@ -75,6 +75,8 @@ function printAllModelTableRows(tbodyidentifier, modelObjs) {
  * -> This method should send it's data to basket. After that the upload procedure can
  * start. */
 function selectModel(objectTrippleUUID) {
+    //TODO: ON SELECT GO DIRECTLY LIKE A LINK TO AN UPLOAD PAGE
+
     //Only select if not selected already and if not null
     if (objectTrippleUUID !== null && selectedObj !== objectTrippleUUID) {
         console.log('Received selected model with id: ' + objectTrippleUUID);
@@ -83,7 +85,7 @@ function selectModel(objectTrippleUUID) {
         console.log('Tried to set bgcolor.');
 
         //Update heading for step 2 (usability)
-        document.getElementById('step2_title').innerHTML = "Step 2: Upload new compression for " + objectTrippleUUID;
+        //todo document.getElementById('step2_title').innerHTML = "Step 2: Upload new compression for " + objectTrippleUUID;
 
         //TODO: Do here sth stuff (e.g. send to basket with ajax or similar etc.) and then receive HERE a valid json str
 

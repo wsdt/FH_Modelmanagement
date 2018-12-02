@@ -22,7 +22,7 @@ function parseJson(json) {
 }
 
 
-export class ModelObj {
+class ModelObj {
     objectTripleID: string;
     description: string;
     mediaTripleID: string;
@@ -121,13 +121,13 @@ export class ModelObj {
 }
 
 
-export enum AccessLevel {
+enum AccessLevel {
     Private = "private",
     Visit = "visit",
     Public = "public"
 }
 
-export class Compression {
+class Compression {
     compressionUUID: number;
     uploadDate: string;
     accessLevel: AccessLevel;

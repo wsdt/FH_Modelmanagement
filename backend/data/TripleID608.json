@@ -1,1 +1,21 @@
-{"description":"This is an example description","objectTripleID":"TripleID608","mediaTripleID":"TripleID608","createDate":"date","creator":"string","owner":"string","MIMEtype":"string","files":[{},{},{},{},{},{},{},{},{}]}
+{
+  "description": "string",
+  "objectTripleID": "TripleID",
+  "mediaTripleID": "TripleID",
+  "createDate": "date",
+  "creator": "string",
+  "owner": "string",
+  "uploader": "string",
+  "MIMEtype": "string",
+  "files": [
+    {
+      "uploadDate": "date",
+      "accessLevel": "accessLevel[public|private|visit]",
+      "license": "string",
+      "fileSize": "long",
+      "paths": "[Array von string]",
+      "fileTypeSpecificMeta": {
+      }
+    }
+  ]
+}

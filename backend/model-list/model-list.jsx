@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@stencil/core");
-var modelObj_es6_1 = require("../../../frontend/js/modelObj_es6");
+//import {ModelObj} from "../../../frontend/js/modelObj_es6";
 require("../../../frontend/vendors/iCheck/icheck.min.js");
 require("../../../frontend/vendors/datatables.net/js/jquery.dataTables.min.js");
 require("../../../frontend/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js");
@@ -27,8 +27,8 @@ require("../../../frontend/vendors/pdfmake/build/vfs_fonts.js");
 var ModelList = /** @class */ (function () {
     function ModelList() {
     }
-    ModelList_1 = ModelList;
     ModelList.prototype.render = function () {
+        //<-- ModelList.printAllModelTableRows(ModelObj.getAllLocally()) }-->
         return <table id="datatable-buttons" class="table table-striped table-bordered">
           <thead>
           <tr>
@@ -44,7 +44,7 @@ var ModelList = /** @class */ (function () {
           </thead>
 
           <tbody>
-          {ModelList_1.printAllModelTableRows(modelObj_es6_1.ModelObj.getAllLocally())}
+
           </tbody>
       </table>;
     };
@@ -88,7 +88,7 @@ var ModelList = /** @class */ (function () {
         }
         return table;
     };
-    ModelList = ModelList_1 = __decorate([
+    ModelList = __decorate([
         core_1.Component({
             tag: 'model-list',
             styleUrl: 'model-list.css',
@@ -96,6 +96,5 @@ var ModelList = /** @class */ (function () {
         })
     ], ModelList);
     return ModelList;
-    var ModelList_1;
 }());
 exports.ModelList = ModelList;
