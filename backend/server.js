@@ -1,5 +1,6 @@
 const express = require('express');
 const express_app = express();
+const bodyParser = require('body-parser');
 const db = require('./controller/db');
 const db_con = new db(express_app); //make instance (execute constr. automatically)z
 let https_server = setup_443();
@@ -42,7 +43,10 @@ function setup_443() {
     //Set static base url for all inline refs (stylesheets, js)
     express_app.use(express.static("frontend"));
     //enable json data body parsing
-    express_app.use(express.json());
+    express_app.use(bodyParser.json());
+    express_app.use(bodyParser.urlencoded({
+        extended: true
+    }));
 
     //Render engine
     express_app.engine('html',require('ejs').renderFile);

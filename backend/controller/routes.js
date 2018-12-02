@@ -229,7 +229,9 @@ function post_model(req, res) {
     if (mod_sessionMiddleware.isSessionValid(req)) {
         if (newModel !== undefined && newModel !== null && newModel !== "") {
             try {
+                console.log("routes:post_model:1 -> "+JSON.stringify(newModel)+ " ; "+newModel+ ";;");
                 newModel = JSON.parse(newModel);
+                console.log("routes:post_model:2");
                 Mod_fs.writeFile(data_dir + newModel.objectTripleID + ".json", newModel, "utf8"); //no callback
                 console.log("routes:post_model: Tried to save new model.");
             } catch (e) {

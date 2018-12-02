@@ -15,7 +15,7 @@ function uploadNewCompression() {
                 '"accessLevel": "' + document.getElementById('accessLevels').value + '",' +
                 '"license": "' + document.getElementById('license').value + '",' +
                 '"fileSize": "long",' +
-                '"path": "/data/compressions/' + randomSubId + '.comprFileExt",' +
+                '"paths": ["/data/compressions/' + randomSubId + '.comprFileExt"],' +
                 '"fileTypeSpecificMeta": {' +
                 '}}'
             )));
@@ -75,8 +75,6 @@ function printAllModelTableRows(tbodyidentifier, modelObjs) {
  * -> This method should send it's data to basket. After that the upload procedure can
  * start. */
 function selectModel(objectTrippleUUID) {
-    //TODO: ON SELECT GO DIRECTLY LIKE A LINK TO AN UPLOAD PAGE
-
     //Only select if not selected already and if not null
     if (objectTrippleUUID !== null && selectedObj !== objectTrippleUUID) {
         console.log('Received selected model with id: ' + objectTrippleUUID);
