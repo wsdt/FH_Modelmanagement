@@ -468,7 +468,7 @@ $.fn.smartWizard.defaults = {
     noForwardJumping: false,
     onLeaveStep: null, // triggers when leaving a step
     onShowStep: null,  // triggers when showing a step
-    onFinish: uploadNewCompression()  // triggers when Finish button is clicked
+    onFinish: uploadNewCompression  // triggers when Finish button is clicked
 };
 
 })(jQuery);

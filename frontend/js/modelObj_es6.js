@@ -46,7 +46,7 @@ var ModelObj = /** @class */ (function () {
     ;
     ModelObj.prototype.saveLocally = function () {
         var strModelObj = JSON.stringify((this));
-        console.log("OBJ: " + strModelObj + ";;" + JSON.stringify(this.files));
+        console.log("modelObj:saveLocally: " + strModelObj + ";;" + JSON.stringify(this.files));
         fetch("/v1/model", {
             method: "POST",
             headers: {
@@ -60,8 +60,8 @@ var ModelObj = /** @class */ (function () {
     };
     ModelObj.getLocally = function (objectTripleID) {
         if (objectTripleID !== undefined && objectTripleID !== null) {
-            console.log('Sending id to ' + "./LocalJsonMgr.php?objectTripleID=" + objectTripleID);
-            return fetch("/model?objectTripleID=" + objectTripleID)
+            console.log('Sending id to ' + "/v1/model?objectTripleID=" + objectTripleID);
+            return fetch("/v1/model?objectTripleID=" + objectTripleID)
                 .then(function (resp) { return resp.json(); })
                 .then(function (res) {
                 var modelObj = ModelObj.mapJsonToInstance(res);

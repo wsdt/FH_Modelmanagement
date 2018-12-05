@@ -56,7 +56,7 @@ class ModelObj {
 
     saveLocally() {
         let strModelObj = JSON.stringify((this));
-        console.log("OBJ: " + strModelObj + ";;" + JSON.stringify(this.files));
+        console.log("modelObj:saveLocally: " + strModelObj + ";;" + JSON.stringify(this.files));
 
         fetch("/v1/model",
             {
@@ -73,8 +73,8 @@ class ModelObj {
 
     static getLocally(objectTripleID) {
         if (objectTripleID !== undefined && objectTripleID !== null) {
-            console.log('Sending id to ' + "./LocalJsonMgr.php?objectTripleID=" + objectTripleID);
-            return fetch("/model?objectTripleID=" + objectTripleID)
+            console.log('Sending id to '+"/v1/model?objectTripleID=" + objectTripleID);
+            return fetch("/v1/model?objectTripleID=" + objectTripleID)
                 .then((resp) => resp.json())
                 .then(function (res) {
                         let modelObj = ModelObj.mapJsonToInstance(res);
