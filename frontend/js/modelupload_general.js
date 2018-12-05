@@ -10,16 +10,18 @@ function uploadNewCompression() {
         let randomSubId = "TripleID" + parseInt(Math.random() * 1000, 10);
 
         modelObjPromise.then(function (modelObj) {
-            modelObj.saveNewCompression((new CompressionObj(randomSubId,
-                '{"uploadDate": "' + (new Date().toLocaleString()) + '",' +
-                '"accessLevel": "' + document.getElementById('accessLevels').value + '",' +
-                '"license": "' + document.getElementById('license').value + '",' +
-                '"fileSize": "long",' +
-                '"paths": ["/data/compressions/' + randomSubId + '.comprFileExt"],' +
-                '"fileTypeSpecificMeta": {' +
-                '}}'
-            )));
+            console.log("uploadNewCompression:then::before: "+JSON.stringify(modelObj));
+            let newCompr = new Compression(
+                randomSubId,
+                (new Date()).toLocaleString(),
+                document.getElementById('accessLevels').value,
+                document.getElementById('license').value,
+                100,
+                "examplepathtofile",
+                "{}");
 
+            modelObj.saveNewCompression(newCompr);
+            console.log("uploadNewCompression:then::after: "+JSON.stringify(modelObj));
             modelObj.saveLocally(); //save also locally
         });
     } else {

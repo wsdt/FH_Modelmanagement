@@ -229,9 +229,9 @@ function post_model(req, res) {
     if (mod_sessionMiddleware.isSessionValid(req)) {
         if (newModel !== undefined && newModel !== null && newModel !== "") {
             try {
-                console.log("routes:post_model:1 -> "+JSON.stringify(newModel)+ " ; "+newModel.constructor+ ";;");
+                console.log("route: "+JSON.stringify(newModel));
                 newModel = JSON.parse(newModel);
-                console.log("routes:post_model:2");
+                console.log("route: "+2);
                 Mod_fs.writeFile(data_dir + newModel.objectTripleID + ".json", newModel, "utf8"); //no callback
                 console.log("routes:post_model: Tried to save new model.");
             } catch (e) {
@@ -255,12 +255,12 @@ function get_models(req, res) {
         if (modelId !== undefined && modelId !== null && modelId !== "") {
             //Only return one json obj
             console.log("routes:get_models: Requested model -> " + modelId);
-            let modelJson = JSON.parse(Mod_fs.readFileSync(data_dir + modelId, "utf8"));
+            let modelJson = JSON.parse(Mod_fs.readFileSync(data_dir + modelId+".json", "utf8"));
             if (modelJson === undefined || modelJson === null || modelJson === {} || modelJson === []) {
                 console.error("routes:get_models: Requested model NOT found.");
-                return {};
+                return "{}";
             } else {
-                return modelJson;
+                res.send(JSON.stringify(modelJson));
             }
         } else {
             Mod_fs.readdir(data_dir, function (err, items) {
