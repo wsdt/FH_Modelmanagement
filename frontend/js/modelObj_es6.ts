@@ -1,3 +1,5 @@
+declare var PNotify: any;
+
 function parseJson(json) {
     let jsonObj;
     if (json === null) {
@@ -66,8 +68,14 @@ class ModelObj {
                 },
                 body: strModelObj
             })
-            .then(function (res) {
-                console.log('Submitted json: ' + res);
+            .then((resp) => resp.json())
+            .then(function(res) {
+                new PNotify({
+                    title: res.res_title,
+                    text: res.res_text,
+                    type: res.notification_type,
+                    styling: 'bootstrap3'
+                });
             });
     }
 
@@ -78,7 +86,7 @@ class ModelObj {
                 .then((resp) => resp.json())
                 .then(function (res) {
                         let modelObj = ModelObj.mapJsonToInstance(res);
-                        console.log('Received json: ' + JSON.stringify(res) + " / ModelObj: " + modelObj);
+                        console.log('Received json: ' + JSON.stringify(res) + " / ModelObj: " + JSON.stringify(modelObj));
                         return modelObj;
                     }
                 );
@@ -162,19 +170,21 @@ class Compression {
      * */
     static mapFilesJsonToInstances(json) {
         let jsonObj = parseJson(json);
+        console.warn("GOT: "+JSON.stringify(json)+"\nparsedJson: "+JSON.stringify(jsonObj));
 
         let comprArr = [];
         for (let jsonElem of jsonObj) {
             comprArr.push(new Compression(
-                jsonObj.compressionUUID,
-                jsonObj.uploadDate,
-                jsonObj.accessLevel,
-                jsonObj.license,
-                jsonObj.fileSize,
-                jsonObj.paths,
-                jsonObj.fileTypeSpecificMeta
+                jsonElem.compressionUUID,
+                jsonElem.uploadDate,
+                jsonElem.accessLevel,
+                jsonElem.license,
+                jsonElem.fileSize,
+                jsonElem.paths,
+                jsonElem.fileTypeSpecificMeta
             ));
         }
+        console.warn("ARR: "+JSON.stringify(comprArr));
 
         return comprArr;
     }

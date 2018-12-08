@@ -54,8 +54,14 @@ var ModelObj = /** @class */ (function () {
             },
             body: strModelObj
         })
+            .then(function (resp) { return resp.json(); })
             .then(function (res) {
-            console.log('Submitted json: ' + res);
+            new PNotify({
+                title: res.res_title,
+                text: res.res_text,
+                type: res.notification_type,
+                styling: 'bootstrap3'
+            });
         });
     };
     ModelObj.getLocally = function (objectTripleID) {
@@ -65,7 +71,7 @@ var ModelObj = /** @class */ (function () {
                 .then(function (resp) { return resp.json(); })
                 .then(function (res) {
                 var modelObj = ModelObj.mapJsonToInstance(res);
-                console.log('Received json: ' + JSON.stringify(res) + " / ModelObj: " + modelObj);
+                console.log('Received json: ' + JSON.stringify(res) + " / ModelObj: " + JSON.stringify(modelObj));
                 return modelObj;
             });
         }
@@ -124,11 +130,13 @@ var Compression = /** @class */ (function () {
      * */
     Compression.mapFilesJsonToInstances = function (json) {
         var jsonObj = parseJson(json);
+        console.warn("GOT: " + JSON.stringify(json) + "\nparsedJson: " + JSON.stringify(jsonObj));
         var comprArr = [];
         for (var _i = 0, jsonObj_1 = jsonObj; _i < jsonObj_1.length; _i++) {
             var jsonElem = jsonObj_1[_i];
-            comprArr.push(new Compression(jsonObj.compressionUUID, jsonObj.uploadDate, jsonObj.accessLevel, jsonObj.license, jsonObj.fileSize, jsonObj.paths, jsonObj.fileTypeSpecificMeta));
+            comprArr.push(new Compression(jsonElem.compressionUUID, jsonElem.uploadDate, jsonElem.accessLevel, jsonElem.license, jsonElem.fileSize, jsonElem.paths, jsonElem.fileTypeSpecificMeta));
         }
+        console.warn("ARR: " + JSON.stringify(comprArr));
         return comprArr;
     };
     Compression.mapJsonToInstance = function (json) {

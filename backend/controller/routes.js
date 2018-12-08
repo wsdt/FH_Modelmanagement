@@ -225,15 +225,22 @@ function post_login(req, res) {
 /** Saves new model/compression */
 function post_model(req, res) {
     let newModel = req.body;
+    let error = true;
 
     if (mod_sessionMiddleware.isSessionValid(req)) {
         if (newModel !== undefined && newModel !== null && newModel !== "") {
             try {
                 console.log("route: "+JSON.stringify(newModel));
-                newModel = JSON.parse(newModel);
-                console.log("route: "+2);
-                Mod_fs.writeFile(data_dir + newModel.objectTripleID + ".json", newModel, "utf8"); //no callback
-                console.log("routes:post_model: Tried to save new model.");
+
+                Mod_fs.writeFile(data_dir + newModel.objectTripleID + ".json", JSON.stringify(newModel), "utf8", () => {
+                    console.log("routes:post_model: Tried to save new model.");
+                    res.json({
+                       res_title: "Model saved",
+                       res_text: "Your compression has been saved successfully.",
+                       notification_type: "success"
+                    });
+                });
+                error = false;
             } catch (e) {
                 console.error("routes:post_model: Could not save new model, as it is not valid JSON -> " + JSON.stringify(newModel) + "\n" + JSON.stringify(e));
             }
@@ -243,6 +250,14 @@ function post_model(req, res) {
     } else {
         console.error("routes:post_model: User not logged in.");
         //no redirect necessary as it is a post request.
+    }
+
+    if (error) {
+        res.json({
+            res_title: "Model not saved",
+            res_text: "Your compression could not be saved due to an error.",
+            notification_type: "error"
+        });
     }
 }
 
