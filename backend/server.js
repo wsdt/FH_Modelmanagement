@@ -53,6 +53,48 @@ function setup_443() {
     express_app.set('view engine','html');
     express_app.set('views', require('path').join(__dirname, '../frontend/html'));
 
+    /*file mgr setup
+    let dir = process.cwd();
+    express_app.use(express.static(dir)); //current working dir
+    express_app.use(express.static(__dirname)); //module dir
+
+    express_app.get('/component/file_mgr', function (req, res) {
+        var currentDir =  dir;
+        var query = req.query.path || '';
+        if (query) currentDir = path.join(dir, query);
+        console.log("browsing ", currentDir);
+        fs.readdir(currentDir, function (err, files) {
+            if (err) {
+                throw err;
+            }
+            var data = [];
+            files
+                .forEach(function (file) {
+                    try {
+                        //console.log("processingile);
+                        var isDirectory = fs.statSync(path.join(currentDir,file)).isDirectory();
+                        if (isDirectory) {
+                            data.push({ Name : file, IsDirectory: true, Path : path.join(query, file)  });
+                        } else {
+                            var ext = path.extname(file);
+                            if(program.exclude && _.contains(program.exclude, ext)) {
+                                console.log("excluding file ", file);
+                                return;
+                            }
+                            data.push({ Name : file, Ext : ext, IsDirectory: false, Path : path.join(query, file) });
+                        }
+
+                    } catch(e) {
+                        console.log(e);
+                    }
+
+                });
+            data = _.sortBy(data, function(f) { return f.Name });
+            res.json(data);
+        });
+    });
+    //file mgr setup end*/
+
     console.log('server.js:setup_443: Port 443 setup done.');
     return mod_https.createServer(options, express_app).listen(443);
 }

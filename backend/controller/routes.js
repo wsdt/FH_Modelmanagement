@@ -9,6 +9,9 @@ module.exports = {
     "/": {
         "get": get_login
     },
+    "/v1/file_browser": {
+         "get": get_filebrowser
+    },
     "/v1/login": {
         "get": get_login,
         "post": post_login
@@ -37,6 +40,17 @@ const data_dir = "./backend/data/";
 
 function isValueNotEmpty(val) {
     return (val !== undefined && val !== null && val !== "");
+}
+
+function get_filebrowser(req, res) {
+    return "Functionality not implemented yet.";
+    /*if (mod_sessionMiddleware.isSessionValid(req)) {
+        openFile("modelbrowser", req, res, {});
+    } else {
+        console.warn("routes:get_filebrowser: User session not valid. Redirecting ...");
+        res.writeHead(301, {Location: '/v1/login'});
+        res.end();
+    }*/
 }
 
 function post_logout(req, res) {
