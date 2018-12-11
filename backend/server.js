@@ -3,42 +3,11 @@ const express_app = express();
 const bodyParser = require('body-parser');
 const db = require('./controller/db');
 const db_con = new db(express_app); //make instance (execute constr. automatically)z
-let https_server = setup_443();
-
-/* SERVER CONFIGURATION ***********************************/
-/** If true, then all requests to 80 get redirected to 443. */
-const HTTPS_REDIRECT = true;
-
-
-// Set up other ports than 443 ++++++++++++++++++++++++++
-if (HTTPS_REDIRECT) {
-    setup_80();
-}
+setup_8080();
 
 // Functions ++++++++++++++++++++++++++++++
-function setup_80() {
-    const mod_http = require("http");
-    mod_http.createServer(function (req, res) {
-        //redirect to https
-        res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
-        res.end();
-    }).listen(80);
-    console.log('server.js:setup_80: Port 80 setup done (redirect to 443 activated).');
-}
-
-function setup_443() {
-    const mod_https = require('https'),
-        mod_fs = require('fs');
-
-    const con_secret_key = './backend/secrets/key.pem';
-    const con_secret_cert = './backend/secrets/cert.pem';
-    const con_secret_pwd = '12345';
-
-    const options = {
-        key: mod_fs.readFileSync(con_secret_key),
-        cert: mod_fs.readFileSync(con_secret_cert),
-        passphrase: con_secret_pwd
-    };
+function setup_8080() {
+    const mod_http = require('http');
 
     //Set static base url for all inline refs (stylesheets, js)
     express_app.use(express.static("frontend"));
@@ -95,8 +64,8 @@ function setup_443() {
     });
     //file mgr setup end*/
 
-    console.log('server.js:setup_443: Port 443 setup done.');
-    return mod_https.createServer(options, express_app).listen(443);
+    console.log('server.js:setup_8080: Port 8080 setup done.');
+    return mod_http.createServer(express_app).listen(8080);
 }
 
 
