@@ -5,12 +5,6 @@
   "corePolyfilled": "es5-build-disabled.js",
   "core": "fhkuf.core.js",
   "components": {
-    "kev-kevin": {
-      "bundleIds": {
-        "$": "kev-kevin"
-      },
-      "encapsulation": "shadow"
-    },
     "profile-pic": {
       "bundleIds": {
         "$": "profile-pic"

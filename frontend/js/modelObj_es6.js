@@ -115,28 +115,13 @@ var Compression = /** @class */ (function () {
         this.paths = paths;
         this.fileTypeSpecificMeta = fileTypeSpecificMeta;
     }
-    /**
-     * //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-     *
-     * let compressionUUIDs = Object.keys(filesObj);
-     console.log('Compression UUIDs: '+compressionUUIDs+";;;"+compressionUUIDs.length);
-     let compressionObjs = []; //TODO: statt array jsonObj mit UUID als key damit ausgangsjson und result gleich!
-     for (let i = 0;i<compressionUUIDs.length;i++) {
-                        compressionObjs.push((new CompressionObj(compressionUUIDs[i],filesObj[compressionUUIDs[i]]))); //.files[compressionUUIDs[i]])
-                        console.log(compressionObjs[i]);
-                    }
-     jsonObj.files = compressionObjs; //as extra param bc. --> id : {provided obj}
-     *
-     * */
     Compression.mapFilesJsonToInstances = function (json) {
         var jsonObj = parseJson(json);
-        console.warn("GOT: " + JSON.stringify(json) + "\nparsedJson: " + JSON.stringify(jsonObj));
         var comprArr = [];
         for (var _i = 0, jsonObj_1 = jsonObj; _i < jsonObj_1.length; _i++) {
             var jsonElem = jsonObj_1[_i];
             comprArr.push(new Compression(jsonElem.compressionUUID, jsonElem.uploadDate, jsonElem.accessLevel, jsonElem.license, jsonElem.fileSize, jsonElem.paths, jsonElem.fileTypeSpecificMeta));
         }
-        console.warn("ARR: " + JSON.stringify(comprArr));
         return comprArr;
     };
     Compression.mapJsonToInstance = function (json) {

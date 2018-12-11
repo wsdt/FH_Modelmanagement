@@ -154,23 +154,8 @@ class Compression {
         this.fileTypeSpecificMeta = fileTypeSpecificMeta;
     }
 
-
-    /**
-     * //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-     *
-     * let compressionUUIDs = Object.keys(filesObj);
-     console.log('Compression UUIDs: '+compressionUUIDs+";;;"+compressionUUIDs.length);
-     let compressionObjs = []; //TODO: statt array jsonObj mit UUID als key damit ausgangsjson und result gleich!
-     for (let i = 0;i<compressionUUIDs.length;i++) {
-                        compressionObjs.push((new CompressionObj(compressionUUIDs[i],filesObj[compressionUUIDs[i]]))); //.files[compressionUUIDs[i]])
-                        console.log(compressionObjs[i]);
-                    }
-     jsonObj.files = compressionObjs; //as extra param bc. --> id : {provided obj}
-     *
-     * */
     static mapFilesJsonToInstances(json) {
         let jsonObj = parseJson(json);
-        console.warn("GOT: "+JSON.stringify(json)+"\nparsedJson: "+JSON.stringify(jsonObj));
 
         let comprArr = [];
         for (let jsonElem of jsonObj) {
@@ -184,7 +169,6 @@ class Compression {
                 jsonElem.fileTypeSpecificMeta
             ));
         }
-        console.warn("ARR: "+JSON.stringify(comprArr));
 
         return comprArr;
     }

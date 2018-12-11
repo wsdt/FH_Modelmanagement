@@ -12,17 +12,6 @@ import '@stencil/core';
 
 export namespace Components {
 
-  interface KevKevin {
-    'first': string;
-    'last': string;
-    'middle': string;
-  }
-  interface KevKevinAttributes extends StencilHTMLAttributes {
-    'first'?: string;
-    'last'?: string;
-    'middle'?: string;
-  }
-
   interface ProfilePic {
     'alt_msg': string;
     'class_name': string;
@@ -37,21 +26,13 @@ export namespace Components {
 
 declare global {
   interface StencilElementInterfaces {
-    'KevKevin': Components.KevKevin;
     'ProfilePic': Components.ProfilePic;
   }
 
   interface StencilIntrinsicElements {
-    'kev-kevin': Components.KevKevinAttributes;
     'profile-pic': Components.ProfilePicAttributes;
   }
 
-
-  interface HTMLKevKevinElement extends Components.KevKevin, HTMLStencilElement {}
-  var HTMLKevKevinElement: {
-    prototype: HTMLKevKevinElement;
-    new (): HTMLKevKevinElement;
-  };
 
   interface HTMLProfilePicElement extends Components.ProfilePic, HTMLStencilElement {}
   var HTMLProfilePicElement: {
@@ -60,12 +41,10 @@ declare global {
   };
 
   interface HTMLElementTagNameMap {
-    'kev-kevin': HTMLKevKevinElement
     'profile-pic': HTMLProfilePicElement
   }
 
   interface ElementTagNameMap {
-    'kev-kevin': HTMLKevKevinElement;
     'profile-pic': HTMLProfilePicElement;
   }
 

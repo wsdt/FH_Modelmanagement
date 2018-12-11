@@ -1,8 +1,6 @@
 const express = require('express');
 const express_app = express();
 const bodyParser = require('body-parser');
-const db = require('./controller/db');
-const db_con = new db(express_app); //make instance (execute constr. automatically)z
 setup_8080();
 
 // Functions ++++++++++++++++++++++++++++++

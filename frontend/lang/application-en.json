@@ -5,23 +5,6 @@
 	  "copyright_notice": "© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms"
   },
   "pages": {
-    "login_php": {
-      "h_loginform": "Login form",
-      "lost_pwd": "Lost your password?",
-      "register_intro": "New to site?",
-      "a_register": "Create Account",
-      "register_login_intro": "Already a member ?",
-      "a_login": "Log in",
-      "h_lostpwd": "Lost password",
-      "lostpwd_login_intro": "Remembering your password?",
-      "lostpwd_recovery": {
-        "mail_notfound":"No user with this email address registered.",
-        "subject":"FH Kufstein - New password",
-        "head":"Password recovery",
-        "body_intro":"As you might have lost/forgotten your password, we have sent you a new pwd here. Please login with your new password.",
-        "body_conclusion":"If you know your password and didn't do this, please contact the administrator immediately."
-      }
-    },
     "modelupload_php": {
 		"nav":{
 			"profile_welcome":"Welcome,",

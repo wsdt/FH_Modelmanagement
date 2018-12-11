@@ -1,6 +1,6 @@
 /*!
  * Built with http://stenciljs.com
- * 2018-11-11T22:32:04
+ * 2018-11-11T22:55:48
  */
 (function(win, doc, namespace, fsNamespace, resourcesUrl, appCore, appCoreSsr, appCorePolyfilled, hydratedCssClass, components) {
 
@@ -136,4 +136,4 @@ function createComponentOnReadyPrototype(win, namespace, HTMLElementPrototype) {
 
   init(win, doc, namespace, fsNamespace, resourcesUrl, appCore, appCoreSsr, appCorePolyfilled, hydratedCssClass, components);
 
-  })(window, document, "fhkuf","fhkuf",0,"fhkuf.core.js","es5-build-disabled.js","hydrated",[["kev-kevin","kev-kevin",1,[["first",1,0,1,2],["last",1,0,1,2],["middle",1,0,1,2]],1],["profile-pic","profile-pic",1,[["alt_msg",1,0,1,2],["class_name",1,0,1,2],["user_name",1,0,1,2]],1]],HTMLElement.prototype);
+  })(window, document, "fhkuf","fhkuf",0,"fhkuf.core.js","es5-build-disabled.js","hydrated",[["profile-pic","profile-pic",1,[["alt_msg",1,0,1,2],["class_name",1,0,1,2],["user_name",1,0,1,2]],1]],HTMLElement.prototype);
