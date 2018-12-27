@@ -89,19 +89,7 @@
                 </div>
                 <!-- /sidebar menu -->
 
-                <!-- /menu footer buttons -->
-                <div class="sidebar-footer hidden-small">
-                    <a data-toggle="tooltip" data-placement="top" title="Settings">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Lock">
-                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                    </a>
-                </div>
-                <!-- /menu footer buttons -->
+
             </div>
         </div>
 
@@ -123,11 +111,14 @@
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;" data-localize="pages.modelupload_php.nav.profile">
-                                    Profile</a></li>
                                 <li>
-                                    <a href="javascript:;">
-                                        <span class="badge bg-red pull-right">50%</span>
+                                    <a onclick=" new PNotify({
+                                        title: 'Settings missing',
+                                        text: 'This application currently does not have any available settings.',
+                                        type: 'info',
+                                        styling: 'bootstrap3'
+                                    });">
+                                        <span class="badge bg-green pull-right">100%</span>
                                         <span data-localize="pages.modelupload_php.nav.settings">Settings</span>
                                     </a>
                                 </li>
