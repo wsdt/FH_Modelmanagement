@@ -80,8 +80,6 @@
                     <div class="menu_section">
                         <h3 data-localize="pages.modelupload_php.nav.section_gen">General</h3>
                         <ul class="nav side-menu">
-                            <li class="active"><a data-localize="pages.modelupload_php.nav.page_name"><i
-                                    class="fa fa-book"></i> List</a></li>
                             <li><a data-localize="pages.modelupload_php.nav.page_name"><i
                                     class="fa fa-plus-circle"></i> New</a></li>
                         </ul>
@@ -283,7 +281,7 @@
                                         </form>
 
                                         <!-- Drag/Upload File old action -> ../../form_upload.html -->
-                                        <form action="../../backend/compressions" method="post" class="dropzone"></form>
+                                        <form action="/v1/compressions" method="post" class="dropzone" enctype="multipart/form-data"></form>
                                     </div>
                                 </div>
                             </div>

@@ -1,4 +1,5 @@
 const Mod_fs = require('fs');
+const formidable = require("formidable");
 
 /** Define routes **********************************
  * Allowed http-methods:
@@ -7,35 +8,38 @@ module.exports = {
     "/": {
         "get": get_upload
     },
-    "/v1/file_browser": {
-        "get": get_filebrowser
-    },
     "/v1/upload": {
         "get": get_upload
     },
     "/v1/model": {
         "get": get_models,
         "post": post_model
+    },
+    "/v1/compressions": {
+        "post": post_compression
     }
 };
 
 /** Route methods ***********************************/
 const page_dir = "./frontend/html/";
 const data_dir = "./backend/data/";
+const compression_target_dir = "./backend/compressions/";
 
 function isValueNotEmpty(val) {
     return (val !== undefined && val !== null && val !== "");
 }
 
-function get_filebrowser(req, res) {
-    return "Functionality not implemented yet.";
-    /*if (mod_sessionMiddleware.isSessionValid(req)) {
-        openFile("modelbrowser", req, res, {});
-    } else {
-        console.warn("routes:get_filebrowser: User session not valid. Redirecting ...");
-        res.writeHead(301, {Location: '/v1/login'});
-        res.end();
-    }*/
+/** Saves uploaded file to compression folder */
+function post_compression(req, res) {
+    let form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        let oldPath = files.file.path;
+        Mod_fs.rename(oldPath, compression_target_dir+files.file.name, function(err) {
+            if (err) throw err;
+            res.write('File uploaded and moved!');
+            res.end();
+        });
+    });
 }
 
 /** Saves new model/compression */
