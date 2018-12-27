@@ -63,6 +63,7 @@ function printAllModelTableRows(tbodyidentifier, modelObjs) {
                     //console.log('Trying to print table row of provided array->'+JSON.stringify(jsonObjs[i]));
                     printModelTableRow(tbodyidentifier, modelObjArr[i]);
                 }
+                refreshScrollViewHeight();
             } else {
                 console.error('modelupload_general:printAllModelTableRows: Could not print table bc. resolved jsonObj[] is null|undefined (maybe no modelObjs at all saved).');
             }
