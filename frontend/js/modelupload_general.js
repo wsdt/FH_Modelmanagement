@@ -10,17 +10,24 @@ function uploadNewCompression() {
         let randomSubId = "TripleID" + parseInt(Math.random() * 1000, 10);
 
         modelObjPromise.then(function (modelObj) {
-            console.log("uploadNewCompression:then::before: "+JSON.stringify(modelObj));
-            let newCompr = new Compression(
-                randomSubId,
-                (new Date()).toLocaleString(),
-                document.getElementById('accessLevels').value,
-                document.getElementById('license').value,
-                100,
-                "examplepathtofile",
-                "{}");
+            let uploadedFiles = document.getElementsByClassName('dz-preview dz-processing dz-success dz-complete dz-image-preview');
+            for (let uploadedFile of uploadedFiles) {
+                let metaData = uploadedFile.getElementsByClassName('dz-details')[0];
+                let fileNameWithExtension = metaData.getElementsByClassName('dz-filename')[0].firstChild.innerHTML;
+                let fileSize = metaData.getElementsByClassName('dz-size')[0];
+                fileSize = (fileSize.textContent || fileSize.innerText);
 
-            modelObj.saveNewCompression(newCompr);
+                let newCompr = new Compression(
+                    randomSubId,
+                    (new Date()).toLocaleString(),
+                    document.getElementById('accessLevels').value,
+                    document.getElementById('license').value,
+                    fileSize,
+                    fileNameWithExtension,
+                    "{}");
+
+                modelObj.saveNewCompression(newCompr);
+            }
             console.log("uploadNewCompression:then::after: "+JSON.stringify(modelObj));
             modelObj.saveLocally(); //save also locally
         });
