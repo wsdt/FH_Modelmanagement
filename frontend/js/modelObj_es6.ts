@@ -88,12 +88,15 @@ class ModelObj {
     })
       .then(resp => resp.json())
       .then(function(res) {
-        new PNotify({
-          title: res.res_title,
-          text: res.res_text,
-          type: res.notification_type,
-          styling: "bootstrap3"
-        });
+          // synchronize
+          printAllModelTableRows('#queriedmodels', ModelObj.getAllLocally()); //works!! Just ignore IDE ref not found here
+
+          new PNotify({
+            title: res.res_title,
+            text: res.res_text,
+            type: res.notification_type,
+            styling: "bootstrap3"
+          });
       });
   }
 

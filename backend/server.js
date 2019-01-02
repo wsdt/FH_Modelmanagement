@@ -1,3 +1,5 @@
+
+
 const express = require("express");
 const express_app = express();
 const bodyParser = require("body-parser");
@@ -28,3 +30,44 @@ function setup_8080() {
 
 // Export to other files (to export multiple see: https://stackoverflow.com/questions/8595509/how-do-you-share-constants-in-nodejs-modules)
 module.exports = express_app;
+
+/*const express = require("express");
+const http = require("http");
+const WebSocket = require("ws");
+const bodyParser = require("body-parser");
+
+const app = express();
+const server = http.createServer(app);
+
+// Server config
+app.use(express.static("frontend"));
+//enable json data body parsing
+app.use(bodyParser.json());
+app.use(
+    bodyParser.urlencoded({
+        extended: true
+    })
+);
+
+//Render engine
+app.engine("html", require("ejs").renderFile);
+app.set("view engine", "html");
+app.set("views", require("path").join(__dirname, "../frontend/html"));
+
+
+const wss = new WebSocket.Server({server});
+wss.on('connection', (ws) => {
+   console.log("New Client connected.");
+
+    ws.on('message', (msg) => {
+        switch (msg) {
+            case 'model_list_changed': printAllModelTableRows('#queriedmodels', ModelObj.getAllLocally());break;
+            default: console.warn("Received unknown event -> "+msg);
+        }
+    })
+});
+server.listen(8080, () => {
+    console.log("server.js: Port 8080 setup done.");
+});
+
+module.exports = app;*/

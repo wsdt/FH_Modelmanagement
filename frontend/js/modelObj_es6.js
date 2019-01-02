@@ -57,6 +57,8 @@ var ModelObj = /** @class */ (function () {
         })
             .then(function (resp) { return resp.json(); })
             .then(function (res) {
+            // synchronize
+            printAllModelTableRows('#queriedmodels', ModelObj.getAllLocally()); //works!! Just ignore IDE ref not found here
             new PNotify({
                 title: res.res_title,
                 text: res.res_text,

@@ -1,3 +1,5 @@
+
+
 let selectedObj; //used to keep track which elem is selected (i think it is less error prone than determining the bgColor)
 
 /** Uploads a new compression */
@@ -12,12 +14,14 @@ function uploadNewCompression() {
     let randomSubId = "TripleID" + parseInt(Math.random() * 1000, 10);
 
     modelObjPromise.then(function(modelObj) {
-
       let uploadedFiles = document.getElementsByClassName(
         "dz-preview dz-processing dz-success dz-complete"
       );
 
-      console.log("uploadNewCompression: Uploaded compr -> "+JSON.stringify(uploadedFiles));
+      console.log(
+        "uploadNewCompression: Uploaded compr -> " +
+          JSON.stringify(uploadedFiles)
+      );
       for (let uploadedFile of uploadedFiles) {
         let metaData = uploadedFile.getElementsByClassName("dz-details")[0];
         let fileNameWithExtension = metaData.getElementsByClassName(
@@ -102,8 +106,9 @@ function printModelTableRow(tbodyidentifier, modelObj) {
 
 /** Adds table row for creating a new model without any compressions. */
 function printAddNewModelTableRow(tbodyidentifier) {
-    $(tbodyidentifier)
-        .append(`
+  $(tbodyidentifier)
+    .append(
+      `
           <tr id="new_model_creator">
             <td><a href="#" class="btn btn-success btn-xs" onclick="createModel(
                 document.getElementById('mc_objectTripleID').value,
@@ -124,20 +129,50 @@ function printAddNewModelTableRow(tbodyidentifier) {
             <td><input class="model_create_input" type="text" id="mc_mimetype"/></td> <!-- MIMEtype -->
             <td>Add new model first</td>
           </tr>
-        `).fadeIn('slow');
+        `
+    )
+    .fadeIn("slow");
 }
 
-function createModel(objectTripleID, mediaTripleID, description, createDate, creator, owner, uploader, mimeType) {
-    if (objectTripleID && mediaTripleID && description && createDate && creator && owner && uploader && mimeType) {
-        (new ModelObj(objectTripleID, description, mediaTripleID, createDate, creator, owner, uploader, mimeType, null)).saveLocally();
-    } else {
-        new PNotify({
-            title: "Input invalid",
-            text: "All fields are required.",
-            type: "error",
-            styling: "bootstrap3"
-        });
-    }
+function createModel(
+  objectTripleID,
+  mediaTripleID,
+  description,
+  createDate,
+  creator,
+  owner,
+  uploader,
+  mimeType
+) {
+  if (
+    objectTripleID &&
+    mediaTripleID &&
+    description &&
+    createDate &&
+    creator &&
+    owner &&
+    uploader &&
+    mimeType
+  ) {
+    new ModelObj(
+      objectTripleID,
+      description,
+      mediaTripleID,
+      createDate,
+      creator,
+      owner,
+      uploader,
+      mimeType,
+      null
+    ).saveLocally();
+  } else {
+    new PNotify({
+      title: "Input invalid",
+      text: "All fields are required.",
+      type: "error",
+      styling: "bootstrap3"
+    });
+  }
 }
 
 /** Prints search results so just give all ModelJsonObjs as an Array to this method :)*/
