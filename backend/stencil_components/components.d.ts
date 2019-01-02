@@ -4,50 +4,45 @@
  * It contains typing information for all components that exist in this project.
  */
 
-
-import '@stencil/core';
-
-
-
+import "@stencil/core";
 
 export namespace Components {
-
   interface ProfilePic {
-    'alt_msg': string;
-    'class_name': string;
-    'user_name': string;
+    alt_msg: string;
+    class_name: string;
+    user_name: string;
   }
   interface ProfilePicAttributes extends StencilHTMLAttributes {
-    'alt_msg'?: string;
-    'class_name'?: string;
-    'user_name'?: string;
+    alt_msg?: string;
+    class_name?: string;
+    user_name?: string;
   }
 }
 
 declare global {
   interface StencilElementInterfaces {
-    'ProfilePic': Components.ProfilePic;
+    ProfilePic: Components.ProfilePic;
   }
 
   interface StencilIntrinsicElements {
-    'profile-pic': Components.ProfilePicAttributes;
+    "profile-pic": Components.ProfilePicAttributes;
   }
 
-
-  interface HTMLProfilePicElement extends Components.ProfilePic, HTMLStencilElement {}
+  interface HTMLProfilePicElement
+    extends Components.ProfilePic,
+      HTMLStencilElement {}
   var HTMLProfilePicElement: {
     prototype: HTMLProfilePicElement;
     new (): HTMLProfilePicElement;
   };
 
   interface HTMLElementTagNameMap {
-    'profile-pic': HTMLProfilePicElement
+    "profile-pic": HTMLProfilePicElement;
   }
 
   interface ElementTagNameMap {
-    'profile-pic': HTMLProfilePicElement;
+    "profile-pic": HTMLProfilePicElement;
   }
-
 
   export namespace JSX {
     export interface Element {}
@@ -56,5 +51,4 @@ declare global {
     }
   }
   export interface HTMLAttributes extends StencilHTMLAttributes {}
-
 }

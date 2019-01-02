@@ -1,5 +1,3 @@
-
-
 let selectedObj; //used to keep track which elem is selected (i think it is less error prone than determining the bgColor)
 
 /** Uploads a new compression */

@@ -11,3 +11,4 @@ data/
 */build/
 vendors/
 *.min.*
+frontend/js/stencil_components/
