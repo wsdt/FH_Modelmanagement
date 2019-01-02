@@ -3,18 +3,22 @@
   "version": "0.0.4",
   "description": "Enables you to upload new compressions for your model management system.",
   "main": "app.js",
+  "husky": {
+	"hooks": {
+		"pre-commit": "npm run prettier"
+	}
+  },
   "scripts": {
     "build": "stencil build",
     "prestart": "stencil build --dev",
     "start": "node app.js",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
-    "tslint": "tslint",
-    "tslint-fix": "tslint --fix",
-    "ts-compile": "tsc"
+    "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,scss,css,json}\""
   },
   "devDependencies": {
-    "@stencil/core": "~0.13.2"
+    "@stencil/core": "~0.13.2",
+    "prettier": "^1.15.3"
   },
   "dependencies": {
     "ejs": "^2.6.1",

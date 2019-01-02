@@ -1,46 +1,46 @@
 {
   "general": {
-	"project_name":"Interreg",
-    "owner":"FH Kufstein",
-	  "copyright_notice": "© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms"
+    "project_name": "Interreg",
+    "owner": "FH Kufstein",
+    "copyright_notice": "© 2018 All Rights Reserved. FH Kufstein. Privacy and Terms"
   },
   "pages": {
     "modelupload_php": {
-		"nav":{
-			"profile_welcome":"Welcome,",
-			"page_name":"New",
-			"section_gen":"General",
-			"profile":"Profile",
-			"settings":"Settings",
-			"help":"Help",
-			"logout":"Log Out",
-			"see_all_alerts":"See All Alerts",
-			"sync":"Synchronize"
-		},
-		"wizard":{
-			"h_modelupload":"Model Upload - Wizard",
-			"h_modelmanagement":"Model Management",
-			"subH_uploadnewmodel":"Upload new model",
-			"descr":"This is a basic wizard for adding new models.",
-			"step":"Step",
-			"step1":{
-				"h":"Search and Select",
-				"descr":"This step focuses on searching for available models. After selecting a model you can add new variations of it.",
-				"thcol_descr":"Description",
-				"thcol_compr":"Compressions",
-				"thcol_status":"Status",
-				"thcol_edit":"Edit"
-			},
-			"step2":{
-				"h":"Upload new compression",
-				"descr":"Drag (multiple) files or upload them manually by clicking onto the dropzone.",
-				"form_license":"License",
-				"form_accesslvl":"Accesslevel",
-				"form_accesslvl_public":"public",
-				"form_accesslvl_visit":"visit",
-				"form_accesslvl_private":"private"
-			}
-		}
+      "nav": {
+        "profile_welcome": "Welcome,",
+        "page_name": "New",
+        "section_gen": "General",
+        "profile": "Profile",
+        "settings": "Settings",
+        "help": "Help",
+        "logout": "Log Out",
+        "see_all_alerts": "See All Alerts",
+        "sync": "Synchronize"
+      },
+      "wizard": {
+        "h_modelupload": "Model Upload - Wizard",
+        "h_modelmanagement": "Model Management",
+        "subH_uploadnewmodel": "Upload new model",
+        "descr": "This is a basic wizard for adding new models.",
+        "step": "Step",
+        "step1": {
+          "h": "Search and Select",
+          "descr": "This step focuses on searching for available models. After selecting a model you can add new variations of it.",
+          "thcol_descr": "Description",
+          "thcol_compr": "Compressions",
+          "thcol_status": "Status",
+          "thcol_edit": "Edit"
+        },
+        "step2": {
+          "h": "Upload new compression",
+          "descr": "Drag (multiple) files or upload them manually by clicking onto the dropzone.",
+          "form_license": "License",
+          "form_accesslvl": "Accesslevel",
+          "form_accesslvl_public": "public",
+          "form_accesslvl_visit": "visit",
+          "form_accesslvl_private": "private"
+        }
+      }
     }
   }
 }

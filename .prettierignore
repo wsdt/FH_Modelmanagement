@@ -1,0 +1,13 @@
+dist/
+.jest/
+www/
+coverage/
+node_modules/
+resources/
+data/
+.stencil/
+.idea/
+.git/
+*/build/
+vendors/
+*.min.*

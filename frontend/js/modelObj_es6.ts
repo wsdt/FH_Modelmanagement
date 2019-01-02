@@ -1,189 +1,224 @@
 declare var PNotify: any;
 
 function parseJson(json) {
-    let jsonObj;
-    if (json === null) {
-        console.warn('isJsonParamValid: Provided json is null. Created empty obj.');
-        return false; //just in case
-    } else if (json === undefined) {
-        console.warn('isJsonParamValid: Provided json is undefined. Created empty one.');
-        return false;
+  let jsonObj;
+  if (json === null) {
+    console.warn("isJsonParamValid: Provided json is null. Created empty obj.");
+    return false; //just in case
+  } else if (json === undefined) {
+    console.warn(
+      "isJsonParamValid: Provided json is undefined. Created empty one."
+    );
+    return false;
+  } else {
+    //provided param must be an array, obj or str
+    if (json.constructor === "str".constructor) {
+      //Provided param is a str (presumably an unparsed json obj)
+      jsonObj = JSON.parse(json);
+    } else if (
+      json.constructor === {}.constructor ||
+      json.constructor === [].constructor
+    ) {
+      jsonObj = json;
     } else {
-        //provided param must be an array, obj or str
-        if (json.constructor === "str".constructor) {
-            //Provided param is a str (presumably an unparsed json obj)
-            jsonObj = JSON.parse(json);
-        } else if (json.constructor === {}.constructor || json.constructor === [].constructor) {
-            jsonObj = json;
-        } else {
-            console.warn('isJsonParamValid: Provided json is not a string neither an object! Created empty obj. Constructor: ' + json.constructor);
-            return false; //exit constructor
-        }
+      console.warn(
+        "isJsonParamValid: Provided json is not a string neither an object! Created empty obj. Constructor: " +
+          json.constructor
+      );
+      return false; //exit constructor
     }
-    return jsonObj;
+  }
+  return jsonObj;
 }
-
 
 class ModelObj {
-    objectTripleID: string;
-    description: string;
-    mediaTripleID: string;
-    createDate: string;
-    creator: string;
-    owner: string;
-    uploader: string;
-    MIMEtype: string;
-    files: Compression[];
+  objectTripleID: string;
+  description: string;
+  mediaTripleID: string;
+  createDate: string;
+  creator: string;
+  owner: string;
+  uploader: string;
+  MIMEtype: string;
+  files: Compression[];
 
-    constructor(objectTripleID: string, description: string, mediaTripleID: string, createDate: string, creator: string, owner: string, uploader: string, MIMEtype: string, files: Compression[]) {
-        this.objectTripleID = objectTripleID;
-        this.description = description;
-        this.mediaTripleID = mediaTripleID;
-        this.createDate = createDate;
-        this.creator = creator;
-        this.owner = owner;
-        this.uploader = uploader;
-        this.MIMEtype = MIMEtype;
-        this.files = files;
+  constructor(
+    objectTripleID: string,
+    description: string,
+    mediaTripleID: string,
+    createDate: string,
+    creator: string,
+    owner: string,
+    uploader: string,
+    MIMEtype: string,
+    files: Compression[]
+  ) {
+    this.objectTripleID = objectTripleID;
+    this.description = description;
+    this.mediaTripleID = mediaTripleID;
+    this.createDate = createDate;
+    this.creator = creator;
+    this.owner = owner;
+    this.uploader = uploader;
+    this.MIMEtype = MIMEtype;
+    this.files = files;
+  }
+
+  saveNewCompression(compressionJson: Compression) {
+    //assuming that let is compressionObj (not a json etc.)
+    this.files.push(compressionJson);
+  }
+
+  getFile(compressionUUID) {
+    return this.files[compressionUUID];
+  }
+
+  saveLocally() {
+    let strModelObj = JSON.stringify(this);
+    console.log(
+      "modelObj:saveLocally: " + strModelObj + ";;" + JSON.stringify(this.files)
+    );
+
+    fetch("/v1/model", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: strModelObj
+    })
+      .then(resp => resp.json())
+      .then(function(res) {
+        new PNotify({
+          title: res.res_title,
+          text: res.res_text,
+          type: res.notification_type,
+          styling: "bootstrap3"
+        });
+      });
+  }
+
+  static getLocally(objectTripleID) {
+    if (objectTripleID !== undefined && objectTripleID !== null) {
+      console.log(
+        "Sending id to " + "/v1/model?objectTripleID=" + objectTripleID
+      );
+      return fetch("/v1/model?objectTripleID=" + objectTripleID)
+        .then(resp => resp.json())
+        .then(function(res) {
+          let modelObj = ModelObj.mapJsonToInstance(res);
+          console.log(
+            "Received json: " +
+              JSON.stringify(res) +
+              " / ModelObj: " +
+              JSON.stringify(modelObj)
+          );
+          return modelObj;
+        });
     }
+  }
 
-    saveNewCompression(compressionJson: Compression) {
-        //assuming that let is compressionObj (not a json etc.)
-        this.files.push(compressionJson);
-    }
+  static getAllLocally() {
+    return fetch("/v1/model")
+      .then(resp => resp.json())
+      .then(function(res) {
+        console.log("PHP Row json: " + JSON.stringify(res));
 
-    getFile(compressionUUID) {
-        return this.files[compressionUUID];
-    };
-
-    saveLocally() {
-        let strModelObj = JSON.stringify((this));
-        console.log("modelObj:saveLocally: " + strModelObj + ";;" + JSON.stringify(this.files));
-
-        fetch("/v1/model",
-            {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: strModelObj
-            })
-            .then((resp) => resp.json())
-            .then(function(res) {
-                new PNotify({
-                    title: res.res_title,
-                    text: res.res_text,
-                    type: res.notification_type,
-                    styling: 'bootstrap3'
-                });
-            });
-    }
-
-    static getLocally(objectTripleID) {
-        if (objectTripleID !== undefined && objectTripleID !== null) {
-            console.log('Sending id to '+"/v1/model?objectTripleID=" + objectTripleID);
-            return fetch("/v1/model?objectTripleID=" + objectTripleID)
-                .then((resp) => resp.json())
-                .then(function (res) {
-                        let modelObj = ModelObj.mapJsonToInstance(res);
-                        console.log('Received json: ' + JSON.stringify(res) + " / ModelObj: " + JSON.stringify(modelObj));
-                        return modelObj;
-                    }
-                );
+        let allModelObjs = [];
+        for (let obj of res) {
+          allModelObjs.push(ModelObj.mapJsonToInstance(obj));
+          console.log(
+            "ModelObj:getAllLocally: Parsed modelobj -> " + JSON.stringify(obj)
+          );
         }
-    }
+        return allModelObjs;
+      })
+      .catch(function(error) {
+        console.error("ModelObj:getAllLocally: " + error);
+      });
+  }
 
-    static getAllLocally() {
-        return fetch("/v1/model")
-            .then((resp) => resp.json())
-            .then(function (res) {
-                    console.log("PHP Row json: " + JSON.stringify(res));
+  static mapJsonToInstance(json) {
+    let jsonObj = parseJson(json);
 
-                    let allModelObjs = [];
-                    for (let obj of res) {
-                        allModelObjs.push(ModelObj.mapJsonToInstance(obj));
-                        console.log("ModelObj:getAllLocally: Parsed modelobj -> " + JSON.stringify(obj));
-                    }
-                    return allModelObjs;
-                }
-            ).catch(function (error) {
-                console.error('ModelObj:getAllLocally: ' + error);
-            })
-    };
-
-    static mapJsonToInstance(json) {
-        let jsonObj = parseJson(json);
-
-        return new ModelObj(
-            jsonObj.objectTripleID,
-            jsonObj.description,
-            jsonObj.mediaTripleID,
-            jsonObj.createDate,
-            jsonObj.creator,
-            jsonObj.owner,
-            jsonObj.uploader,
-            jsonObj.MIMEtype,
-            Compression.mapFilesJsonToInstances(jsonObj.files)
-        );
-    }
+    return new ModelObj(
+      jsonObj.objectTripleID,
+      jsonObj.description,
+      jsonObj.mediaTripleID,
+      jsonObj.createDate,
+      jsonObj.creator,
+      jsonObj.owner,
+      jsonObj.uploader,
+      jsonObj.MIMEtype,
+      Compression.mapFilesJsonToInstances(jsonObj.files)
+    );
+  }
 }
 
-
 enum AccessLevel {
-    Private = "private",
-    Visit = "visit",
-    Public = "public"
+  Private = "private",
+  Visit = "visit",
+  Public = "public"
 }
 
 class Compression {
-    compressionUUID: number;
-    uploadDate: string;
-    accessLevel: AccessLevel;
-    license: string;
-    fileSize: number;
-    paths: string[];
-    fileTypeSpecificMeta: string;
+  compressionUUID: number;
+  uploadDate: string;
+  accessLevel: AccessLevel;
+  license: string;
+  fileSize: number;
+  paths: string[];
+  fileTypeSpecificMeta: string;
 
-    constructor(compressUUID: number, uploadDate: string, accessLevel: AccessLevel, license: string, fileSize: number, paths: string[], fileTypeSpecificMeta: string) {
-        this.compressionUUID = compressUUID;
-        this.uploadDate = uploadDate;
-        this.accessLevel = accessLevel;
-        this.license = license;
-        this.fileSize = fileSize;
-        this.paths = paths;
-        this.fileTypeSpecificMeta = fileTypeSpecificMeta;
+  constructor(
+    compressUUID: number,
+    uploadDate: string,
+    accessLevel: AccessLevel,
+    license: string,
+    fileSize: number,
+    paths: string[],
+    fileTypeSpecificMeta: string
+  ) {
+    this.compressionUUID = compressUUID;
+    this.uploadDate = uploadDate;
+    this.accessLevel = accessLevel;
+    this.license = license;
+    this.fileSize = fileSize;
+    this.paths = paths;
+    this.fileTypeSpecificMeta = fileTypeSpecificMeta;
+  }
+
+  static mapFilesJsonToInstances(json) {
+    let jsonObj = parseJson(json);
+
+    let comprArr = [];
+    for (let jsonElem of jsonObj) {
+      comprArr.push(
+        new Compression(
+          jsonElem.compressionUUID,
+          jsonElem.uploadDate,
+          jsonElem.accessLevel,
+          jsonElem.license,
+          jsonElem.fileSize,
+          jsonElem.paths,
+          jsonElem.fileTypeSpecificMeta
+        )
+      );
     }
 
-    static mapFilesJsonToInstances(json) {
-        let jsonObj = parseJson(json);
+    return comprArr;
+  }
 
-        let comprArr = [];
-        for (let jsonElem of jsonObj) {
-            comprArr.push(new Compression(
-                jsonElem.compressionUUID,
-                jsonElem.uploadDate,
-                jsonElem.accessLevel,
-                jsonElem.license,
-                jsonElem.fileSize,
-                jsonElem.paths,
-                jsonElem.fileTypeSpecificMeta
-            ));
-        }
+  static mapJsonToInstance(json) {
+    let jsonObj = parseJson(json);
 
-        return comprArr;
-    }
-
-    static mapJsonToInstance(json) {
-        let jsonObj = parseJson(json);
-
-        return new Compression(
-            jsonObj.compressionUUID,
-            jsonObj.uploadDate,
-            jsonObj.accessLevel,
-            jsonObj.license,
-            jsonObj.fileSize,
-            jsonObj.paths,
-            jsonObj.fileTypeSpecificMeta
-        );
-    }
+    return new Compression(
+      jsonObj.compressionUUID,
+      jsonObj.uploadDate,
+      jsonObj.accessLevel,
+      jsonObj.license,
+      jsonObj.fileSize,
+      jsonObj.paths,
+      jsonObj.fileTypeSpecificMeta
+    );
+  }
 }

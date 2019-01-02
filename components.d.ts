@@ -4,84 +4,83 @@
  * It contains typing information for all components that exist in this project.
  */
 
-
-import '@stencil/core';
-
-
-
+import "@stencil/core";
 
 export namespace Components {
-
   interface KevKevin {
-    'first': string;
-    'last': string;
-    'middle': string;
+    first: string;
+    last: string;
+    middle: string;
   }
   interface KevKevinAttributes extends StencilHTMLAttributes {
-    'first'?: string;
-    'last'?: string;
-    'middle'?: string;
+    first?: string;
+    last?: string;
+    middle?: string;
   }
 
   interface ModelList {}
   interface ModelListAttributes extends StencilHTMLAttributes {}
 
   interface ProfilePic {
-    'alt_msg': string;
-    'class_name': string;
-    'user_name': string;
+    alt_msg: string;
+    class_name: string;
+    user_name: string;
   }
   interface ProfilePicAttributes extends StencilHTMLAttributes {
-    'alt_msg'?: string;
-    'class_name'?: string;
-    'user_name'?: string;
+    alt_msg?: string;
+    class_name?: string;
+    user_name?: string;
   }
 }
 
 declare global {
   interface StencilElementInterfaces {
-    'KevKevin': Components.KevKevin;
-    'ModelList': Components.ModelList;
-    'ProfilePic': Components.ProfilePic;
+    KevKevin: Components.KevKevin;
+    ModelList: Components.ModelList;
+    ProfilePic: Components.ProfilePic;
   }
 
   interface StencilIntrinsicElements {
-    'kev-kevin': Components.KevKevinAttributes;
-    'model-list': Components.ModelListAttributes;
-    'profile-pic': Components.ProfilePicAttributes;
+    "kev-kevin": Components.KevKevinAttributes;
+    "model-list": Components.ModelListAttributes;
+    "profile-pic": Components.ProfilePicAttributes;
   }
 
-
-  interface HTMLKevKevinElement extends Components.KevKevin, HTMLStencilElement {}
+  interface HTMLKevKevinElement
+    extends Components.KevKevin,
+      HTMLStencilElement {}
   var HTMLKevKevinElement: {
     prototype: HTMLKevKevinElement;
     new (): HTMLKevKevinElement;
   };
 
-  interface HTMLModelListElement extends Components.ModelList, HTMLStencilElement {}
+  interface HTMLModelListElement
+    extends Components.ModelList,
+      HTMLStencilElement {}
   var HTMLModelListElement: {
     prototype: HTMLModelListElement;
     new (): HTMLModelListElement;
   };
 
-  interface HTMLProfilePicElement extends Components.ProfilePic, HTMLStencilElement {}
+  interface HTMLProfilePicElement
+    extends Components.ProfilePic,
+      HTMLStencilElement {}
   var HTMLProfilePicElement: {
     prototype: HTMLProfilePicElement;
     new (): HTMLProfilePicElement;
   };
 
   interface HTMLElementTagNameMap {
-    'kev-kevin': HTMLKevKevinElement
-    'model-list': HTMLModelListElement
-    'profile-pic': HTMLProfilePicElement
+    "kev-kevin": HTMLKevKevinElement;
+    "model-list": HTMLModelListElement;
+    "profile-pic": HTMLProfilePicElement;
   }
 
   interface ElementTagNameMap {
-    'kev-kevin': HTMLKevKevinElement;
-    'model-list': HTMLModelListElement;
-    'profile-pic': HTMLProfilePicElement;
+    "kev-kevin": HTMLKevKevinElement;
+    "model-list": HTMLModelListElement;
+    "profile-pic": HTMLProfilePicElement;
   }
-
 
   export namespace JSX {
     export interface Element {}
@@ -90,5 +89,4 @@ declare global {
     }
   }
   export interface HTMLAttributes extends StencilHTMLAttributes {}
-
 }
