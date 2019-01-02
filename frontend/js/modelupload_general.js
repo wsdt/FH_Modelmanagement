@@ -12,9 +12,12 @@ function uploadNewCompression() {
     let randomSubId = "TripleID" + parseInt(Math.random() * 1000, 10);
 
     modelObjPromise.then(function(modelObj) {
+
       let uploadedFiles = document.getElementsByClassName(
-        "dz-preview dz-processing dz-success dz-complete dz-image-preview"
+        "dz-preview dz-processing dz-success dz-complete"
       );
+
+      console.log("uploadNewCompression: Uploaded compr -> "+JSON.stringify(uploadedFiles));
       for (let uploadedFile of uploadedFiles) {
         let metaData = uploadedFile.getElementsByClassName("dz-details")[0];
         let fileNameWithExtension = metaData.getElementsByClassName(
@@ -61,7 +64,7 @@ function printModelTableRow(tbodyidentifier, modelObj) {
     //console.log("Added string to types list. ");
   }
 
-  let printFunction = $(tbodyidentifier)
+  $(tbodyidentifier)
     .append(
       "<tr id='" +
         modelObj.objectTripleID +
@@ -84,6 +87,8 @@ function printModelTableRow(tbodyidentifier, modelObj) {
         "<td>" +
         modelObj.owner +
         "</td><td>" +
+        modelObj.uploader +
+        "</td><td>" +
         modelObj.MIMEtype +
         "</td><td>" +
         compressionTypesList +
@@ -93,6 +98,46 @@ function printModelTableRow(tbodyidentifier, modelObj) {
 
   //objectTripleUUID as Row ID, so we can get id as reference when selecting an action btn
   //console.log("Tried to execute printModelTableRow(): "+tbodyidentifier+";;"+JSON.stringify(jsonObj));
+}
+
+/** Adds table row for creating a new model without any compressions. */
+function printAddNewModelTableRow(tbodyidentifier) {
+    $(tbodyidentifier)
+        .append(`
+          <tr id="new_model_creator">
+            <td><a href="#" class="btn btn-success btn-xs" onclick="createModel(
+                document.getElementById('mc_objectTripleID').value,
+                document.getElementById('mc_mediaTripleID').value,
+                document.getElementById('mc_description').value,
+                document.getElementById('mc_createDate').value,
+                document.getElementById('mc_creator').value,
+                document.getElementById('mc_owner').value,
+                document.getElementById('mc_uploader').value,
+                document.getElementById('mc_mimetype').value
+            );"><i class="fa fa-plus"></i> Add</a></td>
+            <td><input class="model_create_input" type="text" id="mc_objectTripleID"/></td> <!-- objectTripleID -->
+            <td><input class="model_create_input" type="text" id="mc_mediaTripleID"/></td> <!-- mediaTripleID -->
+            <td><input class="model_create_input" type="text" id="mc_description"/></td> <!-- description -->
+            <td><input class="model_create_input" type="text" id="mc_createDate"/><br />by<br /><input class="model_create_input" id="mc_creator" type="text"/></td> <!-- createDate by creator -->
+            <td><input class="model_create_input" type="text" id="mc_owner"/></td> <!-- owner -->
+            <td><input class="model_create_input" type="text" id="mc_uploader"/></td> <!-- uploader -->
+            <td><input class="model_create_input" type="text" id="mc_mimetype"/></td> <!-- MIMEtype -->
+            <td>Add new model first</td>
+          </tr>
+        `).fadeIn('slow');
+}
+
+function createModel(objectTripleID, mediaTripleID, description, createDate, creator, owner, uploader, mimeType) {
+    if (objectTripleID && mediaTripleID && description && createDate && creator && owner && uploader && mimeType) {
+        (new ModelObj(objectTripleID, description, mediaTripleID, createDate, creator, owner, uploader, mimeType, null)).saveLocally();
+    } else {
+        new PNotify({
+            title: "Input invalid",
+            text: "All fields are required.",
+            type: "error",
+            styling: "bootstrap3"
+        });
+    }
 }
 
 /** Prints search results so just give all ModelJsonObjs as an Array to this method :)*/
@@ -108,6 +153,8 @@ function printAllModelTableRows(tbodyidentifier, modelObjs) {
           //console.log('Trying to print table row of provided array->'+JSON.stringify(jsonObjs[i]));
           printModelTableRow(tbodyidentifier, modelObjArr[i]);
         }
+        printAddNewModelTableRow(tbodyidentifier);
+
         refreshScrollViewHeight();
       } else {
         console.error(

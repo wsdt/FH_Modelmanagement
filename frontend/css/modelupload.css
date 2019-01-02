@@ -1,0 +1,8 @@
+.model_create_input {
+    width:100%;
+    background-color:#000080;
+    color: #fff;
+    padding: 2px;
+    border-width: 0.5px;
+    opacity: 0.8;
+}
