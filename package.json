@@ -4,9 +4,9 @@
   "description": "Enables you to upload new compressions for your model management system.",
   "main": "app.js",
   "husky": {
-	"hooks": {
-		"pre-commit": "npm run prettier"
-	}
+    "hooks": {
+      "pre-commit": "npm run prettier"
+    }
   },
   "scripts": {
     "build": "stencil build",
