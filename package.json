@@ -8,7 +8,10 @@
     "prestart": "stencil build --dev",
     "start": "node app.js",
     "test": "stencil test --spec --e2e",
-    "test.watch": "stencil test --spec --e2e --watchAll"
+    "test.watch": "stencil test --spec --e2e --watchAll",
+	"tslint": "tslint",
+	"tslint-fix": "tslint --fix",
+	"ts-compile": "tsc"
   },
   "devDependencies": {
     "@stencil/core": "~0.13.2"
