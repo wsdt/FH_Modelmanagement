@@ -11,6 +11,9 @@ module.exports = {
   "/v1/upload": {
     get: get_upload
   },
+  "/v1/filemgr": {
+    get: get_filemgr
+  },
   "/v1/model": {
     get: get_models,
     post: post_model
@@ -27,6 +30,11 @@ const compression_target_dir = "./backend/compressions/";
 
 function isValueNotEmpty(val) {
   return val !== undefined && val !== null && val !== "";
+}
+
+/** Load file manager */
+function get_filemgr(req, res) {
+  openFile("filemgr", req, res);
 }
 
 /** Saves uploaded file to compression folder */

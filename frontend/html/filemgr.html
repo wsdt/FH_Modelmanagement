@@ -143,7 +143,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h3 data-localize="pages.modelupload_php.wizard.h_modelupload">Model Upload - Wizard</h3>
+                        <h3 data-localize="pages.modelupload_php.wizard.h_modelupload">File Manager</h3>
                     </div>
 
                     <!-- if you want you could here place the search bar -->
@@ -156,8 +156,7 @@
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2 data-localize="pages.modelupload_php.wizard.h_modelmanagement">Model Management
-                                    <small data-localize="pages.modelupload_php.wizard.subH_uploadnewmodel">Upload new
-                                        model
+                                    <small data-localize="pages.modelupload_php.wizard.subH_uploadnewmodel">Manage your models
                                     </small>
                                 </h2>
                                 <ul class="nav navbar-right panel_toolbox">
@@ -190,106 +189,11 @@
 
 
                                 <!-- Smart Wizard -->
-                                <p data-localize="pages.modelupload_php.wizard.descr">This is a basic wizard for adding
-                                    new models.</p>
-                                <div id="wizard" class="form_wizard wizard_horizontal">
-                                    <ul class="wizard_steps">
-                                        <li>
-                                            <a href="#step-1">
-                                                <span class="step_no">1</span>
-                                                <span class="step_descr">
-                                                    <span data-localize="pages.modelupload_php.wizard.step">Step</span> 1<br/>
-                                              <small data-localize="pages.modelupload_php.wizard.step1.h">Search and Select</small>
-                                          </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#step-2">
-                                                <span class="step_no">2</span>
-                                                <span class="step_descr">
-                                                    <span data-localize="pages.modelupload_php.wizard.step"></span>Step 2<br/>
-                                              <small data-localize="pages.modelupload_php.wizard.step2.h">Upload new compression</small>
-                                          </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div id="step-1">
-                                        <h2 class="StepTitle"><span data-localize="pages.modelupload_php.wizard.step">Step</span>
-                                            1:
-                                            <span data-localize="pages.modelupload_php.wizard.step1.h">Search and Select</span>
-                                        </h2>
-                                        <p data-localize="pages.modelupload_php.wizard.step1.descr">This step focuses on
-                                            searching for available models. After selecting a model you can add new
-                                            variations of it.</p>
-                                        <div class="title_right">
-                                            <p class="text-muted font-13 m-b-30">
-                                                Click on the 'Next'-Button if you have selected your desired model.
-                                            </p>
-                                            <table id="datatable-buttons" class="table table-striped table-bordered">
-                                                <thead>
-                                                <tr>
-                                                    <th><span data-localize="pages.modelupload_php.wizard.step1.thcol_edit">Edit</span></th>
-                                                    <th>Object-TripleID</th>
-                                                    <th>Media-TripleID</th>
-                                                    <th data-localize="pages.modelupload_php.wizard.step1.thcol_descr">Description</th>
-                                                    <th>Created on/by</th>
-                                                    <th>Owner</th>
-                                                    <th>Uploader</th>
-                                                    <th>Mime</th>
-                                                    <th data-localize="pages.modelupload_php.wizard.step1.thcol_compr">Compressions</th>
-                                                    <!--<th data-localize="pages.modelupload_php.wizard.step1.thcol_status">Status</th>-->
-                                                </tr>
-                                                </thead>
+                                <p data-localize="pages.modelupload_php.wizard.descr">This is a simple file manager for your models and compressions.</p>
 
-                                                <!-- <td><button type='button' class='btn btn-success btn-xs'>Active</button></td> -->
-                                                <tbody id="queriedmodels"></tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                                <div id="filemgr_parent">
 
-                                    <div id="step-2">
-                                        <!-- ID used for updating with TrippleUUID (usability) -->
-                                        <h2 class="StepTitle" id="step2_title"><span
-                                                data-localize="pages.modelupload_php.wizard.step">Step</span> 2: <span
-                                                data-localize="pages.modelupload_php.wizard.step2.h">Upload new compression</span>
-                                        </h2>
-                                        <p data-localize="pages.modelupload_php.wizard.step2.descr">Drag (multiple)
-                                            files or upload them manually by clicking onto the dropzone.</p>
-
-                                        <form class="form-horizontal form-label-left">
-                                            <div class="form-group">
-                                                <label data-localize="pages.modelupload_php.wizard.step2.form_license">License</label>
-                                                <!-- If I know which data to place here I would make something more special here -->
-                                                <input type="text" id="license" class="form-control"
-                                                       placeholder="Enter license">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="accessLevels"
-                                                       data-localize="pages.modelupload_php.wizard.step2.form_accesslvl">Accesslevel</label>
-                                                <select id="accessLevels" class="form-control" required>
-                                                    <option value="public"
-                                                            data-localize="pages.modelupload_php.wizard.step2.form_accesslvl_public">
-                                                        public
-                                                    </option>
-                                                    <option value="visit"
-                                                            data-localize="pages.modelupload_php.wizard.step2.form_accesslvl_visit">
-                                                        visit
-                                                    </option>
-                                                    <option value="private"
-                                                            data-localize="pages.modelupload_php.wizard.step2.form_accesslvl_private">
-                                                        private
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </form>
-
-                                        <!-- Drag/Upload File old action -> ../../form_upload.html -->
-                                        <form action="/v1/compressions" method="post" class="dropzone" enctype="multipart/form-data"></form>
-                                    </div>
                                 </div>
-                            </div>
-                            <!-- End SmartWizard Content -->
-
                     </div>
                 </div>
             </div>
