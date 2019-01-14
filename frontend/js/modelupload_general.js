@@ -53,7 +53,6 @@ function uploadNewCompression() {
 }
 
 function deleteModel(objectTripleId) {
-
   fetch("/v1/model", {
     method: "DELETE",
     headers: {
@@ -73,6 +72,38 @@ function deleteModel(objectTripleId) {
           styling: "bootstrap3"
         });
       });
+}
+
+let allModels = {cachedModels:[],lastFetched:0};
+function searchModels(keywords) {
+  keywords = keywords.split(" "); // get arr of keywords
+  console.log("searchModels: Keywords -> "+JSON.stringify(keywords));
+
+  // fetch at maximum every 5 seconds
+  if (!allModels || allModels.length <= 0 || allModels.lastFetched === 0 || ((new Date()).getMilliseconds()-allModels.lastFetched.getMilliseconds()) > 5000) {
+    ModelObj.getAllLocally().then((arr) => {
+      if (arr) {
+        console.log("searchModels: Fetched models.");
+        allModels.cachedModels = arr;
+        allModels.lastFetched = new Date();
+      } else {
+        console.error("searchModels: Models not available.");
+      }
+    });
+  } else {
+    console.info("searchModels: Models already cached -> "+ JSON.stringify(allModels))
+  }
+
+  let searchedModels = [];
+  for (let modelObj of allModels.cachedModels) {
+    for (let keyword of keywords) {
+      if (JSON.stringify(modelObj).includes(keyword)) {
+        searchedModels.push(modelObj);
+        console.log("searchModels: Found model for keyword "+keyword+" -> model: "+JSON.stringify(modelObj));
+      }
+    }
+  }
+  return Promise.resolve(searchedModels);
 }
 
 /** Prints general table row to tbody elem from json str */
@@ -216,6 +247,7 @@ function printAllModelTableRows(tbodyidentifier, modelObjs) {
         printAddNewModelTableRow(tbodyidentifier);
 
         refreshScrollViewHeight();
+
       } else {
         console.error(
           "modelupload_general:printAllModelTableRows: Could not print table bc. resolved jsonObj[] is null|undefined (maybe no modelObjs at all saved)."
@@ -265,63 +297,6 @@ function selectModel(objectTrippleUUID) {
   }
 }
 
-/** @param searchTerm: e.g. "foo"
- * @param resultSet: contains all jsonObjs as array.
- *      I think the easiest thing just to provide resultSet as normal String-array (unparsed Jsons)
- *
- *      --> Search happens on Server and resultset gets delivered so in production just print resultSet with printAllTableRows()*/
-function searchInResultSet(searchTerm, resultSet) {
-  console.log("search: " + resultSet + "//" + JSON.stringify(resultSet));
-
-  let filteredResultSet = [];
-  if (
-    resultSet !== undefined &&
-    resultSet !== null &&
-    searchTerm !== undefined &&
-    searchTerm !== null
-  ) {
-    //Result set is a promise!
-    resultSet.then(function(resultSetValue) {
-      console.log(
-        "search:: " + resultSetValue + "//" + JSON.stringify(resultSetValue)
-      );
-
-      for (let i = 0; i < resultSetValue.length; i++) {
-        console.log(
-          "search: " +
-            searchTerm +
-            "//" +
-            JSON.stringify(resultSet) +
-            JSON.stringify(resultSetValue[i]).toLowerCase() +
-            "//" +
-            JSON.stringify(resultSetValue).toLowerCase()
-        );
-
-        //console.log('searchInResultSet:Search->'+JSON.stringify(resultSet[i]).toLowerCase()+" searching for "+searchTerm.toString().toLowerCase());
-        if (
-          JSON.stringify(resultSetValue[i])
-            .toLowerCase()
-            .indexOf(resultSetValue.toString().toLowerCase()) !== -1
-        ) {
-          //found sth
-          console.log("searchInResultSet: Found entry->" + resultSetValue[i]);
-          filteredResultSet.push(resultSetValue[i]);
-        }
-      }
-      console.log(
-        "searchInResultSet: Length of resultSet->" + filteredResultSet.length
-      );
-    });
-  } else {
-    console.warn(
-      "searchInResultSet: Resultset or searchterm equals null or undefined."
-    );
-  }
-  console.log(
-    "searchInResultSet: searchResults->" + JSON.stringify(filteredResultSet)
-  );
-  return filteredResultSet;
-}
 
 function colorOnlyProvidedObject(objectTrippleUUID) {
   let unselectedColor = "#f9f9f9";
@@ -339,49 +314,3 @@ function colorOnlyProvidedObject(objectTrippleUUID) {
   ).style.backgroundColor = selectedColor;
 }
 
-// DUMMY DATA FOR TESTING ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-/** Imitates server response with json strings. Server answer should be an String array of jsons. Should be already filtered.
- * In our case to simulate searching we just provide here a large resultset (different in future) and filter them with the search() method.*/
-function provideTestResultSet() {
-  let testResultSet = [];
-  for (let i = 0; i < 10; i++) {
-    testResultSet.push(new ModelObj(JSON.parse(receiveExampleJson())));
-  }
-  return testResultSet;
-}
-
-/** Supplies example json str (simulating that it comes from basket/server or similar */
-function receiveExampleJson() {
-  //Every line here is just for testing purpose
-  console.log("Trying to craft json string. ");
-  let randomSubId = parseInt(Math.random() * 1000, 10);
-  return (
-    "{" +
-    '"description": "This is an example description",' +
-    '"objectTripleID": "TripleID' +
-    randomSubId +
-    '",' +
-    '"mediaTripleID": "TripleID' +
-    randomSubId +
-    '",' +
-    '"createDate": "date",' +
-    '"creator": "string",' +
-    '"owner": "string",' +
-    '"MIMEtype": "string",' +
-    '"files": {' +
-    '"compressionUUID' +
-    randomSubId +
-    '": {' +
-    '"uploadDate": "' +
-    new Date().toLocaleString() +
-    '",' +
-    '"accessLevel": "accessLevel[public|private|visit]",' +
-    '"license": "string",' +
-    '"fileSize": "long",' +
-    '"path": "string",' +
-    '"fileTypeSpecificMeta": {' +
-    "}" +
-    "}}}"
-  );
-}

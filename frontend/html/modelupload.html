@@ -221,6 +221,11 @@
                                         <p data-localize="pages.modelupload_php.wizard.step1.descr">This step focuses on
                                             searching for available models. After selecting a model you can add new
                                             variations of it.</p>
+
+                                        <form><label for="searchInput">Search</label>
+                                        <input type="text" id="searchInput"
+                                               onkeyup="printAllModelTableRows('#queriedmodels', searchModels(document.getElementById('searchInput').value));" /></form>
+
                                         <div class="title_right">
                                             <p class="text-muted font-13 m-b-30">
                                                 Click on the 'Next'-Button if you have selected your desired model.
