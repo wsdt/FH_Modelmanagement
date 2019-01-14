@@ -16,7 +16,8 @@ module.exports = {
   },
   "/v1/model": {
     get: get_models,
-    post: post_model
+    post: post_model,
+    delete: delete_model
   },
   "/v1/compressions": {
     post: post_compression
@@ -52,6 +53,48 @@ function post_compression(req, res) {
   });
 }
 
+/** Delete model incl. compressions */
+function delete_model(req, res) {
+  let modelToDelete = req.body.tripleID;
+  let error = false;
+
+  if (modelToDelete) {
+    try {
+      console.log("route:delete_model: "+modelToDelete);
+
+      Mod_fs.unlink(
+          data_dir + modelToDelete + ".json", (err) => {
+            if (!err) {
+              // TODO: NOTE, that currently compression files are not deleted (only json)
+              console.log("routes:delete_model: Tried to delete model.");
+              res.json({
+                res_title: "Model deleted",
+                res_text: "Your model and compressions have been deleted.",
+                notification_type: "success"
+              });
+            } else {
+              console.error("route:delete_model: File error -> "+JSON.stringify(err));
+              error = true;
+            }
+          }
+      )
+    } catch (e) {
+      console.error("routes:delete_model: Deleting file failed -> "+ JSON.stringify(e));
+      error = true;
+    }
+  } else {
+    console.error("routes:delete_model: Request misformed.");
+    error = true;
+  }
+  if (error) {
+    res.json({
+      res_title: "Model not deleted",
+      res_text: "Could not delete your model and associated compressions.",
+      notification_type: "error"
+    });
+  }
+}
+
 /** Saves new model/compression */
 function post_model(req, res) {
   let newModel = req.body;
@@ -59,7 +102,7 @@ function post_model(req, res) {
 
   if (newModel !== undefined && newModel !== null && newModel !== "") {
     try {
-      console.log("route: " + JSON.stringify(newModel));
+      console.log("route:post_model: " + JSON.stringify(newModel));
 
       Mod_fs.writeFile(
         data_dir + newModel.objectTripleID + ".json",

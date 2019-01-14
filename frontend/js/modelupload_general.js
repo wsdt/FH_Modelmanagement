@@ -52,6 +52,29 @@ function uploadNewCompression() {
   }
 }
 
+function deleteModel(objectTripleId) {
+
+  fetch("/v1/model", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({tripleID: objectTripleId})
+  })
+      .then(resp => resp.json())
+      .then(function(res) {
+        // synchronize
+        printAllModelTableRows("#queriedmodels", ModelObj.getAllLocally()); //works!! Just ignore IDE ref not found here
+
+        new PNotify({
+          title: res.res_title,
+          text: res.res_text,
+          type: res.notification_type,
+          styling: "bootstrap3"
+        });
+      });
+}
+
 /** Prints general table row to tbody elem from json str */
 function printModelTableRow(tbodyidentifier, modelObj) {
   let compressionTypesList = "";
@@ -73,7 +96,11 @@ function printModelTableRow(tbodyidentifier, modelObj) {
         "'>" +
         "<td><a href='#' class='btn btn-info btn-xs' onclick='selectModel(&apos;" +
         modelObj.objectTripleID +
-        "&apos;)'><i class='fa fa-pencil'></i> Select</a></td>" +
+        "&apos;)'><i class='fa fa-pencil'></i> Select</a>" +
+        "<a href='#' class='btn btn-danger btn-xs' onclick='deleteModel(&apos;" +
+        modelObj.objectTripleID +
+        "&apos;)'><i class='fa fa-pencil'></i> Delete</a>" +
+        "</td>" +
         "<td>" +
         modelObj.objectTripleID +
         "</td><td>" +
