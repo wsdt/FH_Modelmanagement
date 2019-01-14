@@ -20,6 +20,8 @@ function uploadNewCompression() {
         "uploadNewCompression: Uploaded compr -> " +
           JSON.stringify(uploadedFiles)
       );
+      let fileSizeSum = "";
+      let pathArr = [];
       for (let uploadedFile of uploadedFiles) {
         let metaData = uploadedFile.getElementsByClassName("dz-details")[0];
         let fileNameWithExtension = metaData.getElementsByClassName(
@@ -28,18 +30,22 @@ function uploadNewCompression() {
         let fileSize = metaData.getElementsByClassName("dz-size")[0];
         fileSize = fileSize.textContent || fileSize.innerText;
 
-        let newCompr = new Compression(
+        fileSizeSum = fileSize;
+        pathArr.push(fileNameWithExtension);
+      }
+
+      let newCompr = new Compression(
           randomSubId,
           new Date().toLocaleString(),
           document.getElementById("accessLevels").value,
           document.getElementById("license").value,
-          fileSize,
-          fileNameWithExtension,
+          fileSizeSum,
+          pathArr,
           "{}"
-        );
+      );
 
-        modelObj.saveNewCompression(newCompr);
-      }
+      modelObj.saveNewCompression(newCompr);
+
       console.log(
         "uploadNewCompression:then::after: " + JSON.stringify(modelObj)
       );

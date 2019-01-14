@@ -27,7 +27,8 @@ module.exports = {
 /** Route methods ***********************************/
 const page_dir = "./frontend/html/";
 const data_dir = "./backend/data/";
-const compression_target_dir = "./backend/compressions/";
+const compression_parent_dir = "./backend/compressions/";
+const compression_temp_dir = compression_parent_dir+"temp/";
 
 function isValueNotEmpty(val) {
   return val !== undefined && val !== null && val !== "";
@@ -43,7 +44,7 @@ function post_compression(req, res) {
   let form = new formidable.IncomingForm();
   form.parse(req, function(err, fields, files) {
     let oldPath = files.file.path;
-    Mod_fs.rename(oldPath, compression_target_dir + files.file.name, function(
+    Mod_fs.rename(oldPath, compression_temp_dir + files.file.name, function(
       err
     ) {
       if (err) throw err;
@@ -104,23 +105,21 @@ function post_model(req, res) {
     try {
       console.log("route:post_model: " + JSON.stringify(newModel));
 
-      Mod_fs.writeFile(
-        data_dir + newModel.objectTripleID + ".json",
-        JSON.stringify(newModel),
-        "utf8",
-        () => {
-          console.log("routes:post_model: Tried to save new model.");
-          res.json({
-            res_title: "Model saved",
-            res_text: "Your compression has been saved successfully.",
-            notification_type: "success"
-          });
-        }
-      );
+      // Also move temp files into correct folder according to accessLevel
+      let newCompr = newModel.files[newModel.files.length-1];
+      let accessibility = newCompr.accessLevel;
+      accessibility = ((accessibility !== "private") ? "sync/" : "")+accessibility;
+
+      for (let path of newCompr.paths) {
+        let fileExtension = path.split(".")[1]; // get second part, file extension
+        console.log("route:post_model: Trying to move file with extension -> "+fileExtension);
+        Mod_fs.renameSync(compression_temp_dir+path, `${compression_parent_dir}${accessibility}/${newCompr.compressionUUID}.${fileExtension}`);
+      }
+
       error = false;
     } catch (e) {
       console.error(
-        "routes:post_model: Could not save new model, as it is not valid JSON -> " +
+        "routes:post_model: Could not save new model -> " +
           JSON.stringify(newModel) +
           "\n" +
           JSON.stringify(e)
@@ -139,6 +138,20 @@ function post_model(req, res) {
       res_text: "Your compression could not be saved due to an error.",
       notification_type: "error"
     });
+  } else {
+    Mod_fs.writeFile(
+        data_dir + newModel.objectTripleID + ".json",
+        JSON.stringify(newModel),
+        "utf8",
+        () => {
+          console.log("routes:post_model: Tried to save new model.");
+          res.json({
+            res_title: "Model saved",
+            res_text: "Your compression has been saved successfully.",
+            notification_type: "success"
+          });
+        }
+    );
   }
 }
 
