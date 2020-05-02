@@ -8,3 +8,5 @@ First time using the application will require the installation of all dependenci
 
 After that you can start the application via: 
 ``` npm start ``` (this will compile all stencil components and start the Node.JS application).
+
+<img src="https://github.com/wsdt/FH_Modelmanagement/blob/master/Docs/Screenshot.PNG" />
